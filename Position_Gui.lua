@@ -66,7 +66,7 @@ local script = Instance.new("LocalScript", copy)
 script.Parent.MouseButton1Click:Connect(function()
 function Callback(answer)
 if answer == "Available" then
-setclipboard("game.Players.LocalPlayer.HumanoidRootPart.Position = Vector3.new("..script.Parent.Parent.pos.Text..")")
+setclipboard("game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new("..script.Parent.Parent.pos.Text..")")
 elseif answer == "Not Available" then
 setclipboard(script.Parent.Parent.pos.Text)
 end
