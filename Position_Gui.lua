@@ -4,6 +4,7 @@ local title = Instance.new("TextLabel")
 local copy = Instance.new("TextButton")
 local pos = Instance.new("TextBox")
 local find = Instance.new("TextButton")
+local Bindable = Instance.new("BindableFunction")
 
 ScreenGui.Parent = game.CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -21,7 +22,7 @@ title.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 title.BorderSizePixel = 0
 title.Size = UDim2.new(0, 387, 0, 50)
 title.Font = Enum.Font.GothamBold
-title.Text = "CFrame Finde"
+title.Text = "Position Finder"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.TextSize = 30.000
 title.TextWrapped = true
@@ -33,7 +34,7 @@ copy.BorderSizePixel = 0
 copy.Position = UDim2.new(0.527131796, 0, 0.635922313, 0)
 copy.Size = UDim2.new(0, 148, 0, 50)
 copy.Font = Enum.Font.GothamSemibold
-copy.Text = "Copy"
+copy.Text = "Select"
 copy.TextColor3 = Color3.fromRGB(255, 255, 255)
 copy.TextSize = 20.000
 
@@ -60,17 +61,22 @@ find.Text = "Find"
 find.TextColor3 = Color3.fromRGB(255, 255, 255)
 find.TextSize = 20.000
 
--- Scripts:
-
-local function UMTQ_fake_script() -- copy.LocalScript 
-	local script = Instance.new('LocalScript', copy)
-
-	script.Parent.MouseButton1Click:Connect(function()
-		setclipboard(script.Parent.Parent.pos.Text)
-	end)
+local function UMTQ_fake_script()
+local script = Instance.new("LocalScript", copy)
+script.Parent.MouseButton1Click:Connect(function()
+function Callback(answer)
+if answer == "Available" then
+setclipboard("game.Players.LocalPlayer.HumanoidRootPart.Position = Vector3.new("..script.Parent.Parent.pos.Text..")")
+elseif answer == "Not Available" then
+setclipboard(script.Parent.Parent.pos.Text)
+end
+end
+Bindable.OnInvoke = Callback
+game.StarterGui:SetCore("SendNotification", {Title = "Error",Text = "Position You Choose To Go",Duration = 10,Button1 = "Available",Button2 = "Not Available",Icon = "rbxassetid://7733658504",Callback = Bindable})
+end)
 end
 coroutine.wrap(UMTQ_fake_script)()
-local function KJAYG_fake_script() -- Frame.Dragify 
+local function KJAYG_fake_script()
 	local script = Instance.new('LocalScript', Frame)
 
 	local UIS = game:GetService("UserInputService")
@@ -116,7 +122,7 @@ local function EKBNYI_fake_script() -- find.LocalScript
 	local script = Instance.new('LocalScript', find)
 
 	script.Parent.MouseButton1Down:Connect(function()
-		script.Parent.Parent.pos.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+		script.Parent.Parent.pos.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
 	end)
 end
 coroutine.wrap(EKBNYI_fake_script)()
