@@ -9,8 +9,8 @@ if not game:IsLoaded() then game.Loaded:Wait() end
 
 cam.CameraType = Enum.CameraType.Scriptable
 
-local speed = 40
-local sens = 2
+local speed = 20
+local sens = 0.4
 
 if onMobile then sens*=2 end
 
