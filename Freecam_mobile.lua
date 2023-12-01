@@ -9,9 +9,10 @@ if not game:IsLoaded() then game.Loaded:Wait() end
 
 cam.CameraType = Enum.CameraType.Scriptable
 
-local speed = 20
-local sens = 0.4
+local speed = 30
+local sens = .3
 
+speed /= 10
 if onMobile then sens*=2 end
 
 local function renderStepped()
