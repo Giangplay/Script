@@ -12,11 +12,11 @@ local OrionLib = {
 	Flags = {},
 	Themes = {
 		Default = {
-			Main = Color3.fromRGB(0, 0, 0),
-			Second = Color3.fromRGB(10, 10, 10),
-			Stroke = Color3.fromRGB(60, 60, 60),
-			Divider = Color3.fromRGB(60, 60, 60),
-			Text = Color3.fromRGB(240,240,240),
+			Main = Color3.fromRGB(25, 25, 35),
+			Second = Color3.fromRGB(32, 32, 42),
+			Stroke = Color3.fromRGB(37, 37, 47),
+			Divider = Color3.fromRGB(60, 60, 70),
+			Text = Color3.fromRGB(240, 240, 240),
 			TextDark = Color3.fromRGB(150, 150, 150)
 		}
 	},
@@ -42,7 +42,7 @@ local function GetIcon(IconName)
 	else
 		return nil
 	end
-end   
+end
 
 local Orion = Instance.new("ScreenGui")
 Orion.Name = "Orion"
@@ -61,6 +61,64 @@ function OrionLib:IsRunning()
 	end
 
 end
+
+local ToggleUi = Instance.new("ScreenGui",Orion)
+ToggleUi.Name = "Toggle"
+
+local frame = Instance.new("Frame",ToggleUi)
+frame.Size = UDim2.new(0.1, 0, 0.1, 0)
+frame.Position = UDim2.new(0.15, 0, -0.1, 0)
+frame.BackgroundColor3 = Color3.new(1, 1, 1)
+frame.BorderColor3 = Color3.new(0, 0, 0)
+frame.BorderSizePixel = 1
+
+local cornerUI = Instance.new("UICorner",frame)
+cornerUI.CornerRadius = UDim.new(0, 5)
+
+local frame2 = Instance.new("Frame",ToggleUi)
+frame2.Size = UDim2.new(0.1, 0, 0.1, 0)
+frame2.Position = UDim2.new(0.15, 0, -0.1, 0)
+frame2.BackgroundColor3 = Color3.new(1, 1, 1)
+frame2.BorderColor3 = Color3.new(0, 0, 0)
+frame2.BorderSizePixel = 1
+
+local cornerUI = Instance.new("UICorner",frame2)
+cornerUI.CornerRadius = UDim.new(0, 5)
+
+local TextButton = Instance.new("TextButton", frame)
+TextButton.Text = "Toggle"
+TextButton.TextSize = 10
+TextButton.Font = Enum.Font.FredokaOne
+TextButton.BackgroundColor3 = Color3.new(1, 1, 1)
+TextButton.BorderColor3 = Color3.new(0, 0, 0)
+TextButton.Size = UDim2.new(1, 0, 1, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+
+TextButton.MouseButton1Click:connect(function()
+frame.Visible = false
+frame2.Visible = true
+MainWindow.Visible = false
+end)
+
+local TextButton1 = Instance.new("TextButton", frame2)
+TextButton1.Text = "Toggle"
+TextButton1.TextSize = 10
+TextButton1.Font = Enum.Font.FredokaOne
+TextButton1.BackgroundColor3 = Color3.new(1, 1, 1)
+TextButton1.BorderColor3 = Color3.new(0, 0, 0)
+TextButton1.Size = UDim2.new(1, 0, 1, 0)
+TextButton1.Position = UDim2.new(0, 0, 0, 0)
+
+TextButton.MouseButton1Click:connect(function()
+frame.Visible = true
+frame2.Visible = false
+MainWindow.Visible = true
+end)
+
+local cornerUI1 = Instance.new("UICorner",TextButton1)
+local cornerUI = Instance.new("UICorner",TextButton)
+cornerUI1.CornerRadius = UDim.new(0, 5)
+cornerUI.CornerRadius = UDim.new(0, 5)
 
 local function AddConnection(Signal, Function)
 	if (not OrionLib:IsRunning()) then
@@ -626,11 +684,6 @@ function OrionLib:MakeWindow(WindowConfig)
 	AddConnection(CloseBtn.MouseButton1Up, function()
 		MainWindow.Visible = false
 		UIHidden = true
-		OrionLib:MakeNotification({
-			Name = "Interface Hidden",
-			Content = "Tap Left Control to reopen the interface",
-			Time = 5
-		})
 		WindowConfig.CloseCallback()
 	end)
 
