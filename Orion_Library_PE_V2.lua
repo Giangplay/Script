@@ -349,7 +349,7 @@ CreateElement("Label", function(Text, TextSize, Transparency)
 		TextColor3 = Color3.fromRGB(240, 240, 240),
 		TextTransparency = Transparency or 0,
 		TextSize = TextSize or 15,
-		Font = Enum.Font.Roboto,
+		Font = Enum.Font.FredokaOne,
 		RichText = true,
 		BackgroundTransparency = 1,
 		TextXAlignment = Enum.TextXAlignment.Left
@@ -407,7 +407,7 @@ function OrionLib:MakeNotification(NotificationConfig)
 			SetProps(MakeElement("Label", NotificationConfig.Content, 14), {
 				Size = UDim2.new(1, 0, 0, 0),
 				Position = UDim2.new(0, 0, 0, 25),
-				Font = Enum.Font.GothamSemibold,
+				Font = Enum.Font.FredokaOne,
 				Name = "Content",
 				AutomaticSize = Enum.AutomaticSize.Y,
 				TextColor3 = Color3.fromRGB(200, 200, 200),
@@ -574,7 +574,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	local WindowName = AddThemeObject(SetProps(MakeElement("Label", WindowConfig.Name, 14), {
 		Size = UDim2.new(1, -30, 2, 0),
 		Position = UDim2.new(0, 25, 0, -24),
-		Font = Enum.Font.GothamBlack,
+		Font = Enum.Font.FredokaOne,
 		TextSize = 20
 	}), "Text")
 
@@ -718,7 +718,7 @@ function OrionLib:MakeWindow(WindowConfig)
 			AddThemeObject(SetProps(MakeElement("Label", TabConfig.Name, 14), {
 				Size = UDim2.new(1, -35, 1, 0),
 				Position = UDim2.new(0, 35, 0, 0),
-				Font = Enum.Font.GothamSemibold,
+				Font = Enum.Font.FredokaOne,
 				TextTransparency = 0.4,
 				Name = "Title"
 			}), "Text")
@@ -747,14 +747,14 @@ function OrionLib:MakeWindow(WindowConfig)
 			FirstTab = false
 			TabFrame.Ico.ImageTransparency = 0
 			TabFrame.Title.TextTransparency = 0
-			TabFrame.Title.Font = Enum.Font.GothamBlack
+			TabFrame.Title.Font = Enum.Font.FredokaOne
 			Container.Visible = true
 		end    
 
 		AddConnection(TabFrame.MouseButton1Click, function()
 			for _, Tab in next, TabHolder:GetChildren() do
 				if Tab:IsA("TextButton") then
-					Tab.Title.Font = Enum.Font.GothamSemibold
+					Tab.Title.Font = Enum.Font.FredokaOne
 					TweenService:Create(Tab.Ico, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {ImageTransparency = 0.4}):Play()
 					TweenService:Create(Tab.Title, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {TextTransparency = 0.4}):Play()
 				end    
@@ -766,7 +766,7 @@ function OrionLib:MakeWindow(WindowConfig)
 			end  
 			TweenService:Create(TabFrame.Ico, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {ImageTransparency = 0}):Play()
 			TweenService:Create(TabFrame.Title, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
-			TabFrame.Title.Font = Enum.Font.GothamBlack
+			TabFrame.Title.Font = Enum.Font.FredokaOne
 			Container.Visible = true   
 		end)
 
@@ -811,7 +811,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", "", 13), {
 						Size = UDim2.new(1, -24, 0, 0),
 						Position = UDim2.new(0, 12, 0, 26),
-						Font = Enum.Font.GothamSemibold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Content",
 						TextWrapped = true
 					}), "TextDark"),
@@ -1116,7 +1116,7 @@ function OrionLib:MakeWindow(WindowConfig)
 						}), "TextDark"),
 						AddThemeObject(SetProps(MakeElement("Label", "Selected", 13), {
 							Size = UDim2.new(1, -40, 1, 0),
-							Font = Enum.Font.Gotham,
+							Font = Enum.Font.FredokaOne,
 							Name = "Selected",
 							TextXAlignment = Enum.TextXAlignment.Right
 						}), "TextDark"),
@@ -1356,7 +1356,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					TextColor3 = Color3.fromRGB(255, 255, 255),
 					PlaceholderColor3 = Color3.fromRGB(210,210,210),
 					PlaceholderText = "Input",
-					Font = Enum.Font.GothamSemibold,
+					Font = Enum.Font.FredokaOne,
 					TextXAlignment = Enum.TextXAlignment.Center,
 					TextSize = 14,
 					ClearTextOnFocus = false
@@ -1617,7 +1617,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				AddThemeObject(SetProps(MakeElement("Label", SectionConfig.Name, 14), {
 					Size = UDim2.new(1, -12, 0, 16),
 					Position = UDim2.new(0, 0, 0, 3),
-					Font = Enum.Font.GothamSemibold
+					Font = Enum.Font.FredokaOne
 				}), "TextDark"),
 				SetChildren(SetProps(MakeElement("TFrame"), {
 					AnchorPoint = Vector2.new(0, 0),
