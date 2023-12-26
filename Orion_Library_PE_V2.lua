@@ -401,7 +401,7 @@ function OrionLib:MakeNotification(NotificationConfig)
 			SetProps(MakeElement("Label", NotificationConfig.Name, 15), {
 				Size = UDim2.new(1, -30, 0, 20),
 				Position = UDim2.new(0, 30, 0, 0),
-				Font = Enum.Font.GothamBold,
+				Font = Enum.Font.FredokaOne,
 				Name = "Title"
 			}),
 			SetProps(MakeElement("Label", NotificationConfig.Content, 14), {
@@ -560,7 +560,7 @@ function OrionLib:MakeWindow(WindowConfig)
 			AddThemeObject(SetProps(MakeElement("Label", "User", WindowConfig.HidePremium and 14 or 13), {
 				Size = UDim2.new(1, -60, 0, 13),
 				Position = WindowConfig.HidePremium and UDim2.new(0, 50, 0, 19) or UDim2.new(0, 50, 0, 12),
-				Font = Enum.Font.GothamBold,
+				Font = Enum.Font.FredokaOne,
 				ClipsDescendants = true
 			}), "Text"),
 			AddThemeObject(SetProps(MakeElement("Label", "", 12), {
@@ -677,7 +677,7 @@ function OrionLib:MakeWindow(WindowConfig)
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.new(0.5, 19, 0.5, 0),
 			TextXAlignment = Enum.TextXAlignment.Center,
-			Font = Enum.Font.GothamBold,
+			Font = Enum.Font.FredokaOne,
 			TextTransparency = 1
 		})
 
@@ -781,7 +781,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", Text, 15), {
 						Size = UDim2.new(1, -12, 1, 0),
 						Position = UDim2.new(0, 12, 0, 0),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Content"
 					}), "Text"),
 					AddThemeObject(MakeElement("Stroke"), "Stroke")
@@ -805,7 +805,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", Text, 15), {
 						Size = UDim2.new(1, -12, 0, 14),
 						Position = UDim2.new(0, 12, 0, 10),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Title"
 					}), "Text"),
 					AddThemeObject(SetProps(MakeElement("Label", "", 13), {
@@ -850,7 +850,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", ButtonConfig.Name, 15), {
 						Size = UDim2.new(1, -12, 1, 0),
 						Position = UDim2.new(0, 12, 0, 0),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Content"
 					}), "Text"),
 					AddThemeObject(SetProps(MakeElement("Image", ButtonConfig.Icon), {
@@ -927,7 +927,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", ToggleConfig.Name, 15), {
 						Size = UDim2.new(1, -12, 1, 0),
 						Position = UDim2.new(0, 12, 0, 0),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Content"
 					}), "Text"),
 					AddThemeObject(MakeElement("Stroke"), "Stroke"),
@@ -992,7 +992,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", "value", 13), {
 						Size = UDim2.new(1, -12, 0, 14),
 						Position = UDim2.new(0, 12, 0, 6),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Value",
 						TextTransparency = 0
 					}), "Text")
@@ -1009,7 +1009,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", "value", 13), {
 						Size = UDim2.new(1, -12, 0, 14),
 						Position = UDim2.new(0, 12, 0, 6),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Value",
 						TextTransparency = 0.8
 					}), "Text"),
@@ -1023,7 +1023,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", SliderConfig.Name, 15), {
 						Size = UDim2.new(1, -12, 0, 14),
 						Position = UDim2.new(0, 12, 0, 10),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Content"
 					}), "Text"),
 					AddThemeObject(MakeElement("Stroke"), "Stroke"),
@@ -1104,7 +1104,7 @@ function OrionLib:MakeWindow(WindowConfig)
 						AddThemeObject(SetProps(MakeElement("Label", DropdownConfig.Name, 15), {
 							Size = UDim2.new(1, -12, 1, 0),
 							Position = UDim2.new(0, 12, 0, 0),
-							Font = Enum.Font.GothamBold,
+							Font = Enum.Font.FredokaOne,
 							Name = "Content"
 						}), "Text"),
 						AddThemeObject(SetProps(MakeElement("Image", "rbxassetid://7072706796"), {
@@ -1241,7 +1241,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(MakeElement("Stroke"), "Stroke"),
 					AddThemeObject(SetProps(MakeElement("Label", BindConfig.Name, 14), {
 						Size = UDim2.new(1, 0, 1, 0),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						TextXAlignment = Enum.TextXAlignment.Center,
 						Name = "Value"
 					}), "Text")
@@ -1254,7 +1254,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", BindConfig.Name, 15), {
 						Size = UDim2.new(1, -12, 1, 0),
 						Position = UDim2.new(0, 12, 0, 0),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Content"
 					}), "Text"),
 					AddThemeObject(MakeElement("Stroke"), "Stroke"),
@@ -1379,7 +1379,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					AddThemeObject(SetProps(MakeElement("Label", TextboxConfig.Name, 15), {
 						Size = UDim2.new(1, -12, 1, 0),
 						Position = UDim2.new(0, 12, 0, 0),
-						Font = Enum.Font.GothamBold,
+						Font = Enum.Font.FredokaOne,
 						Name = "Content"
 					}), "Text"),
 					AddThemeObject(MakeElement("Stroke"), "Stroke"),
@@ -1501,7 +1501,7 @@ function OrionLib:MakeWindow(WindowConfig)
 						AddThemeObject(SetProps(MakeElement("Label", ColorpickerConfig.Name, 15), {
 							Size = UDim2.new(1, -12, 1, 0),
 							Position = UDim2.new(0, 12, 0, 0),
-							Font = Enum.Font.GothamBold,
+							Font = Enum.Font.FredokaOne,
 							Name = "Content"
 						}), "Text"),
 						ColorpickerBox,
@@ -1672,7 +1672,7 @@ function OrionLib:MakeWindow(WindowConfig)
 				AddThemeObject(SetProps(MakeElement("Label", "Premium Features", 14), {
 					Size = UDim2.new(1, -150, 0, 14),
 					Position = UDim2.new(0, 150, 0, 112),
-					Font = Enum.Font.GothamBold
+					Font = Enum.Font.FredokaOne
 				}), "Text"),
 				AddThemeObject(SetProps(MakeElement("Label", "This part of the script is locked to Sirius Premium users. Purchase Premium in the Discord server (discord.gg/sirius)", 12), {
 					Size = UDim2.new(1, -200, 0, 14),
@@ -1698,7 +1698,6 @@ local Configs_HUB = {
   Text_Font = Enum.Font.FredokaOne
 }
 
-local CoreGui = game:GetService("CoreGui")
 local TweenService = game:GetService("TweenService")
 
 local function Create(instance, parent, props)
@@ -1749,7 +1748,7 @@ local function CreateTween(instance, prop, value, time, tweenWait)
   end
 end
 
-local ScreenGui = Create("ScreenGui", CoreGui)
+local ScreenGui = Create("ScreenGui", Orion)
 
 local Menu_Notifi = Create("Frame", ScreenGui, {
   Size = UDim2.new(0, 300, 1, 0),
@@ -1769,9 +1768,9 @@ local ListLayout = Create("UIListLayout", Menu_Notifi, {
   VerticalAlignment = "Bottom"
 })
 
-function MakeNotifi(Configs)
-  local Title = Configs.Title or "REDz HUB"
-  local text = Configs.Text or "Notificação"
+function OrionLib:MakeNotifi(Configs)
+  local Title = Configs.Title or "Title!"
+  local text = Configs.Text or "Notification content... what will it say??"
   local timewait = Configs.Time or 5
   
   local Frame1 = Create("Frame", Menu_Notifi, {
