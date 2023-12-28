@@ -4,6 +4,15 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local HttpService = game:GetService("HttpService")
+local Configs_HUB = {
+  Cor_Hub = Color3.fromRGB(15, 15, 15),
+  Cor_Options = Color3.fromRGB(15, 15, 15),
+  Cor_Stroke = Color3.fromRGB(60, 60, 60),
+  Cor_Text = Color3.fromRGB(240, 240, 240),
+  Cor_DarkText = Color3.fromRGB(140, 140, 140),
+  Corner_Radius = UDim.new(0, 4),
+  Text_Font = Enum.Font.FredokaOne
+}
 
 local OrionLib = {
 	Elements = {},
@@ -123,6 +132,63 @@ local function Create(Name, Properties, Children)
 	return Object
 end
 
+local function CreateNew(instance, parent, props)
+  local new = Instance.new(instance, parent)
+  if props then
+    table.foreach(props, function(prop, value)
+      new[prop] = value
+    end)
+  end
+  return new
+end
+
+local function CornerNew(parent, props)
+  local new = Instance.new("UICorner", parent)
+  new.CornerRadius = Configs_HUB.Corner_Radius
+  if props then
+    SetProps(new, props)
+  end
+  return new
+end
+
+local function CreateTweenNew(instance, prop, value, time, tweenWait)
+  local tween = game:GetService("TweenService"):CreateNew(instance,
+  TweenInfo.new(time, Enum.EasingStyle.Linear),
+  {[prop] = value})
+  tween:Play()
+  if tweenWait then
+    tween.Completed:Wait()
+  end
+end
+
+local function SetPropsNew(instance, props)
+  if instance and props then
+    table.foreach(props, function(prop, value)
+      instance[prop] = value
+    end)
+  end
+  return instance
+end
+
+local function StrokeNew(parent, props)
+  local new = CreateNew("UIStroke", parent)
+  new.Color = Configs_HUB.Cor_Stroke
+  new.ApplyStrokeMode = "Border"
+  if props then
+    SetProps(new, props)
+  end
+  return new
+end
+
+local function TextSetColorNew(instance)
+  instance.MouseEnter:Connect(function()
+    CreateTweenNew(instance, "TextColor3", Color3.fromRGB(30, 140, 200), 0.4, true)
+  end)
+  instance.MouseLeave:Connect(function()
+    CreateTweenNew(instance, "TextColor3", Configs_HUB.Cor_Text, 0.4, false)
+  end)
+end
+
 local function CreateElement(ElementName, ElementFunction)
 	OrionLib.Elements[ElementName] = function(...)
 		return ElementFunction(...)
@@ -229,14 +295,6 @@ end
 
 local WhitelistedMouse = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2,Enum.UserInputType.MouseButton3,Enum.UserInputType.Touch}
 local BlacklistedKeys = {Enum.KeyCode.Unknown,Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.KeyCode.Up,Enum.KeyCode.Left,Enum.KeyCode.Down,Enum.KeyCode.Right,Enum.KeyCode.Slash,Enum.KeyCode.Tab,Enum.KeyCode.Backspace,Enum.KeyCode.Escape}
-
-local function CheckKey(Table, Key)
-	for _, v in next, Table do
-		if v == Key then
-			return true
-		end
-	end
-end
 
 CreateElement("Corner", function(Scale, Offset)
 	local Corner = Create("UICorner", {
@@ -371,6 +429,114 @@ local NotificationHolder = SetProps(SetChildren(MakeElement("TFrame"), {
 	Parent = Orion
 })
 
+local ScreenGui = CreateNew("ScreenGui", Orion)
+
+local Menu_Notifi = CreateNew("Frame", ScreenGui, {
+  Size = UDim2.new(0, 300, 1, 0),
+  Position = UDim2.new(1, 0, 0, 0),
+  AnchorPoint = Vector2.new(1, 0),
+  BackgroundTransparency = 1
+})
+
+local Padding = CreateNew("UIPadding", Menu_Notifi, {
+  PaddingLeft = UDim.new(0, 25),
+  PaddingTop = UDim.new(0, 25),
+  PaddingBottom = UDim.new(0, 50)
+})
+
+local ListLayout = CreateNew("UIListLayout", Menu_Notifi, {
+  Padding = UDim.new(0, 15),
+  VerticalAlignment = "Bottom"
+})
+
+function OrionLib:MakeNotifi(Configs)
+  local Title = Configs.Title or "Title!"
+  local text = Configs.Text or "Notification content... what will it say??"
+  local timewait = Configs.Time or 5
+  
+  local Frame1 = Create("Frame", Menu_Notifi, {
+    Size = UDim2.new(2, 0, 0, 0),
+    BackgroundTransparency = 1,
+    AutomaticSize = "Y",
+    Name = "Title"
+  })
+  
+  local Frame2 = CreateNew("Frame", Frame1, {
+    Size = UDim2.new(0, Menu_Notifi.Size.X.Offset - 50, 0, 0),
+    BackgroundColor3 = Configs_HUB.Cor_Hub,
+    Position = UDim2.new(0, Menu_Notifi.Size.X.Offset, 0, 0),
+    AutomaticSize = "Y"
+  })Corner(Frame2)
+  
+  local TextLabel = CreateNew("TextLabel", Frame2, {
+    Size = UDim2.new(1, 0, 0, 25),
+    Font = Configs_HUB.Text_Font,
+    BackgroundTransparency = 1,
+    Text = Title,
+    TextSize = 20,
+    Position = UDim2.new(0, 20, 0, 5),
+    TextXAlignment = "Left",
+    TextColor3 = Configs_HUB.Cor_Text
+  })
+  
+  local TextButton = CreateNew("TextButton", Frame2, {
+    Text = "X",
+    Font = Configs_HUB.Text_Font,
+    TextSize = 20,
+    BackgroundTransparency = 1,
+    TextColor3 = Color3.fromRGB(200, 200, 200),
+    Position = UDim2.new(1, -5, 0, 5),
+    AnchorPoint = Vector2.new(1, 0),
+    Size = UDim2.new(0, 25, 0, 25)
+  })
+  
+  local TextLabel = CreateNew("TextLabel", Frame2, {
+    Size = UDim2.new(1, -30, 0, 0),
+    Position = UDim2.new(0, 20, 0, TextButton.Size.Y.Offset + 10),
+    TextSize = 15,
+    TextColor3 = Configs_HUB.Cor_DarkText,
+    TextXAlignment = "Left",
+    TextYAlignment = "Top",
+    AutomaticSize = "Y",
+    Text = text,
+    Font = Configs_HUB.Text_Font,
+    BackgroundTransparency = 1,
+    AutomaticSize = Enum.AutomaticSize.Y,
+    TextWrapped = true
+  })
+  
+  local FrameSize = CreateNew("Frame", Frame2, {
+    Size = UDim2.new(1, 0, 0, 2),
+    BackgroundColor3 = Configs_HUB.Cor_Stroke,
+    Position = UDim2.new(0, 2, 0, 30),
+    BorderSizePixel = 0
+  })Corner(FrameSize)Create("Frame", Frame2, {
+    Size = UDim2.new(0, 0, 0, 5),
+    Position = UDim2.new(0, 0, 1, 5),
+    BackgroundTransparency = 1
+  })
+  
+  task.spawn(function()
+    CreateTweenNew(FrameSize, "Size", UDim2.new(0, 0, 0, 2), timewait, true)
+  end)
+  
+  TextButton.MouseButton1Click:Connect(function()
+    CreateTweenNew(Frame2, "Position", UDim2.new(0, -20, 0, 0), 0.1, true)
+    CreateTweenNew(Frame2, "Position", UDim2.new(0, Menu_Notifi.Size.X.Offset, 0, 0), 0.5, true)
+    Frame1:Destroy()
+  end)
+  
+  task.spawn(function()
+    CreateTweenNew(Frame2, "Position", UDim2.new(0, -20, 0, 0), 0.5, true)
+    CreateTweenNew(Frame2, "Position", UDim2.new(), 0.1, true)task.wait(timewait)
+    if Frame2 then
+      CreateTweenNew(Frame2, "Position", UDim2.new(0, -20, 0, 0), 0.1, true)
+      CreateTweenNew(Frame2, "Position", UDim2.new(0, Menu_Notifi.Size.X.Offset, 0, 0), 0.5, true)
+      Frame1:Destroy()
+    end
+  end)
+end
+
 function OrionLib:MakeNotification(NotificationConfig)
 	spawn(function()
 		NotificationConfig.Name = NotificationConfig.Name or "Notification"
@@ -448,11 +614,168 @@ function OrionLib:Init()
 end	
 
 function OrionLib:MakeWindow(WindowConfig)
-	local FirstTab = true
+    local title = Configs.Hub.Title or "Key System"
+    local Anim_Title = Configs.Hub.Animation or "You Enter"
+  
+    local KeySystem = Configs.Key.KeySystem or false
+    local KeyTitle = Configs.Key.Title or "Key System"
+    local KeyDescription = Configs.Key.Description or ".-."
+    local KeyKey = Configs.Key.Keys or {"123", "321"}
+    local KeyLink = Configs.Key.KeyLink or ""
+    local KeyNotifications = Configs.Key.Notifi.Notifications or true
+    local KeyNotSuccess = Configs.Key.Notifi.Incorrectkey or "The key is incorrect"
+    local KeySuccess = Configs.Key.Notifi.CorrectKey or "Running the Script..."
+    local KeyCopyKeyLink = Configs.Key.Notifi.CopyKeyLink or "Copied to Clipboard"
+
+    if KeySystem then
+    local KeyMenu = CreateNew("Frame", Orion, {
+      Size = UDim2.new(0, 400, 0, 220),
+      Position = UDim2.new(0.5, 0, 0.5, 0),
+      BackgroundColor3 = Configs_HUB.Cor_Hub,
+      AnchorPoint = Vector2.new(0.5, 0.5),
+      Active = true,
+      Draggable = true
+    })CornerNew(KeyMenu)
+    
+    local CloseButton = CreateNew("TextButton", KeyMenu, {
+      Size = UDim2.new(0, 30, 0, 30),
+      Position = UDim2.new(1, -10, 0, 5),
+      AnchorPoint = Vector2.new(1, 0),
+      Text = "X",
+      Font = Enum.Font.FredokaOne,
+      TextScaled = true,
+      TextColor3 = Color3.fromRGB(240, 0, 0),
+      BackgroundTransparency = 1,
+    })CornerNew(CloseButton)
+    
+    local Title = CreateNew("TextLabel", KeyMenu, {
+      Size = UDim2.new(1, -80, 0, 20),
+      Position = UDim2.new(0, 20, 0, 5),
+      Text = KeyTitle,
+      Font = Configs_HUB.Text_Font,
+      TextScaled = true,
+      TextColor3 = Configs_HUB.Cor_Text,
+      TextXAlignment = "Left",
+      BackgroundTransparency = 1
+    })
+    
+    local Description = CreateNew("TextLabel", KeyMenu, {
+      Size = UDim2.new(1, -80, 0, 0),
+      Text = KeyDescription,
+      TextSize = 17,
+      TextColor3 = Configs_HUB.Cor_DarkText,
+      Font = Configs_HUB.Text_Font,
+      Position = UDim2.new(0, 20, 0, 25),
+      TextXAlignment = "Left",
+      AutomaticSize = "Y",
+      TextYAlignment = "Top",
+      BackgroundTransparency = 1
+    })
+    
+    local ConfirmButton = CreateNew("TextButton", KeyMenu, {
+      Text = "Check Key",
+      Font = Configs_HUB.Text_Font,
+      TextSize = 20,
+      TextColor3 = Configs_HUB.Cor_Text,
+      Size = UDim2.new(0, 150, 0, 40),
+      AnchorPoint = Vector2.new(1, 0),
+      Position = UDim2.new(1, -35, 0, 140),
+      BackgroundColor3 = Configs_HUB.Cor_Options
+    })CornerNew(ConfirmButton)
+    
+    local GetKeyLink = CreateNew("TextButton", KeyMenu, {
+      Text = "Get Key Link",
+      Font = Configs_HUB.Text_Font,
+      TextSize = 20,
+      TextColor3 = Configs_HUB.Cor_Text,
+      Size = UDim2.new(0, 150, 0, 40),
+      Position = UDim2.new(0, 35, 0, 140),
+      BackgroundColor3 = Configs_HUB.Cor_Options
+    })CornerNew(GetKeyLink)
+    
+    local TextBox = CreateNew("TextBox", KeyMenu, {
+      Size = UDim2.new(1, -70, 0, 40),
+      Position = UDim2.new(0, 35, 0, 90),
+      BackgroundColor3 = Configs_HUB.Cor_Options,
+      PlaceholderText = "Enter Key",
+      Text = "",
+      TextColor3 = Configs_HUB.Cor_Text,
+      Font = Configs_HUB.Text_Font,
+      TextWrapped = true,
+      TextSize = 25
+    })CornerNew(TextBox)
+    
+    local KeyVerify = false
+    CloseButton.MouseButton1Click:Connect(function()
+      local UIScale = CreateNew("UIScale", ScreenGui)
+      CreateTweenNew(UIScale, "Scale", 0, 0.20, true)
+      ScreenGui:Destroy()
+    end)
+    
+    ConfirmButton.MouseButton1Click:Connect(function()
+      for _,v in pairs(KeyKey) do
+        if TextBox.Text == v then
+          KeyVerify = true
+        end
+      end
+      if KeyNotifications and not KeyVerify then
+        OrionLib:MakeNotification({Name = KeyTitle,Content = KeyNotSuccess,Image = "rbxassetid://7733658504",Time = 5})
+      elseif KeyNotifications then
+        OrionLib:MakeNotification({Name = KeyTitle,Content = KeySuccess,Image = "rbxassetid://7733658504",Time = 5})
+      end
+    end)
+    
+    GetKeyLink.MouseButton1Click:Connect(function()
+      if KeyNotifications then
+        setclipboard(KeyLink)
+        OrionLib:MakeNotification({Name = KeyCopyKeyLink,Content = KeyCopyKeyLink,Image = "rbxassetid://7733658504",Time = 5})
+      end
+    end)
+    
+    repeat task.wait()
+    until KeyVerify
+    local UIScale = Create("UIScale", KeyMenu)
+    CreateTweenNew(UIScale, "Scale", 0, 0.40, true)
+    KeyMenu:Destroy()
+  end
+  
+  local AnimMenu = CreateNew("Frame", Orion, {
+    Position = UDim2.new(0.5, 0, 0.5, 0),
+    AnchorPoint = Vector2.new(0.5, 0.5),
+    BackgroundColor3 = Configs_HUB.Cor_Hub
+  })CornerNew(AnimMenu, {CornerRadius = UDim.new(0, 6)})
+  
+  local Anim_Credits = CreateNew("TextLabel", AnimMenu, {
+    Text = Anim_Title,
+    BackgroundTransparency = 1,
+    Size = UDim2.new(1, 0, 1, 0),
+    Visible = false,
+    Font = Configs_HUB.Text_Font,
+    TextTransparency = 1,
+    TextColor3 = Configs_HUB.Cor_Text,
+    Position = UDim2.new(0, 10, 0, 0),
+    TextXAlignment = "Left",
+    TextSize = 15
+  })
+  
+  CreateTweenNew(AnimMenu, "Size", UDim2.new(0, 0, 0, 35), 0.5, true)
+  CreateTweenNew(AnimMenu, "Size", UDim2.new(0, 150, 0, 35), 0.5, true)
+  Anim_Credits.Visible = true
+  task.wait(0.5)
+  for i = 1, 0, -0.1 do task.wait()
+    Anim_Credits.TextTransparency = i
+  end
+  task.wait(1)
+  for i = 0, 1, 0.1 do task.wait()
+    Anim_Credits.TextTransparency = i
+  end
+  Anim_Credits:Destroy()
+  AnimMenu:Destroy()
+  
+    local FirstTab = true
 	local Minimized = false
 	local Loaded = false
 	local UIHidden = false
-
 	WindowConfig = WindowConfig or {}
 	WindowConfig.Name = WindowConfig.Name or "Orion Library"
 	WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
@@ -1687,174 +2010,6 @@ function OrionLib:MakeWindow(WindowConfig)
 	
 	return TabFunction
 end   
-
-local Configs_HUB = {
-  Cor_Hub = Color3.fromRGB(15, 15, 15),
-  Cor_Options = Color3.fromRGB(15, 15, 15),
-  Cor_Stroke = Color3.fromRGB(60, 60, 60),
-  Cor_Text = Color3.fromRGB(240, 240, 240),
-  Cor_DarkText = Color3.fromRGB(140, 140, 140),
-  Corner_Radius = UDim.new(0, 4),
-  Text_Font = Enum.Font.FredokaOne
-}
-
-local TweenService = game:GetService("TweenService")
-
-local function Create(instance, parent, props)
-  local new = Instance.new(instance, parent)
-  if props then
-    table.foreach(props, function(prop, value)
-      new[prop] = value
-    end)
-  end
-  return new
-end
-
-local function SetProps(instance, props)
-  if instance and props then
-    table.foreach(props, function(prop, value)
-      instance[prop] = value
-    end)
-  end
-  return instance
-end
-
-local function Corner(parent, props)
-  local new = Create("UICorner", parent)
-  new.CornerRadius = Configs_HUB.Corner_Radius
-  if props then
-    SetProps(new, props)
-  end
-  return new
-end
-
-local function Stroke(parent, props)
-  local new = Create("UIStroke", parent)
-  new.Color = Configs_HUB.Cor_Stroke
-  new.ApplyStrokeMode = "Border"
-  if props then
-    SetProps(new, props)
-  end
-  return new
-end
-
-local function CreateTween(instance, prop, value, time, tweenWait)
-  local tween = TweenService:Create(instance,
-  TweenInfo.new(time, Enum.EasingStyle.Linear),
-  {[prop] = value})
-  tween:Play()
-  if tweenWait then
-    tween.Completed:Wait()
-  end
-end
-
-local ScreenGui = Create("ScreenGui", Orion)
-
-local Menu_Notifi = Create("Frame", ScreenGui, {
-  Size = UDim2.new(0, 300, 1, 0),
-  Position = UDim2.new(1, 0, 0, 0),
-  AnchorPoint = Vector2.new(1, 0),
-  BackgroundTransparency = 1
-})
-
-local Padding = Create("UIPadding", Menu_Notifi, {
-  PaddingLeft = UDim.new(0, 25),
-  PaddingTop = UDim.new(0, 25),
-  PaddingBottom = UDim.new(0, 50)
-})
-
-local ListLayout = Create("UIListLayout", Menu_Notifi, {
-  Padding = UDim.new(0, 15),
-  VerticalAlignment = "Bottom"
-})
-
-function OrionLib:MakeNotifi(Configs)
-  local Title = Configs.Title or "Title!"
-  local text = Configs.Text or "Notification content... what will it say??"
-  local timewait = Configs.Time or 5
-  
-  local Frame1 = Create("Frame", Menu_Notifi, {
-    Size = UDim2.new(2, 0, 0, 0),
-    BackgroundTransparency = 1,
-    AutomaticSize = "Y",
-    Name = "Title"
-  })
-  
-  local Frame2 = Create("Frame", Frame1, {
-    Size = UDim2.new(0, Menu_Notifi.Size.X.Offset - 50, 0, 0),
-    BackgroundColor3 = Configs_HUB.Cor_Hub,
-    Position = UDim2.new(0, Menu_Notifi.Size.X.Offset, 0, 0),
-    AutomaticSize = "Y"
-  })Corner(Frame2)
-  
-  local TextLabel = Create("TextLabel", Frame2, {
-    Size = UDim2.new(1, 0, 0, 25),
-    Font = Configs_HUB.Text_Font,
-    BackgroundTransparency = 1,
-    Text = Title,
-    TextSize = 20,
-    Position = UDim2.new(0, 20, 0, 5),
-    TextXAlignment = "Left",
-    TextColor3 = Configs_HUB.Cor_Text
-  })
-  
-  local TextButton = Create("TextButton", Frame2, {
-    Text = "X",
-    Font = Configs_HUB.Text_Font,
-    TextSize = 20,
-    BackgroundTransparency = 1,
-    TextColor3 = Color3.fromRGB(200, 200, 200),
-    Position = UDim2.new(1, -5, 0, 5),
-    AnchorPoint = Vector2.new(1, 0),
-    Size = UDim2.new(0, 25, 0, 25)
-  })
-  
-  local TextLabel = Create("TextLabel", Frame2, {
-    Size = UDim2.new(1, -30, 0, 0),
-    Position = UDim2.new(0, 20, 0, TextButton.Size.Y.Offset + 10),
-    TextSize = 15,
-    TextColor3 = Configs_HUB.Cor_DarkText,
-    TextXAlignment = "Left",
-    TextYAlignment = "Top",
-    AutomaticSize = "Y",
-    Text = text,
-    Font = Configs_HUB.Text_Font,
-    BackgroundTransparency = 1,
-    AutomaticSize = Enum.AutomaticSize.Y,
-    TextWrapped = true
-  })
-  
-  local FrameSize = Create("Frame", Frame2, {
-    Size = UDim2.new(1, 0, 0, 2),
-    BackgroundColor3 = Configs_HUB.Cor_Stroke,
-    Position = UDim2.new(0, 2, 0, 30),
-    BorderSizePixel = 0
-  })Corner(FrameSize)Create("Frame", Frame2, {
-    Size = UDim2.new(0, 0, 0, 5),
-    Position = UDim2.new(0, 0, 1, 5),
-    BackgroundTransparency = 1
-  })
-  
-  task.spawn(function()
-    CreateTween(FrameSize, "Size", UDim2.new(0, 0, 0, 2), timewait, true)
-  end)
-  
-  TextButton.MouseButton1Click:Connect(function()
-    CreateTween(Frame2, "Position", UDim2.new(0, -20, 0, 0), 0.1, true)
-    CreateTween(Frame2, "Position", UDim2.new(0, Menu_Notifi.Size.X.Offset, 0, 0), 0.5, true)
-    Frame1:Destroy()
-  end)
-  
-  task.spawn(function()
-    CreateTween(Frame2, "Position", UDim2.new(0, -20, 0, 0), 0.5, true)
-    CreateTween(Frame2, "Position", UDim2.new(), 0.1, true)task.wait(timewait)
-    if Frame2 then
-      CreateTween(Frame2, "Position", UDim2.new(0, -20, 0, 0), 0.1, true)
-      CreateTween(Frame2, "Position", UDim2.new(0, Menu_Notifi.Size.X.Offset, 0, 0), 0.5, true)
-      Frame1:Destroy()
-    end
-  end)
-end
 
 function OrionLib:Destroy()
 	Orion:Destroy()
