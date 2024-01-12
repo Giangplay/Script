@@ -149,9 +149,8 @@ local gui = Instance.new("ScreenGui", game.CoreGui)
 local nextb = Instance.new("ImageButton", gui)
 local gui = Instance.new("UICorner", nextb)
 
-gui.Name = "GuiToggles"
-gui.ResetOnSpawn = false
-
+nextb.Name = "GuiToggles"
+nextb.ResetOnSpawn = false
 nextb.Position = UDim2.new(0,100,0,60)
 nextb.Size = UDim2.new(0,40,0,40)
 nextb.BackgroundColor3 = Color3.fromRGB(53, 52, 55)
@@ -159,10 +158,8 @@ nextb.Image = "rbxassetid://7072720870"
 nextb.Active = true
 nextb.Draggable = true
 nextb.MouseButton1Down:connect(function()
-if game.CoreGui[LibName].Enabled then
 nextb.Image = (game.CoreGui[LibName].Enabled and "rbxassetid://7072720870") or "rbxassetid://7072719338"
 game.CoreGui[LibName].Enabled = not game.CoreGui[LibName].Enabled
-end
 end)
 end
 
