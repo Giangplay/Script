@@ -149,8 +149,7 @@ local gui = Instance.new("ScreenGui", game.CoreGui)
 local nextb = Instance.new("ImageButton", gui)
 local gui = Instance.new("UICorner", nextb)
 
-nextb.Name = "GuiToggles"
-nextb.ResetOnSpawn = false
+nextb.Name = "GuiToggle"
 nextb.Position = UDim2.new(0,100,0,60)
 nextb.Size = UDim2.new(0,40,0,40)
 nextb.BackgroundColor3 = Color3.fromRGB(53, 52, 55)
