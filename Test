@@ -144,6 +144,27 @@ function Kavo:ToggleUI()
     end
 end
 
+function Kavo:ToggleUIGui()
+local gui = Instance.new("ScreenGui", game.CoreGui)
+local nextb = Instance.new("ImageButton", gui)
+local gui = Instance.new("UICorner", nextb)
+
+gui.Name = "GuiToggles"
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gui.ResetOnSpawn = false
+
+nextb.Position = UDim2.new(0,100,0,60)
+nextb.Size = UDim2.new(0,40,0,40)
+nextb.BackgroundColor3 = Color3.fromRGB(53, 52, 55)
+nextb.Image = "rbxassetid://7072720870"
+nextb.Active = true
+nextb.Draggable = true
+nextb.MouseButton1Down:connect(function()
+nextb.Image = (game.CoreGui[LibName].Enabled and "rbxassetid://7072720870") or "rbxassetid://7072719338"
+game.CoreGui[LibName].Enabled = not game.CoreGui[LibName].Enabled
+end)
+end
+
 function Kavo.CreateLib(kavName, themeList)
     if not themeList then
         themeList = themes
@@ -205,9 +226,6 @@ function Kavo.CreateLib(kavName, themeList)
     local pages = Instance.new("Frame")
     local Pages = Instance.new("Folder")
     local infoContainer = Instance.new("Frame")
-    local gui = Instance.new("ScreenGui",Main)
-    local nextb = Instance.new("ImageButton", gui)
-    local gui = Instance.new("UICorner", nextb)
 
     local blurFrame = Instance.new("Frame")
 
@@ -269,18 +287,6 @@ function Kavo.CreateLib(kavName, themeList)
     title.TextColor3 = Color3.fromRGB(245, 245, 245)
     title.TextSize = 16.000
     title.TextXAlignment = Enum.TextXAlignment.Left
-
-    nextb.Position = UDim2.new(0,100,0,60)
-    nextb.Size = UDim2.new(0,40,0,40)
-    nextb.BackgroundColor3 = Color3.fromRGB(53, 52, 55)
-    nextb.Image = "rbxassetid://7072720870"
-    nextb.Active = true
-    nextb.Draggable = true
-    nextb.Visible = false
-    nextb.MouseButton1Down:connect(function()
-    nextb.Image = (game.CoreGui[LibName].Visible and "rbxassetid://7072720870") or "rbxassetid://7072719338"
-    game.CoreGui[LibName].Visible = not game.CoreGui[LibName].Visible
-    end)
 
     close.Name = "close"
     close.Parent = MainHeader
