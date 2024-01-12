@@ -8,7 +8,6 @@ local run = game:GetService("RunService")
 local Utility = {}
 local Objects = {}
 function Kavo:DraggingEnabled(frame, parent)
-        
     parent = parent or frame
     local dragging = false
     local dragInput, mousePos, framePos
@@ -269,6 +268,28 @@ function Kavo.CreateLib(kavName, themeList)
     title.TextColor3 = Color3.fromRGB(245, 245, 245)
     title.TextSize = 16.000
     title.TextXAlignment = Enum.TextXAlignment.Left
+
+    close.Name = "close"
+    close.Parent = MainHeader
+    close.BackgroundTransparency = 1.000
+    close.Position = UDim2.new(0.949999988, 0, 0.137999997, 0)
+    close.Size = UDim2.new(0, 21, 0, 21)
+    close.ZIndex = 2
+    close.Image = "rbxassetid://3926305904"
+    close.ImageRectOffset = Vector2.new(284, 4)
+    close.ImageRectSize = Vector2.new(24, 24)
+    close.MouseButton1Click:Connect(function()
+        game.TweenService:Create(close, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+            ImageTransparency = 1
+        }):Play()
+        wait()
+        game.TweenService:Create(Main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = UDim2.new(0,0,0,0),
+			Position = UDim2.new(0, Main.AbsolutePosition.X + (Main.AbsoluteSize.X / 2), 0, Main.AbsolutePosition.Y + (Main.AbsoluteSize.Y / 2))
+		}):Play()
+        wait(1)
+        ScreenGui:Destroy()
+    end)
 
     MainSide.Name = "MainSide"
     MainSide.Parent = Main
@@ -574,7 +595,7 @@ function Kavo.CreateLib(kavName, themeList)
                 buttonElement.ClipsDescendants = true
                 buttonElement.Size = UDim2.new(0, 352, 0, 33)
                 buttonElement.AutoButtonColor = false
-                buttonElement.Font = Enum.Font.SourceSans
+                buttonElement.Font = Enum.Font.FredokaOne
                 buttonElement.Text = ""
                 buttonElement.TextColor3 = Color3.fromRGB(0, 0, 0)
                 buttonElement.TextSize = 14.000
@@ -771,7 +792,7 @@ function Kavo.CreateLib(kavName, themeList)
                 textboxElement.ClipsDescendants = true
                 textboxElement.Size = UDim2.new(0, 352, 0, 33)
                 textboxElement.AutoButtonColor = false
-                textboxElement.Font = Enum.Font.SourceSans
+                textboxElement.Font = Enum.Font.FredokaOne
                 textboxElement.Text = ""
                 textboxElement.TextColor3 = Color3.fromRGB(0, 0, 0)
                 textboxElement.TextSize = 14.000
@@ -971,7 +992,7 @@ function Kavo.CreateLib(kavName, themeList)
                     toggleElement.ClipsDescendants = true
                     toggleElement.Size = UDim2.new(0, 352, 0, 33)
                     toggleElement.AutoButtonColor = false
-                    toggleElement.Font = Enum.Font.SourceSans
+                    toggleElement.Font = Enum.Font.FredokaOne
                     toggleElement.Text = ""
                     toggleElement.TextColor3 = Color3.fromRGB(0, 0, 0)
                     toggleElement.TextSize = 14.000
@@ -1224,7 +1245,7 @@ function Kavo.CreateLib(kavName, themeList)
                 sliderElement.ClipsDescendants = true
                 sliderElement.Size = UDim2.new(0, 352, 0, 33)
                 sliderElement.AutoButtonColor = false
-                sliderElement.Font = Enum.Font.SourceSans
+                sliderElement.Font = Enum.Font.FredokaOne
                 sliderElement.Text = ""
                 sliderElement.TextColor3 = Color3.fromRGB(0, 0, 0)
                 sliderElement.TextSize = 14.000
@@ -1264,7 +1285,7 @@ function Kavo.CreateLib(kavName, themeList)
                 sliderBtn.Position = UDim2.new(0.488749951, 0, 0.393939406, 0)
                 sliderBtn.Size = UDim2.new(0, 149, 0, 6)
                 sliderBtn.AutoButtonColor = false
-                sliderBtn.Font = Enum.Font.SourceSans
+                sliderBtn.Font = Enum.Font.FredokaOne
                 sliderBtn.Text = ""
                 sliderBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
                 sliderBtn.TextSize = 14.000
@@ -1485,7 +1506,7 @@ function Kavo.CreateLib(kavName, themeList)
                 dropOpen.BackgroundColor3 = themeList.ElementColor
                 dropOpen.Size = UDim2.new(0, 352, 0, 33)
                 dropOpen.AutoButtonColor = false
-                dropOpen.Font = Enum.Font.SourceSans
+                dropOpen.Font = Enum.Font.FredokaOne
                 dropOpen.Text = ""
                 dropOpen.TextColor3 = Color3.fromRGB(0, 0, 0)
                 dropOpen.TextSize = 14.000
@@ -1918,7 +1939,7 @@ function Kavo.CreateLib(kavName, themeList)
                 keybindElement.ClipsDescendants = true
                 keybindElement.Size = UDim2.new(0, 352, 0, 33)
                 keybindElement.AutoButtonColor = false
-                keybindElement.Font = Enum.Font.SourceSans
+                keybindElement.Font = Enum.Font.FredokaOne
                 keybindElement.Text = ""
                 keybindElement.TextColor3 = Color3.fromRGB(0, 0, 0)
                 keybindElement.TextSize = 14.000
@@ -2154,7 +2175,7 @@ function Kavo.CreateLib(kavName, themeList)
                 colorElement.Position = UDim2.new(0, 0, 0.566834569, 0)
                 colorElement.Size = UDim2.new(0, 352, 0, 33)
                 colorElement.AutoButtonColor = false
-                colorElement.Font = Enum.Font.SourceSans
+                colorElement.Font = Enum.Font.FredokaOne
                 colorElement.Text = ""
                 colorElement.TextColor3 = Color3.fromRGB(0, 0, 0)
                 colorElement.TextSize = 14.000
@@ -2395,7 +2416,7 @@ function Kavo.CreateLib(kavName, themeList)
                 onrainbow.BackgroundTransparency = 1.000
                 onrainbow.Position = UDim2.new(2.90643607e-06, 0, 0, 0)
                 onrainbow.Size = UDim2.new(1, 0, 1, 0)
-                onrainbow.Font = Enum.Font.SourceSans
+                onrainbow.Font = Enum.Font.FredokaOne
                 onrainbow.Text = ""
                 onrainbow.TextColor3 = Color3.fromRGB(0, 0, 0)
                 onrainbow.TextSize = 14.000
