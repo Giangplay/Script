@@ -11,13 +11,11 @@ function Kavo:DraggingEnabled(frame, parent)
     parent = parent or frame
     local dragging = false
     local dragInput, mousePos, framePos
-
     frame.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             dragging = true
             mousePos = input.Position
             framePos = parent.Position
-            
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then
                     dragging = false
@@ -136,7 +134,7 @@ end
 Settings = game:service'HttpService':JSONEncode(readfile(Name))
 end)
 
-local LibName = tostring(math.random(1, 100))..tostring(math.random(1,50))..tostring(math.random(1, 100))
+LibName = tostring(math.random(1, 100))..tostring(math.random(1,50))..tostring(math.random(1, 100))
 
 function Kavo:ToggleUI()
     if game.CoreGui[LibName].Enabled then
@@ -144,6 +142,25 @@ function Kavo:ToggleUI()
     else
         game.CoreGui[LibName].Enabled = true
     end
+end
+
+function Kavo:ToggleUIGui()
+local gui = Instance.new("ScreenGui", game.CoreGui)
+local nextb = Instance.new("ImageButton", gui)
+local gui = Instance.new("UICorner", nextb)
+
+nextb.Position = UDim2.new(0,100,0,60)
+nextb.Size = UDim2.new(0,40,0,40)
+nextb.BackgroundColor3 = Color3.fromRGB(53, 52, 55)
+nextb.Image = "rbxassetid://7072720870"
+nextb.Active = true
+nextb.Draggable = true
+nextb.MouseButton1Down:connect(function()
+if game.CoreGui[LibName].Enabled then
+nextb.Image = (game.CoreGui[LibName].Enabled and "rbxassetid://7072720870") or "rbxassetid://7072719338"
+game.CoreGui[LibName].Enabled = not game.CoreGui[LibName].Enabled
+end
+end)
 end
 
 function Kavo.CreateLib(kavName, themeList)
