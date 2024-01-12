@@ -150,7 +150,6 @@ local nextb = Instance.new("ImageButton", gui)
 local gui = Instance.new("UICorner", nextb)
 
 gui.Name = "GuiToggles"
-gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.ResetOnSpawn = false
 
 nextb.Position = UDim2.new(0,100,0,60)
