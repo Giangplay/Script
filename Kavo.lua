@@ -156,10 +156,8 @@ nextb.Image = "rbxassetid://7072720870"
 nextb.Active = true
 nextb.Draggable = true
 nextb.MouseButton1Down:connect(function()
-if game.CoreGui[LibName].Enabled then
 nextb.Image = (game.CoreGui[LibName].Enabled and "rbxassetid://7072720870") or "rbxassetid://7072719338"
 game.CoreGui[LibName].Enabled = not game.CoreGui[LibName].Enabled
-end
 end)
 end
 
