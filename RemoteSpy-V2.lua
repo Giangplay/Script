@@ -37,6 +37,34 @@ local gui = Instance.new("ScreenGui",Background)
 local nextb = Instance.new("ImageButton", gui)
 local gui = Instance.new("UICorner", nextb)
 
+function UICornerAll(Arge1)
+UICornerAllGet = Instance.new("UICorner", Arge1)
+end
+
+UICornerAll(Background)
+UICornerAll(LeftPanel)
+UICornerAll(RemoteTemplate)
+UICornerAll(ColorBar)
+UICornerAll(Text)
+UICornerAll(Button)
+UICornerAll(RightPanel)
+UICornerAll(CodeBox)
+UICornerAll(FunctionTemplate)
+UICornerAll(ColorBar_2)
+UICornerAll(Text_2)
+UICornerAll(Button_2)
+UICornerAll(TopBar)
+UICornerAll(Simple)
+UICornerAll(CloseButton)
+UICornerAll(ImageLabel)
+UICornerAll(MaximizeButton)
+UICornerAll(ImageLabel_2)
+UICornerAll(MinimizeButton)
+UICornerAll(ImageLabel_3)
+UICornerAll(TextLabel)
+UICornerAll(ToolTip)
+UICornerAllGet.CornerRadius = UDim.new(0, 5)
+
 SimpleSpy2.Name = "SimpleSpy2"
 SimpleSpy2.ResetOnSpawn = false
 
@@ -109,10 +137,10 @@ Text.BackgroundTransparency = 1
 Text.Position = UDim2.new(0, 12, 0, 1)
 Text.Size = UDim2.new(0, 105, 0, 18)
 Text.ZIndex = 2
-Text.Font = Enum.Font.SourceSans
+Text.Font = Enum.Font.FredokaOne
 Text.Text = "TEXT"
 Text.TextColor3 = Color3.new(1, 1, 1)
-Text.TextSize = 14
+Text.TextSize = 10
 Text.TextXAlignment = Enum.TextXAlignment.Left
 Text.TextWrapped = true
 
@@ -124,10 +152,10 @@ Button.BorderColor3 = Color3.new(1, 1, 1)
 Button.Position = UDim2.new(0, 0, 0, 1)
 Button.Size = UDim2.new(0, 117, 0, 18)
 Button.AutoButtonColor = false
-Button.Font = Enum.Font.SourceSans
+Button.Font = Enum.Font.FredokaOne
 Button.Text = ""
 Button.TextColor3 = Color3.new(0, 0, 0)
-Button.TextSize = 14
+Button.TextSize = 10
 
 RightPanel.Name = "RightPanel"
 RightPanel.Parent = Background
@@ -178,10 +206,10 @@ Text_2.BackgroundTransparency = 1
 Text_2.Position = UDim2.new(0, 19, 0, 10)
 Text_2.Size = UDim2.new(0, 69, 0, 18)
 Text_2.ZIndex = 2
-Text_2.Font = Enum.Font.SourceSans
+Text_2.Font = Enum.Font.FredokaOne
 Text_2.Text = "TEXT"
 Text_2.TextColor3 = Color3.new(1, 1, 1)
-Text_2.TextSize = 14
+Text_2.TextSize = 10
 Text_2.TextStrokeColor3 = Color3.new(0.145098, 0.141176, 0.14902)
 Text_2.TextXAlignment = Enum.TextXAlignment.Left
 Text_2.TextWrapped = true
@@ -194,10 +222,10 @@ Button_2.BorderColor3 = Color3.new(1, 1, 1)
 Button_2.Position = UDim2.new(0, 7, 0, 10)
 Button_2.Size = UDim2.new(0, 80, 0, 18)
 Button_2.AutoButtonColor = false
-Button_2.Font = Enum.Font.SourceSans
+Button_2.Font = Enum.Font.FredokaOne
 Button_2.Text = ""
 Button_2.TextColor3 = Color3.new(0, 0, 0)
-Button_2.TextSize = 14
+Button_2.TextSize = 10
 
 TopBar.Name = "TopBar"
 TopBar.Parent = Background
@@ -212,10 +240,10 @@ Simple.AutoButtonColor = false
 Simple.BackgroundTransparency = 1
 Simple.Position = UDim2.new(0, 5, 0, 0)
 Simple.Size = UDim2.new(0, 57, 0, 18)
-Simple.Font = Enum.Font.SourceSansBold
-Simple.Text = "SimpleSpy For Mobile"
+Simple.Font = Enum.Font.FredokaOne
+Simple.Text = "SimpleSpy"
 Simple.TextColor3 = Color3.new(0, 0, 1)
-Simple.TextSize = 14
+Simple.TextSize = 13
 Simple.TextXAlignment = Enum.TextXAlignment.Left
 
 CloseButton.Name = "CloseButton"
@@ -224,10 +252,10 @@ CloseButton.BackgroundColor3 = Color3.new(0.145098, 0.141176, 0.14902)
 CloseButton.BorderSizePixel = 0
 CloseButton.Position = UDim2.new(1, -19, 0, 0)
 CloseButton.Size = UDim2.new(0, 19, 0, 19)
-CloseButton.Font = Enum.Font.SourceSans
+CloseButton.Font = Enum.Font.FredokaOne
 CloseButton.Text = ""
 CloseButton.TextColor3 = Color3.new(0, 0, 0)
-CloseButton.TextSize = 14
+CloseButton.TextSize = 10
 
 ImageLabel.Parent = CloseButton
 ImageLabel.BackgroundColor3 = Color3.new(1, 1, 1)
@@ -242,10 +270,10 @@ MaximizeButton.BackgroundColor3 = Color3.new(0.145098, 0.141176, 0.14902)
 MaximizeButton.BorderSizePixel = 0
 MaximizeButton.Position = UDim2.new(1, -38, 0, 0)
 MaximizeButton.Size = UDim2.new(0, 19, 0, 19)
-MaximizeButton.Font = Enum.Font.SourceSans
+MaximizeButton.Font = Enum.Font.FredokaOne
 MaximizeButton.Text = ""
 MaximizeButton.TextColor3 = Color3.new(0, 0, 0)
-MaximizeButton.TextSize = 14
+MaximizeButton.TextSize = 10
 
 ImageLabel_2.Parent = MaximizeButton
 ImageLabel_2.BackgroundColor3 = Color3.new(1, 1, 1)
@@ -260,10 +288,10 @@ MinimizeButton.BackgroundColor3 = Color3.new(0.145098, 0.141176, 0.14902)
 MinimizeButton.BorderSizePixel = 0
 MinimizeButton.Position = UDim2.new(1, -57, 0, 0)
 MinimizeButton.Size = UDim2.new(0, 19, 0, 19)
-MinimizeButton.Font = Enum.Font.SourceSans
+MinimizeButton.Font = Enum.Font.FredokaOne
 MinimizeButton.Text = ""
 MinimizeButton.TextColor3 = Color3.new(0, 0, 0)
-MinimizeButton.TextSize = 14
+MinimizeButton.TextSize = 10
 
 ImageLabel_3.Parent = MinimizeButton
 ImageLabel_3.BackgroundColor3 = Color3.new(1, 1, 1)
@@ -287,10 +315,10 @@ TextLabel.BackgroundTransparency = 1
 TextLabel.Position = UDim2.new(0, 2, 0, 2)
 TextLabel.Size = UDim2.new(0, 196, 0, 46)
 TextLabel.ZIndex = 3
-TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Font = Enum.Font.FredokaOne
 TextLabel.Text = "This is some slightly longer text."
 TextLabel.TextColor3 = Color3.new(1, 1, 1)
-TextLabel.TextSize = 14
+TextLabel.TextSize = 10
 TextLabel.TextWrapped = true
 TextLabel.TextXAlignment = Enum.TextXAlignment.Left
 TextLabel.TextYAlignment = Enum.TextYAlignment.Top
