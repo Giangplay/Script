@@ -144,19 +144,21 @@ function Kavo:ToggleUI()
     end
 end
 
-function Kavo:ToggleUIGui()
-local gui = Instance.new("ScreenGui", game.CoreGui)
-local nextb = Instance.new("ImageButton", gui)
-local gui = Instance.new("UICorner", nextb)
+function Kavo:ToggleUIGui(Toggles)
+Toggles.Icons = Toggles.Icons or "rbxassetid://4384403532"
 
-nextb.Position = UDim2.new(0,100,0,60)
-nextb.Size = UDim2.new(0,40,0,40)
-nextb.BackgroundColor3 = Color3.fromRGB(53, 52, 55)
-nextb.Image = "rbxassetid://7072720870"
-nextb.Active = true
-nextb.Draggable = true
-nextb.MouseButton1Down:connect(function()
-nextb.Image = (game.CoreGui[LibName].Enabled and "rbxassetid://7072720870") or "rbxassetid://7072719338"
+local gui = Instance.new("ScreenGui", game.CoreGui)
+local ToggleUi = Instance.new("ImageButton",gui)
+local ToggleUiGui = Instance.new("UICorner",ToggleUi)
+
+ToggleUi.Size = UDim2.new(0, 40, 0, 40)
+ToggleUi.Position = UDim2.new(0,100,0,60)
+ToggleUi.BackgroundColor3 = Color3.fromRGB(53, 52, 55)
+ToggleUi.Image = Toggles.Icons
+ToggleUi.Active = true
+ToggleUi.Draggable = true
+
+ToggleUi.MouseButton1Down:connect(function()
 game.CoreGui[LibName].Enabled = not game.CoreGui[LibName].Enabled
 end)
 end
