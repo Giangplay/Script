@@ -165,6 +165,7 @@ local NewGuiPart163 = Instance.new("BindableEvent")
 -- Properties
 
 NewGuiPart1.Name = "Dex"
+NewGuiPart1.ResetOnSpawn = false
 
 NewGuiPart2.Name = "PropertiesFrame"
 NewGuiPart2.Parent = NewGuiPart1
