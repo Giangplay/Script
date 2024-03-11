@@ -165,7 +165,6 @@ local NewGuiPart163 = Instance.new("BindableEvent")
 -- Properties
 
 NewGuiPart1.Name = "Dex"
-NewGuiPart1.ResetOnSpawn = false
 
 NewGuiPart2.Name = "PropertiesFrame"
 NewGuiPart2.Parent = NewGuiPart1
@@ -1704,6 +1703,7 @@ return NewGuiPart1
 end
 local D_E_X = CreateGui()
 D_E_X.Parent = game.Players.LocalPlayer.PlayerGui
+D_E_X.ResetOnSpawn = false
 spawn(function()
 	local Gui = D_E_X
 	
