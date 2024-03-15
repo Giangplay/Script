@@ -75,10 +75,10 @@ ToggleUiGui.TextColor3 = Color3.new(240,240,240)
 ToggleUiGui.Font = Enum.Font.FredokaOne
 ToggleUiGui.Parent = ToggleUi
 ToggleUiGui.MouseButton1Click:Connect(function()
-if syn then
+if (not OrionLib:IsRunning()) then
 game.CoreGui.Orion.Enabled = not game.CoreGui.Orion.Enabled
 else
-gethui().Orion.Enabled = not gethui().Orion.Enabled or game.CoreGui.Orion.Enabled = not game.CoreGui.Orion.Enabled
+gethui().Orion.Enabled = not gethui().Orion.Enabled
 end
 end)
 end
