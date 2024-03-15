@@ -63,10 +63,10 @@ end
 
 function OrionLib:ToggleUIGui()
 local ToggleUiGui = Instance.new("TextButton")
-ToggleUiGui.Size = UDim2.new(0.2, 0, 0.2, 0)
+ToggleUiGui.Size = UDim2.new(0.1, 0, 0.1, 0)
 ToggleUiGui.Position = UDim2.new(0, 0, 0, 0)
 ToggleUiGui.BackgroundColor3 = Color3.new(0, 0, 0)
-ToggleUiGui.BorderColor3 = Color3.new(0, 0, 0)
+ToggleUiGui.BorderColor3 = Color3.new(255,255,255)
 ToggleUiGui.BorderSizePixel = 3
 ToggleUiGui.Text = "Toggle UI"
 ToggleUiGui.Active = true
@@ -75,10 +75,10 @@ ToggleUiGui.TextColor3 = Color3.new(240,240,240)
 ToggleUiGui.Font = Enum.Font.FredokaOne
 ToggleUiGui.Parent = Orion
 ToggleUiGui.MouseButton1Click:Connect(function()
-if (not OrionLib:IsRunning()) then
-game.CoreGui.Orion.Enabled = not game.CoreGui.Orion.Enabled
+if gethui then
+gethui().Orion.Enabled = not gethui().Orion.Enabled 
 else
-gethui().Orion.Enabled = not gethui().Orion.Enabled
+game:GetService("CoreGui").Orion.Enabled = not game:GetService("CoreGui").Orion.Enabled
 end
 end)
 end
