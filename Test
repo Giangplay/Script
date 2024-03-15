@@ -44,7 +44,7 @@ local function GetIcon(IconName)
 	end
 end   
 
-local Orion = Instance.new("ScreenGui")
+Orion = Instance.new("ScreenGui")
 Orion.Name = "Orion"
 if syn then
 	syn.protect_gui(Orion)
@@ -76,7 +76,7 @@ ToggleUiGui.Font = Enum.Font.FredokaOne
 ToggleUiGui.Parent = Orion
 ToggleUiGui.MouseButton1Click:Connect(function()
 if gethui then
-gethui().Orion.Enabled = not gethui().Orion.Enabled 
+Orion.Enabled = not Orion.Enabled 
 else
 game:GetService("CoreGui").Orion.Enabled = not game:GetService("CoreGui").Orion.Enabled
 end
