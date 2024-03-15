@@ -44,22 +44,9 @@ local function GetIcon(IconName)
 	end
 end   
 
-Orion = Instance.new("ScreenGui")
+local Orion = Instance.new("ScreenGui")
 Orion.Name = "Orion"
-if syn then
-	syn.protect_gui(Orion)
-	Orion.Parent = game.CoreGui
-else
-	Orion.Parent = gethui() or game.CoreGui
-end
-
-function OrionLib:IsRunning()
-	if gethui then
-		return Orion.Parent == gethui()
-	else
-		return Orion.Parent == game:GetService("CoreGui")
-	end
-end
+Orion.Parent = game.CoreGui
 
 function OrionLib:ToggleUIGui()
 local ToggleUiGui = Instance.new("TextButton")
@@ -75,32 +62,9 @@ ToggleUiGui.TextColor3 = Color3.new(240,240,240)
 ToggleUiGui.Font = Enum.Font.FredokaOne
 ToggleUiGui.Parent = Orion
 ToggleUiGui.MouseButton1Click:Connect(function()
-if gethui then
-Orion.Enabled = not Orion.Enabled 
-else
 game:GetService("CoreGui").Orion.Enabled = not game:GetService("CoreGui").Orion.Enabled
-end
 end)
 end
-
-local function AddConnection(Signal, Function)
-	if (not OrionLib:IsRunning()) then
-		return
-	end
-	local SignalConnect = Signal:Connect(Function)
-	table.insert(OrionLib.Connections, SignalConnect)
-	return SignalConnect
-end
-
-task.spawn(function()
-	while (OrionLib:IsRunning()) do
-		wait()
-	end
-
-	for _, Connection in next, OrionLib.Connections do
-		Connection:Disconnect()
-	end
-end)
 
 local function MakeDraggable(DragPoint, Main)
 	pcall(function()
