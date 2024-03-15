@@ -73,7 +73,7 @@ ToggleUiGui.Active = true
 ToggleUiGui.Draggable = true
 ToggleUiGui.TextColor3 = Color3.new(240,240,240)
 ToggleUiGui.Font = Enum.Font.FredokaOne
-ToggleUiGui.Parent = ToggleUi
+ToggleUiGui.Parent = Orion
 ToggleUiGui.MouseButton1Click:Connect(function()
 if (not OrionLib:IsRunning()) then
 game.CoreGui.Orion.Enabled = not game.CoreGui.Orion.Enabled
