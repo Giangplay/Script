@@ -629,7 +629,6 @@ function OrionLib:MakeWindow(WindowConfig)
 		Size = UDim2.new(0, 40, 0, 40),
 		Position = UDim2.new(0.5, -20, 0, 20),
 		BackgroundTransparency = 0,
-		Draggable = true,
 		BackgroundColor3 = OrionLib.Themes[OrionLib.SelectedTheme].Main,
 		Visible = false
 	}), {
@@ -637,7 +636,6 @@ function OrionLib:MakeWindow(WindowConfig)
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.new(0.5, 0, 0.5, 0),
 			Size = UDim2.new(0.7, 0, 0.7, 0),
-			Draggable = true
 		}), "Text"),
 		MakeElement("Corner", 1)
 	})
