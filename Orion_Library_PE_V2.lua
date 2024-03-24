@@ -636,8 +636,8 @@ function OrionLib:MakeWindow(WindowConfig)
 		AddThemeObject(SetProps(MakeElement("Image", WindowConfig.IntroToggleIcon or "http://www.roblox.com/asset/?id=8834748103"), {
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.new(0.5, 0, 0.5, 0),
-			Size = UDim2.new(0.7, 0, 0.7, 0)
-			Draggable = true,
+			Size = UDim2.new(0.7, 0, 0.7, 0),
+			Draggable = true
 		}), "Text"),
 		MakeElement("Corner", 1)
 	})
