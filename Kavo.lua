@@ -160,7 +160,7 @@ TOGGLE["Ui"].ResetOnSpawn = false
 TOGGLE["DaIcon"].Size = UDim2.new(0,45,0,45)
 TOGGLE["DaIcon"].Position = UDim2.new(0,0,0,0)
 TOGGLE["DaIcon"].Draggable = true
-TOGGLE["DaIcon"].Image = "rbxassetid://15315284749"
+TOGGLE["DaIcon"].Image = Toggles.Icons
 TOGGLE["DaIcon"].BackgroundColor3 = Color3.fromRGB(255, 186, 117)
 TOGGLE["DaIcon"].BorderColor3 = Color3.fromRGB(255, 186, 117)
 if Toggles.Rainbow == true then
