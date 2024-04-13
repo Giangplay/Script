@@ -324,6 +324,10 @@ function Kavo.CreateLib(kavName, themeList)
 		}):Play()
         wait(1)
         ScreenGui:Destroy()
+	wait(0.5)
+	if game.Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui") ~= nil then
+	game.Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):Destroy()
+	end
     end)
 
     MainSide.Name = "MainSide"
