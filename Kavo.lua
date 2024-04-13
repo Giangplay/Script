@@ -175,7 +175,7 @@ end
 end)
 end
 TOGGLE["DaIcon"].MouseButton1Click:Connect(function()
-    gethui().OrionEdited.Enabled = not gethui().OrionEdited.Enabled
+game.CoreGui[LibName].Enabled = not game.CoreGui[LibName].Enabled
 end)
 TOGGLE["das"]["CornerRadius"] = UDim.new(0.20000000298023224, 0)
 end
