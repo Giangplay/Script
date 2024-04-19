@@ -6,24 +6,38 @@ local Mouse = LocalPlayer:GetMouse()
 local HttpService = game:GetService("HttpService")
 
 local OrionLib = {
-	Elements = {},
-	ThemeObjects = {},
-	Connections = {},
-	Flags = {},
-	Themes = {
-		Default = {
+    Elements = {},
+    ThemeObjects = {},
+    Connections = {},
+    Flags = {},
+    Themes = {
+        Default = {
             Main = Color3.fromRGB(207, 89, 26),
             Second = Color3.fromRGB(245, 166, 35),
             Stroke = Color3.fromRGB(158, 63, 18),
             Divider = Color3.fromRGB(158, 63, 18),
             Text = Color3.fromRGB(240, 240, 240),
             TextDark = Color3.fromRGB(150, 150, 150)
-		}
-	},
-	SelectedTheme = "Default",
-	Folder = nil,
-	SaveCfg = false
+        }
+    },
+    SelectedTheme = "Default",
+    Folder = nil,
+    SaveCfg = false
 }
+
+local TweenService = game:GetService("TweenService")
+
+local function RainbowColor(time)
+    return Color3.fromHSV((tick() % time) / time, 1, 1)
+end
+
+local function ApplyRainbowBorder(frame)
+    local borderTween = TweenService:Create(frame, TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true), {BorderColor3 = RainbowColor(5)})
+    borderTween:Play()
+end
+
+-- Example usage:
+ApplyRainbowBorder(Frame)  -- Replace 'Frame' with the reference to your GUI frame
 
 --Feather Icons https://github.com/evoincorp/lucideblox/tree/master/src/modules/util - Created by 7kayoh
 local Icons = {}
