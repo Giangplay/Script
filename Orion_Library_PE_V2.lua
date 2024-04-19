@@ -25,20 +25,6 @@ local OrionLib = {
     SaveCfg = false
 }
 
-local TweenService = game:GetService("TweenService")
-
-local function RainbowColor(time)
-    return Color3.fromHSV((tick() % time) / time, 1, 1)
-end
-
-local function ApplyRainbowBorder(frame)
-    local borderTween = TweenService:Create(frame, TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true), {BorderColor3 = RainbowColor(5)})
-    borderTween:Play()
-end
-
--- Example usage:
-ApplyRainbowBorder(Frame)  -- Replace 'Frame' with the reference to your GUI frame
-
 --Feather Icons https://github.com/evoincorp/lucideblox/tree/master/src/modules/util - Created by 7kayoh
 local Icons = {}
 
