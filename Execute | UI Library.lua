@@ -176,8 +176,8 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
-loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Execute",Text = "Execute Success.",Icon = "rbxassetid://7733658504",Duration = 4})
+loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -220,8 +220,8 @@ ButtonClipBoard.MouseButton1Click:Connect(function()
 if not getclipboard() then
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Execute Clipboard",Text = "Error Execute Clipboard Not Execute.",Icon = "rbxassetid://7733658504",Duration = 4})
 elseif getclipboard() then
-loadstring(getclipboard())()
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Execute Clipboard",Text = "Execute Success.",Icon = "rbxassetid://7733658504",Duration = 4})
+loadstring(getclipboard())()
 end
 end)
 
@@ -1118,8 +1118,8 @@ end
 
 local Frame13 = Instance.new("Frame")
 Frame13.Name = "Frame13"
-Frame13.Size = UDim2.new(0.5, 0, 0.8, 0)
-Frame13.Position = UDim2.new(0.2, 0, 0.1, 0)
+Frame13.Size = UDim2.new(0.65, 0, 0.85, 0)
+Frame13.Position = UDim2.new(0.15, 0, 0, 0)
 Frame13.BackgroundColor3 = Color3.new(1, 1, 1)
 Frame13.Active = true
 Frame13.Visible = false
@@ -1141,6 +1141,7 @@ TextButton.Position = UDim2.new(0.9, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(1,1,1)
 TextButton.Text = "×"
 TextButton.TextSize = 16
+TextButton.BackgroundTransparency = 1
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame13
 TextButton.MouseButton1Click:Connect(function()
@@ -1175,7 +1176,7 @@ ScriptBoxHehe = TextBoxScript.Text
 decoded = http:JSONDecode(game:HttpGetAsync("https://scriptblox.com/api/script/search?filters=free&q="..string.gsub(ScriptBoxHehe, " ", "%%20")))
         for _, v in pairs(decoded.result.scripts) do
             if(v.isUniversal == true) then
-                AddTabScript("rbxassetid://13945092962", v.title, v.script)
+                AddTabScript("https://assetgame.roblox.com/Game/Tools/ThumbnailAsset.ashx?aid=4483381587&fmt=png&wd=420&ht=420", v.title, v.script)
             else
                 AddTabScript("https://assetgame.roblox.com/Game/Tools/ThumbnailAsset.ashx?aid="..v.game.gameId.."&fmt=png&wd=420&ht=420", v.title, v.script)
             end
@@ -1213,7 +1214,7 @@ TextLabel.TextColor3 = Color3.new(0,0,0)
 TextLabel.Parent = ImageLabel
 
 local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.35, 0, 0.2, 0)
+TextButton.Size = UDim2.new(0.25, 0, 0.2, 0)
 TextButton.Position = UDim2.new(0, 0, 0.8, 0)
 TextButton.BackgroundColor3 = Color3.new(1,1,1)
 TextButton.Text = "Execute"
@@ -1221,31 +1222,48 @@ TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
 TextButton.MouseButton1Click:Connect(function()
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Execute",Text = "Execute Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 loadstring(source)()
 end)
 
 local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.33, 0, 0.2, 0)
-TextButton.Position = UDim2.new(0.35, 0, 0.8, 0)
+TextButton.Size = UDim2.new(0.23, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.25, 0, 0.8, 0)
 TextButton.BackgroundColor3 = Color3.new(1,1,1)
 TextButton.Text = "Copy Script"
 TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
 TextButton.MouseButton1Click:Connect(function()
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Copy",Text = "Copy Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 setclipboard(source)
 end)
 
 local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.32, 0, 0.2, 0)
-TextButton.Position = UDim2.new(0.68, 0, 0.8, 0)
+TextButton.Size = UDim2.new(0.23, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.48, 0, 0.8, 0)
 TextButton.BackgroundColor3 = Color3.new(1,1,1)
 TextButton.Text = "Open Script"
 TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
 TextButton.MouseButton1Click:Connect(function()
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Open",Text = "Open Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 game.CoreGui.Execute.Frame.ScriptTextBox.Text = source
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.3, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.7, 0, 0.8, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Save Script"
+TextButton.TextSize = 9
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = ImageLabel
+TextButton.MouseButton1Click:Connect(function()
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Save Script",Text = "Save Success.",Icon = "rbxassetid://7733658504",Duration = 4})
+SavedScriptsAdd({Name = scriptname..".txt", Script = source, ScriptSave = source})
+writefile("ExecuteGet/"..scriptname..".txt", source)
 end)
 end
 end)
@@ -1447,7 +1465,6 @@ FlyButton5.MouseButton1Down:connect(function()
             else
                 bv.velocity = Vector3.new(0,0,0)
             end
-            --    game.Players.LocalPlayer.Character.Animate.Disabled = true
             bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0)
         end
         ctrl = {f = 0, b = 0, l = 0, r = 0}
@@ -1552,9 +1569,12 @@ game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(char)
 end)
 
 FlyButton1.MouseButton1Down:connect(function()
-    speeds = speeds + 1
-    FlySpeed.Text = "Speed [ "..speeds.." ]"
-    if nowe == true then
+tis = FlyButton1.MouseEnter:connect(function()
+        while tis do
+            wait()
+            speeds = speeds + 1
+            FlySpeed.Text = "Speed [ "..speeds.." ]"
+            if nowe == true then
         tpwalking = false
         for i = 1, speeds do
             spawn(function()
@@ -1570,16 +1590,28 @@ FlyButton1.MouseButton1Down:connect(function()
             end)
         end
     end
+        end
+    end)
+end)
+
+FlyButton1.MouseLeave:connect(function()
+    if tis then
+        tis:Disconnect()
+        tis = nil
+    end
 end)
 
 FlyButton2.MouseButton1Down:connect(function()
+ts = FlyButton2.MouseEnter:connect(function()
+while ts do
     if speeds == 1 then
         FlySpeed.Text = "Speed [ Cannot Be Less Than 1 ]"
         wait(1)
         FlySpeed.Text = "Speed [ "..speeds.." ]"
     else
-        speeds = speeds - 1
-        FlySpeed.Text = "Speed [ "..speeds.." ]"
+            wait()
+            speeds = speeds - 1
+            FlySpeed.Text = "Speed [ "..speeds.." ]"
         if nowe == true then
             tpwalking = false
             for i = 1, speeds do
@@ -1596,6 +1628,15 @@ FlyButton2.MouseButton1Down:connect(function()
                 end)
             end
         end
+        end
+        end
+            end)
+end)
+
+FlyButton2.MouseLeave:connect(function()
+    if ts then
+        ts:Disconnect()
+        ts = nil
     end
 end)
 
