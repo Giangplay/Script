@@ -1,6 +1,56 @@
-if game.Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui") == nil then
+local gui = Instance.new("ScreenGui")
+gui.Name = "Execute"
+gui.Parent = game.CoreGui
+
+----// Ui Library \\----
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.Parent = playerGui
+
+local frame = Instance.new("Frame")
+frame.Parent = ScreenGui
+frame.Size = UDim2.new(1,0,1,0)
+frame.BackgroundTransparency = 0
+frame.BackgroundColor3 = Color3.fromRGB(0,20,40)
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(1,0,1,0)
+textLabel.BackgroundColor3 = Color3.fromRGB(0,20,40)
+textLabel.Font = Enum.Font.GothamBold
+textLabel.TextColor3 = Color3.new(.8,.8,.8)
+textLabel.Text = "Execute | Ui Library"
+textLabel.TextSize = 28
+textLabel.Parent = frame
+
+local loadingRing = Instance.new("ImageLabel")
+loadingRing.Size = UDim2.new(0,256,0,256)
+loadingRing.BackgroundTransparency = 1
+loadingRing.Image = "rbxassetid://4965945816"
+loadingRing.AnchorPoint = Vector2.new(0.5,0.5)
+loadingRing.Position = UDim2.new(0.5,0,0.5,0)
+loadingRing.Parent = frame
+
+local tweenInfo = TweenInfo.new(4,Enum.EasingStyle.Linear,Enum.EasingDirection.In,-1)
+local tween = TweenService:Create(loadingRing,tweenInfo,{Rotation = 360})
+tween:Play()
+wait(2.7)
+loadingRing.Visible = false
+frame:TweenPosition(UDim2.new(0,0,1,0),"InOut","Sine",0.5)
+wait(0.5)
+ScreenGui:Destroy()
+wait(0.4)
+
+---// Toggle \\---
+
+if game.CoreGui:FindFirstChild("ScreenGui") == nil then
 local TOGGLE = {}
-TOGGLE["Ui"] = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
+TOGGLE["Ui"] = Instance.new("ScreenGui", gui)
 TOGGLE["DaIcon"] = Instance.new("ImageButton", TOGGLE["Ui"])
 TOGGLE["das"] = Instance.new("UICorner", TOGGLE["DaIcon"]);
 
@@ -28,82 +78,6 @@ end)
 TOGGLE["das"]["CornerRadius"] = UDim.new(0.20000000298023224, 0)
 end
 
-http = game:GetService("HttpService")
-
-local gui = Instance.new("ScreenGui")
-gui.Name = "Execute"
-gui.Parent = game.CoreGui
-
-----// Ui Library \\----
-
-local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0.3, 0, 0.6, 0)
-Frame.Position = UDim2.new(0.3, 0, 0.2, 0)
-Frame.BackgroundColor3 = Color3.new(1, 1, 1)
-Frame.Active = true
-Frame.Draggable = true
-Frame.Parent = gui
-
-local UiStroke = Instance.new("UIStroke")
-UiStroke.Color = Color3.new(0, 0, 0)
-UiStroke.Thickness = 3
-UiStroke.Parent = Frame
-
-local TextLabel = Instance.new("TextLabel")
-TextLabel.Size = UDim2.new(1, 0, 0.2, 0)
-TextLabel.Position = UDim2.new(0, 0, 0, 0)
-TextLabel.BackgroundColor3 = Color3.new(1,1,1)
-TextLabel.Text = "Execute | Ui Library"
-TextLabel.TextSize = 12
-TextLabel.TextColor3 = Color3.new(0,0,0)
-TextLabel.Parent = Frame
-
-local TextButton1 = Instance.new("TextButton")
-TextButton1.Size = UDim2.new(0.6, 0, 0.2, 0)
-TextButton1.Position = UDim2.new(0.2, 0, 0.7, 0)
-TextButton1.BackgroundColor3 = Color3.new(1,1,1)
-TextButton1.TextSize = 13
-TextButton1.Text = "Start" 
-TextButton1.TextColor3 = Color3.new(0,0,0)
-TextButton1.Parent = Frame
-
-local Frame1 = Instance.new("Frame")
-Frame1.Size = UDim2.new(0, 0, 0.3, 0)
-Frame1.Position = UDim2.new(0.2, 0, 0.3, 0)
-Frame1.BackgroundColor3 = Color3.new(20, 0, 21)
-Frame1.Active = true
-Frame1.Parent = Frame
-
-local TextLabel1 = Instance.new("TextLabel")
-TextLabel1.Size = UDim2.new(0.6, 0, 0.3, 0)
-TextLabel1.Position = UDim2.new(0.2, 0, 0.3, 0)
-TextLabel1.BackgroundColor3 = Color3.new(1,1,1)
-TextLabel1.Text = "0%"
-TextLabel1.TextSize = 15
-TextLabel1.BackgroundTransparency = 1
-TextLabel1.TextColor3 = Color3.new(0,0,0)
-TextLabel1.Parent = Frame
-
-function updateProgress(progress)
-TextLabel1.Text = progress.."%"
-Frame1.Size = UDim2.new(progress / 170, 0, 0.6, 0)
-end
-
-StartLoading = 0
-TextButton1.MouseButton1Click:Connect(function()
-TextLabel1.Position = UDim2.new(0.2, 0, 0.45, 0)
-TextButton1.Visible = false
-while StartLoading < 100 do
-StartLoading = StartLoading + 1
-updateProgress(StartLoading)
-wait(0.05)
-end
-wait(0.5)
-TextLabel1.TextSize = 11
-TextLabel1.Text = "Success Loading"
-wait(0.3)
-Frame:Destroy()
-wait(0.5)
 local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(0.6, 0, 0.7, 0)
 Frame.Position = UDim2.new(0.2, 0, 0.1, 0)
@@ -126,7 +100,7 @@ local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.1, 0, 0.15, 0)
 TextButton.Position = UDim2.new(0.9, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "×"
+TextButton.Text = "X"
 TextButton.TextSize = 18
 TextButton.BackgroundTransparency = 1
 TextButton.TextColor3 = Color3.new(0,0,0)
@@ -332,7 +306,7 @@ local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.14, 0, 0.15, 0)
 TextButton.Position = UDim2.new(0.86, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(1,1,1)
-TextButton.Text = "×"
+TextButton.Text = "X"
 TextButton.TextSize = 13
 TextButton.BackgroundTransparency = 1
 TextButton.TextColor3 = Color3.new(0,0,0)
@@ -409,6 +383,14 @@ game.CoreGui.Execute.FlyGot.Visible = false
 end
 end)
 
+CreatorButton("Postiton & CFrame Ui Library", function()
+if game.CoreGui.Execute.Frame19.Visible == false then
+game.CoreGui.Execute.Frame19.Visible = true
+else
+game.CoreGui.Execute.Frame19.Visible = false
+end
+end)
+
 -----// Teleport Player \\----
 
 local Frame2 = Instance.new("Frame")
@@ -471,7 +453,7 @@ end)
 local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.3, 0, 0.14, 0)
 TextButton.Position = UDim2.new(0.4, 0, 0.86, 0)
-TextButton.Text = "×"
+TextButton.Text = "X"
 TextButton.TextSize = 8
 TextButton.BackgroundColor3 = Color3.new(200,200,200)
 TextButton.TextColor3 = Color3.new(0,0,0)
@@ -557,7 +539,7 @@ end)
 local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.3, 0, 0.14, 0)
 TextButton.Position = UDim2.new(0.4, 0, 0.86, 0)
-TextButton.Text = "×"
+TextButton.Text = "X"
 TextButton.TextSize = 8
 TextButton.BackgroundColor3 = Color3.new(200,200,200)
 TextButton.TextColor3 = Color3.new(0,0,0)
@@ -591,7 +573,7 @@ local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.12, 0, 0.15, 0)
 TextButton.Position = UDim2.new(0.88, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "×"
+TextButton.Text = "X"
 TextButton.TextSize = 15
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame10
@@ -732,7 +714,7 @@ local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.12, 0, 0.13, 0)
 TextButton.Position = UDim2.new(0.88, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(1,1,1)
-TextButton.Text = "×"
+TextButton.Text = "X"
 TextButton.TextSize = 15
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame15
@@ -850,7 +832,7 @@ local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.12, 0, 0.15, 0)
 TextButton.Position = UDim2.new(0.88, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "×"
+TextButton.Text = "X"
 TextButton.TextSize = 15
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame11
@@ -966,7 +948,8 @@ local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.15, 0, 0.15, 0)
 TextButton.Position = UDim2.new(0.85, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(1,1,1)
-TextButton.Text = "×"
+TextButton.Text = "X"
+TextButton.BackgroundTransparency = 1
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame14
 TextButton.MouseButton1Click:Connect(function()
@@ -1060,7 +1043,7 @@ local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.15, 0, 0.2, 0)
 TextButton.Position = UDim2.new(0.85, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(1,1,1)
-TextButton.Text = "×"
+TextButton.Text = "X"
 TextButton.TextSize = 13
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame16
@@ -1139,7 +1122,7 @@ local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.1, 0, 0.14, 0)
 TextButton.Position = UDim2.new(0.9, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(1,1,1)
-TextButton.Text = "×"
+TextButton.Text = "X"
 TextButton.TextSize = 16
 TextButton.BackgroundTransparency = 1
 TextButton.TextColor3 = Color3.new(0,0,0)
@@ -1173,10 +1156,10 @@ for _, child in ipairs(game.CoreGui.Execute.Frame13.ScrollingFrame:GetChildren()
             end
         end
 ScriptBoxHehe = TextBoxScript.Text
-decoded = http:JSONDecode(game:HttpGetAsync("https://scriptblox.com/api/script/search?filters=free&q="..string.gsub(ScriptBoxHehe, " ", "%%20")))
+decoded = game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://scriptblox.com/api/script/search?filters=free&q="..string.gsub(ScriptBoxHehe, " ", "%%20")))
         for _, v in pairs(decoded.result.scripts) do
             if(v.isUniversal == true) then
-                AddTabScript("https://assetgame.roblox.com/Game/Tools/ThumbnailAsset.ashx?aid=4483381587&fmt=png&wd=420&ht=420", v.title, v.script)
+                AddTabScript("https://assetgame.roblox.com/Game/Tools/ThumbnailAsset.ashx?aid=7234087065&fmt=png&wd=420&ht=420", v.title, v.script)
             else
                 AddTabScript("https://assetgame.roblox.com/Game/Tools/ThumbnailAsset.ashx?aid="..v.game.gameId.."&fmt=png&wd=420&ht=420", v.title, v.script)
             end
@@ -1266,20 +1249,10 @@ SavedScriptsAdd({Name = scriptname..".txt", Script = source, ScriptSave = source
 writefile("ExecuteGet/"..scriptname..".txt", source)
 end)
 end
-end)
 
 -----Fly | Ui library-----
 
 local FlyFrame = Instance.new("Frame")
-local FlyLabel = Instance.new("TextLabel")
-local FlyX = Instance.new("TextButton")
-local FlyButton1 = Instance.new("TextButton")
-local FlyButton2 = Instance.new("TextButton")
-local FlyButton3 = Instance.new("TextButton")
-local FlyButton4 = Instance.new("TextButton")
-local FlyButton5 = Instance.new("TextButton")
-local FlySpeed = Instance.new("TextLabel")
-
 FlyFrame.Name = "FlyGot"
 FlyFrame.Size = UDim2.new(0.3, 0, 0.6, 0)
 FlyFrame.Position = UDim2.new(0.35, 0, 0.2, 0)
@@ -1289,6 +1262,7 @@ FlyFrame.Visible = false
 FlyFrame.Draggable = true
 FlyFrame.Parent = gui
 
+local FlyLabel = Instance.new("TextLabel")
 FlyLabel.Size = UDim2.new(1, 0, 0.15, 0)
 FlyLabel.Position = UDim2.new(0, 0, 0, 0)
 FlyLabel.BackgroundColor3 = Color3.new(255, 255, 255)
@@ -1298,15 +1272,17 @@ FlyLabel.BackgroundTransparency = 0
 FlyLabel.TextColor3 = Color3.new(0, 0, 0)
 FlyLabel.Parent = FlyFrame
 
+local FlyX = Instance.new("TextButton")
 FlyX.Size = UDim2.new(0.15, 0, 0.15, 0)
 FlyX.Position = UDim2.new(0.85, 0, 0, 0)
 FlyX.BackgroundColor3 = Color3.new(255, 255, 255)
-FlyX.Text = "×"
+FlyX.Text = "X"
 FlyX.TextSize = 13
 FlyX.BackgroundTransparency = 1
 FlyX.TextColor3 = Color3.new(0, 0, 0)
 FlyX.Parent = FlyFrame
 
+local FlyButton1 = Instance.new("TextButton")
 FlyButton1.Size = UDim2.new(0.25, 0, 0.2, 0)
 FlyButton1.Position = UDim2.new(0.04, 0, 0.75, 0)
 FlyButton1.BackgroundColor3 = Color3.new(255, 255, 255)
@@ -1316,6 +1292,7 @@ FlyButton1.BackgroundTransparency = 0
 FlyButton1.TextColor3 = Color3.new(0, 0, 0)
 FlyButton1.Parent = FlyFrame
 
+local FlyButton2 = Instance.new("TextButton")
 FlyButton2.Size = UDim2.new(0.25, 0, 0.2, 0)
 FlyButton2.Position = UDim2.new(0.04, 0, 0.51, 0)
 FlyButton2.BackgroundColor3 = Color3.new(255, 255, 255)
@@ -1325,6 +1302,7 @@ FlyButton2.BackgroundTransparency = 0
 FlyButton2.TextColor3 = Color3.new(0, 0, 0)
 FlyButton2.Parent = FlyFrame
 
+local FlyButton3 = Instance.new("TextButton")
 FlyButton3.Size = UDim2.new(0.25, 0, 0.2, 0)
 FlyButton3.Position = UDim2.new(0.7, 0, 0.51, 0)
 FlyButton3.BackgroundColor3 = Color3.new(255, 255, 255)
@@ -1334,6 +1312,7 @@ FlyButton3.BackgroundTransparency = 0
 FlyButton3.TextColor3 = Color3.new(0, 0, 0)
 FlyButton3.Parent = FlyFrame
 
+local FlyButton4 = Instance.new("TextButton")
 FlyButton4.Size = UDim2.new(0.25, 0, 0.2, 0)
 FlyButton4.Position = UDim2.new(0.7, 0, 0.75, 0)
 FlyButton4.BackgroundColor3 = Color3.new(255, 255, 255)
@@ -1343,6 +1322,7 @@ FlyButton4.BackgroundTransparency = 0
 FlyButton4.TextColor3 = Color3.new(0, 0, 0)
 FlyButton4.Parent = FlyFrame
 
+local FlyButton5 = Instance.new("TextButton")
 FlyButton5.Size = UDim2.new(0.35, 0, 0.45, 0)
 FlyButton5.Position = UDim2.new(0.32, 0, 0.5, 0)
 FlyButton5.BackgroundColor3 = Color3.new(255, 255, 255)
@@ -1352,6 +1332,7 @@ FlyButton5.BackgroundTransparency = 0
 FlyButton5.TextColor3 = Color3.new(0, 0, 0)
 FlyButton5.Parent = FlyFrame
 
+local FlySpeed = Instance.new("TextLabel")
 FlySpeed.Size = UDim2.new(0.91, 0, 0.25, 0)
 FlySpeed.Position = UDim2.new(0.04, 0, 0.21, 0)
 FlySpeed.BackgroundColor3 = Color3.new(1,1,1)
@@ -1571,7 +1552,7 @@ end)
 FlyButton1.MouseButton1Down:connect(function()
 tis = FlyButton1.MouseEnter:connect(function()
         while tis do
-            wait()
+            wait(0.26)
             speeds = speeds + 1
             FlySpeed.Text = "Speed [ "..speeds.." ]"
             if nowe == true then
@@ -1604,12 +1585,12 @@ end)
 FlyButton2.MouseButton1Down:connect(function()
 ts = FlyButton2.MouseEnter:connect(function()
 while ts do
+wait(0.26)
     if speeds == 1 then
         FlySpeed.Text = "Speed [ Cannot Be Less Than 1 ]"
         wait(1)
         FlySpeed.Text = "Speed [ "..speeds.." ]"
     else
-            wait()
             speeds = speeds - 1
             FlySpeed.Text = "Speed [ "..speeds.." ]"
         if nowe == true then
@@ -1642,4 +1623,133 @@ end)
 
 FlyX.MouseButton1Click:Connect(function()
     game.CoreGui.Execute.FlyGot.Visible = false
+end)
+
+----// Position & CFrame \\----
+
+local Frame = Instance.new("Frame")
+Frame.Name = "Frame19"
+Frame.Size = UDim2.new(0.5, 0, 0.7, 0)
+Frame.Position = UDim2.new(0.25, 0, 0.1, 0)
+Frame.BackgroundColor3 = Color3.new(1, 1, 1)
+Frame.Active = true
+Frame.Visible = false
+Frame.Draggable = true
+Frame.Parent = gui
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(1, 0, 0.13, 0)
+TextLabel.Position = UDim2.new(0, 0, 0, 0)
+TextLabel.BackgroundColor3 = Color3.new(1,1,1)
+TextLabel.Text = "Position & CFrame | Ui Library"
+TextLabel.TextSize = 10
+TextLabel.TextColor3 = Color3.new(0,0,0)
+TextLabel.Parent = Frame
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.13, 0, 0.13, 0)
+TextButton.Position = UDim2.new(0.87, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "X"
+TextButton.TextSize = 15
+TextButton.BackgroundTransparency = 1
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+    game.CoreGui.Execute.Frame19.Visible = false
+end)
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Name = "CheckUse"
+TextLabel.Size = UDim2.new(0.3, 0, 0.1, 0)
+TextLabel.Position = UDim2.new(0.35, 0, 0.13, 0)
+TextLabel.BackgroundColor3 = Color3.new(1,1,1)
+TextLabel.Text = "You Using Position"
+TextLabel.TextSize = 10
+TextLabel.BackgroundTransparency = 1
+TextLabel.TextColor3 = Color3.new(0,0,0)
+TextLabel.Parent = Frame
+
+local TextBox = Instance.new("TextBox")
+TextBox.Name = "Check"
+TextBox.Size = UDim2.new(0.93, 0, 0.2, 0)
+TextBox.Position = UDim2.new(0.04, 0, 0.22, 0)
+TextBox.BackgroundColor3 = Color3.new(1,1,1)
+TextBox.Text = ""
+TextBox.TextWrapped = true
+TextBox.TextColor3 = Color3.new(0,0,0)
+TextBox.TextSize = 10
+TextBox.Parent = Frame
+
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "CheckTele"
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.05, 0, 0.5, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Check"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.Execute.Frame19.CheckUse.Text == "You Using Position" then
+game.CoreGui.Execute.Frame19.Check.Text = tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z))
+elseif game.CoreGui.Execute.Frame19.CheckUse.Text == "You Using CFrame" then
+game.CoreGui.Execute.Frame19.Check.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+end
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "Teleport"
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.36, 0, 0.5, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Teleport"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+_G.TeleportGet = tostring(game.CoreGui.Execute.Frame19.Check.Text)
+game.Players.LocalPlayer.Character:MoveTo(_G.TeleportGet)
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.05, 0, 0.75, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "[ Copy ] Available Teleport"
+TextButton.TextWrapped = true
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+setclipboard("game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new("..game.CoreGui.Execute.Frame19.Check.Text..")")
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.36, 0, 0.75, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "[ Copy ] No Available Teleport"
+TextButton.TextWrapped = true
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+setclipboard(game.CoreGui.Execute.Frame19.Check.Text)
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "Getcheck"
+TextButton.Size = UDim2.new(0.28, 0, 0.45, 0)
+TextButton.Position = UDim2.new(0.67, 0, 0.5, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Convert In [ CFrame ]"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.Execute.Frame19.CheckUse.Text ~= "You Using Position" then
+game.CoreGui.Execute.Frame19.CheckUse.Text = "You Using Position"
+game.CoreGui.Execute.Frame19.Getcheck.Text = "Convert In [ CFrame ]"
+game.CoreGui.Execute.Frame19.Check.Text = tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z))
+elseif game.CoreGui.Execute.Frame19.CheckUse.Text == "You Using Position" then
+game.CoreGui.Execute.Frame19.CheckUse.Text = "You Using CFrame"
+game.CoreGui.Execute.Frame19.Getcheck.Text = "Convert In [ Position ]"
+game.CoreGui.Execute.Frame19.Check.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+end
 end)
