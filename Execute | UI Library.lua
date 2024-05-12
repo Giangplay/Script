@@ -73,10 +73,66 @@ while true do
 end
 end)
 TOGGLE["DaIcon"].MouseButton1Click:Connect(function()
-    game.CoreGui.Execute.Frame.Visible = not game.CoreGui.Execute.Frame.Visible
+game.CoreGui.Execute.Frame.Visible = not game.CoreGui.Execute.Frame.Visible
 end)
 TOGGLE["das"]["CornerRadius"] = UDim.new(0.20000000298023224, 0)
 end
+
+------// Clear Script \\------
+
+function CreateClear(Name,call)
+if game.CoreGui.Execute:FindFirstChild(Name) ~= nil then
+game.CoreGui.Execute:FindFirstChild(Name):Destroy()
+else
+local StartClear = Instance.new("Frame")
+StartClear.Name = Name
+StartClear.Size = UDim2.new(0.4, 0, 0.35, 0)
+StartClear.Position = UDim2.new(0.3, 0, 0.3, 0)
+StartClear.BackgroundColor3 = Color3.new(1, 1, 1)
+StartClear.Active = true
+StartClear.BackgroundTransparency = 0 
+StartClear.Draggable = true
+StartClear.Parent = gui
+
+local LabelClear = Instance.new("TextLabel")
+LabelClear.Size = UDim2.new(0.95, 0, 0.35, 0)
+LabelClear.Position = UDim2.new(0.025, 0, 0.08, 0)
+LabelClear.BackgroundColor3 = Color3.new(1,1,1)
+LabelClear.Text = "Are you ready to "..Name.." script?"
+LabelClear.TextSize = 11
+LabelClear.TextWrapped = true
+LabelClear.TextColor3 = Color3.new(0,0,0)
+LabelClear.Parent = StartClear
+
+local YesClear = Instance.new("TextButton")
+YesClear.Size = UDim2.new(0.4, 0, 0.4, 0)
+YesClear.Position = UDim2.new(0.06, 0, 0.5, 0)
+YesClear.BackgroundColor3 = Color3.new(1,1,1)
+YesClear.Text = "Yes"
+YesClear.TextSize = 15
+YesClear.BackgroundTransparency = 0
+YesClear.TextColor3 = Color3.new(0,0,0)
+YesClear.Parent = StartClear
+YesClear.MouseButton1Click:Connect(function()
+pcall(call)
+game.CoreGui.Execute:FindFirstChild(Name):Destroy()
+end)
+
+local NoClear = Instance.new("TextButton")
+NoClear.Size = UDim2.new(0.4, 0, 0.4, 0)
+NoClear.Position = UDim2.new(0.52, 0, 0.5, 0)
+NoClear.BackgroundColor3 = Color3.new(1,1,1)
+NoClear.Text = "No"
+NoClear.TextSize = 15
+NoClear.TextColor3 = Color3.new(0,0,0)
+NoClear.Parent = StartClear
+NoClear.MouseButton1Click:Connect(function()
+game.CoreGui.Execute:FindFirstChild(Name):Destroy()
+end)
+end
+end
+
+------// Execute | Ui Library \\------
 
 local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(0.6, 0, 0.7, 0)
@@ -164,7 +220,9 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
+CreateClear("Clear", function()
 game.CoreGui.Execute.Frame.ScriptTextBox.Text = ""
+end)
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -773,7 +831,9 @@ TextButton.Text = "Clear"
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame15
 TextButton.MouseButton1Click:Connect(function()
+CreateClear("Clear Script", function()
 TextBox5.Text = ""
+end)
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -887,8 +947,10 @@ TextButton1.Text = "Delete"
 TextButton1.TextColor3 = Color3.new(0,0,0)
 TextButton1.Parent = TextLabel
 TextButton1.MouseButton1Click:Connect(function()
+CreateClear("Delete", function()
 delfile("ExecuteGet/"..SaveGet.Name)
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Delete Script",Text = "Success | Pls Rejoin game.",Icon = "rbxassetid://7733658504",Duration = 4})
+end)
 end)
 
 local TextButton2 = Instance.new("TextButton")
@@ -1015,7 +1077,9 @@ TextButton.TextWrapped = true
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame14
 TextButton.MouseButton1Click:Connect(function()
+CreateClear("Clear Script Save", function()
 game.CoreGui.Execute.Frame14.TextBox4.Text = ""
+end)
 end)
 
 ----// Set Name \\----
@@ -1088,7 +1152,9 @@ TextButton.TextSize = 10
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame16
 TextButton.MouseButton1Click:Connect(function()
+CreateClear("Clear Set Name", function()
 TextBox6.Text = ""
+end)
 end)
 return TextLabel
 end
