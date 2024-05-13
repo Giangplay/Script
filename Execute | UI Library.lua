@@ -449,6 +449,14 @@ game.CoreGui.Execute.Frame19.Visible = false
 end
 end)
 
+CreatorButton("Postiton & CFrame Player Ui Library", function()
+if game.CoreGui.Execute.Frame20.Visible == false then
+game.CoreGui.Execute.Frame20.Visible = true
+else
+game.CoreGui.Execute.Frame20.Visible = false
+end
+end)
+
 -----// Teleport Player \\----
 
 local Frame2 = Instance.new("Frame")
@@ -804,7 +812,6 @@ TextBox6.BackgroundColor3 = Color3.new(255, 255, 255)
 TextBox6.Text = ""
 TextBox6.PlaceholderText = "Name"
 TextBox6.TextWrapped = true
-TextBox6.MultiLine = true
 TextBox6.ClearTextOnFocus = false
 TextBox6.TextColor3 = Color3.new(0,0,0)
 TextBox6.TextSize = 10
@@ -1616,9 +1623,6 @@ game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(char)
 end)
 
 FlyButton1.MouseButton1Down:connect(function()
-tis = FlyButton1.MouseEnter:connect(function()
-        while tis do
-            wait(0.26)
             speeds = speeds + 1
             FlySpeed.Text = "Speed [ "..speeds.." ]"
             if nowe == true then
@@ -1637,27 +1641,15 @@ tis = FlyButton1.MouseEnter:connect(function()
             end)
         end
     end
-        end
-    end)
-end)
-
-FlyButton1.MouseLeave:connect(function()
-    if tis then
-        tis:Disconnect()
-        tis = nil
-    end
 end)
 
 FlyButton2.MouseButton1Down:connect(function()
-ts = FlyButton2.MouseEnter:connect(function()
-while ts do
-wait(0.26)
     if speeds == 1 then
         FlySpeed.Text = "Speed [ Cannot Be Less Than 1 ]"
         wait(1)
         FlySpeed.Text = "Speed [ "..speeds.." ]"
     else
-            speeds = speeds - 1
+       speeds = speeds - 1
             FlySpeed.Text = "Speed [ "..speeds.." ]"
         if nowe == true then
             tpwalking = false
@@ -1675,15 +1667,6 @@ wait(0.26)
                 end)
             end
         end
-        end
-        end
-            end)
-end)
-
-FlyButton2.MouseLeave:connect(function()
-    if ts then
-        ts:Disconnect()
-        ts = nil
     end
 end)
 
@@ -1817,5 +1800,165 @@ elseif game.CoreGui.Execute.Frame19.CheckUse.Text == "You Using Position" then
 game.CoreGui.Execute.Frame19.CheckUse.Text = "You Using CFrame"
 game.CoreGui.Execute.Frame19.Getcheck.Text = "Convert In [ Position ]"
 game.CoreGui.Execute.Frame19.Check.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+end
+end)
+
+----// Position & CFrame Player \\----
+
+local Frame = Instance.new("Frame")
+Frame.Name = "Frame20"
+Frame.Size = UDim2.new(0.5, 0, 0.7, 0)
+Frame.Position = UDim2.new(0.25, 0, 0.1, 0)
+Frame.BackgroundColor3 = Color3.new(1, 1, 1)
+Frame.Active = true
+Frame.Visible = false
+Frame.Draggable = true
+Frame.Parent = gui
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(1, 0, 0.13, 0)
+TextLabel.Position = UDim2.new(0, 0, 0, 0)
+TextLabel.BackgroundColor3 = Color3.new(1,1,1)
+TextLabel.Text = "Position & CFrame Player | Ui Library"
+TextLabel.TextSize = 10
+TextLabel.TextColor3 = Color3.new(0,0,0)
+TextLabel.Parent = Frame
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.13, 0, 0.13, 0)
+TextButton.Position = UDim2.new(0.87, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "X"
+TextButton.TextSize = 15
+TextButton.BackgroundTransparency = 1
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+    game.CoreGui.Execute.Frame20.Visible = false
+end)
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Name = "CheckUse1"
+TextLabel.Size = UDim2.new(0.3, 0, 0.1, 0)
+TextLabel.Position = UDim2.new(0.35, 0, 0.13, 0)
+TextLabel.BackgroundColor3 = Color3.new(1,1,1)
+TextLabel.Text = "Player Using Position"
+TextLabel.TextSize = 10
+TextLabel.BackgroundTransparency = 1
+TextLabel.TextColor3 = Color3.new(0,0,0)
+TextLabel.Parent = Frame
+
+local TextBox = Instance.new("TextBox")
+TextBox.Name = "Check1"
+TextBox.Size = UDim2.new(0.52, 0, 0.2, 0)
+TextBox.Position = UDim2.new(0.04, 0, 0.22, 0)
+TextBox.BackgroundColor3 = Color3.new(1,1,1)
+TextBox.Text = ""
+TextBox.TextWrapped = true
+TextBox.TextColor3 = Color3.new(0,0,0)
+TextBox.TextSize = 10
+TextBox.Parent = Frame
+
+local TextBox = Instance.new("TextBox")
+TextBox.Name = "CheckPlayer"
+TextBox.Size = UDim2.new(0.35, 0, 0.2, 0)
+TextBox.Position = UDim2.new(0.6, 0, 0.22, 0)
+TextBox.BackgroundColor3 = Color3.new(1,1,1)
+TextBox.Text = ""
+TextBox.PlaceholderText = "Put Player..."
+TextBox.TextWrapped = true
+TextBox.TextColor3 = Color3.new(0,0,0)
+TextBox.TextSize = 10
+TextBox.Parent = Frame
+TextBox.FocusLost:Connect(function(enterPressed)
+if enterPressed then
+local targetAbbreviation = TextBox.Text
+local targetPlayer
+for _, v in pairs(game.Players:GetPlayers()) do
+if string.sub(v.Name, 1, #targetAbbreviation):lower() == targetAbbreviation:lower() then
+targetPlayer = v
+break
+end
+end
+if targetPlayer then
+_G.GetPlayerGot = targetPlayer.Name
+TextBox.Text = _G.GetPlayerGot
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Found Player [ ".._G.GetPlayerGot.." ]",Icon = "rbxassetid://7733658504",Duration = 2})
+else
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Can't find player.",Icon = "rbxassetid://7733658504",Duration = 2})
+end
+end
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "CheckTele1"
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.05, 0, 0.5, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Check"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.Execute.Frame20.CheckUse1.Text == "Player Using Position" then
+game.CoreGui.Execute.Frame20.Check1.Text = tostring(math.round(game.Players[_G.GetPlayerGot].Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players[_G.GetPlayerGot].Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players[_G.GetPlayerGot].Character.HumanoidRootPart.Position.Z))
+elseif game.CoreGui.Execute.Frame20.CheckUse1.Text == "Player Using CFrame" then
+game.CoreGui.Execute.Frame20.Check1.Text = tostring(game.Players[_G.GetPlayerGot].Character.HumanoidRootPart.CFrame)
+end
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "Teleport1"
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.36, 0, 0.5, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Teleport"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+_G.TeleportGet = tostring(game.CoreGui.Execute.Frame20.Check1.Text)
+game.Players.LocalPlayer.Character:MoveTo(_G.TeleportGet)
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.05, 0, 0.75, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "[ Copy ] Available Teleport"
+TextButton.TextWrapped = true
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+setclipboard("game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new("..game.CoreGui.Execute.Frame20.Check1.Text..")")
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.36, 0, 0.75, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "[ Copy ] No Available Teleport"
+TextButton.TextWrapped = true
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+setclipboard(game.CoreGui.Execute.Frame20.Check1.Text)
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "Getcheck1"
+TextButton.Size = UDim2.new(0.28, 0, 0.45, 0)
+TextButton.Position = UDim2.new(0.67, 0, 0.5, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Convert In [ CFrame ]"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.Execute.Frame20.CheckUse1.Text ~= "Player Using Position" then
+game.CoreGui.Execute.Frame20.CheckUse1.Text = "Player Using Position"
+game.CoreGui.Execute.Frame20.Getcheck1.Text = "Convert In [ CFrame ]"
+game.CoreGui.Execute.Frame20.Check1.Text = tostring(math.round(game.Players[_G.GetPlayerGot].Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players[_G.GetPlayerGot].Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players[_G.GetPlayerGot].Character.HumanoidRootPart.Position.Z))
+elseif game.CoreGui.Execute.Frame20.CheckUse1.Text == "Player Using Position" then
+game.CoreGui.Execute.Frame20.CheckUse1.Text = "Player Using CFrame"
+game.CoreGui.Execute.Frame20.Getcheck1.Text = "Convert In [ Position ]"
+game.CoreGui.Execute.Frame20.Check1.Text = tostring(game.Players[_G.GetPlayerGot].Character.HumanoidRootPart.CFrame)
 end
 end)
