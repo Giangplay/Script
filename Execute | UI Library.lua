@@ -616,142 +616,160 @@ end)
 
 -----// Setting \\-----
 
-local Frame10 = Instance.new("Frame")
-Frame10.Name = "Frame10"
-Frame10.Size = UDim2.new(0.35, 0, 0.5, 0)
-Frame10.Position = UDim2.new(0.1, 0, 0.1, 0)
-Frame10.BackgroundColor3 = Color3.new(1, 1, 1)
-Frame10.Active = true
-Frame10.Visible = false
-Frame10.Draggable = true
-Frame10.Parent = gui
+local SettingFrame = Instance.new("Frame")
+SettingFrame.Name = "Frame10"
+SettingFrame.Size = UDim2.new(0.5, 0, 0.7, 0)
+SettingFrame.Position = UDim2.new(0.25, 0, 0.1, 0)
+SettingFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+SettingFrame.Active = true
+SettingFrame.Visible = true
+SettingFrame.BackgroundTransparency = 0
+SettingFrame.Draggable = true
+SettingFrame.Parent = gui
 
-local TextLabel = Instance.new("TextLabel")
-TextLabel.Size = UDim2.new(1, 0, 0.15, 0)
-TextLabel.Position = UDim2.new(0, 0, 0, 0)
-TextLabel.BackgroundColor3 = Color3.new(255,255,255)
-TextLabel.Text = "Settings | Ui Library"
-TextLabel.TextColor3 = Color3.new(0,0,0)
-TextLabel.TextSize = 10
-TextLabel.Parent = Frame10
+local SettingLabel = Instance.new("TextLabel")
+SettingLabel.Size = UDim2.new(1, 0, 0.16, 0)
+SettingLabel.Position = UDim2.new(0, 0, 0, 0)
+SettingLabel.BackgroundColor3 = Color3.new(1,1,1)
+SettingLabel.Text = "Setting | Ui Library"
+SettingLabel.TextSize = 10
+SettingLabel.TextColor3 = Color3.new(0,0,0)
+SettingLabel.Parent = SettingFrame
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.12, 0, 0.15, 0)
-TextButton.Position = UDim2.new(0.88, 0, 0, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "X"
-TextButton.TextSize = 15
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame10
-TextButton.MouseButton1Click:Connect(function()
+local SettingX = Instance.new("TextButton")
+SettingX.Size = UDim2.new(0.1, 0, 0.16, 0)
+SettingX.Position = UDim2.new(0.9, 0, 0, 0)
+SettingX.BackgroundColor3 = Color3.new(1,1,1)
+SettingX.Text = "X"
+SettingX.TextSize = 14
+SettingX.BackgroundTransparency = 1
+SettingX.TextColor3 = Color3.new(0,0,0)
+SettingX.Parent = SettingFrame
+SettingX.MouseButton1Click:Connect(function()
 game.CoreGui.Execute.Frame10.Visible = false
 end)
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.25, 0, 0.11, 0)
-TextButton.Position = UDim2.new(0.05, 0, 0.23, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Rejoin"
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame10
-TextButton.MouseButton1Click:Connect(function()
-game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)
-end)
+local SettingSCF = Instance.new("ScrollingFrame")
+SettingSCF.Size = UDim2.new(1, 0, 0.836, 0)
+SettingSCF.Position = UDim2.new(0, 0, 0.163, 0)
+SettingSCF.BackgroundColor3 = Color3.new(1, 1, 1)
+SettingSCF.Parent = SettingFrame
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.25, 0, 0.11, 0)
-TextButton.Position = UDim2.new(0.05, 0, 0.37, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "ServerHop"
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame10
-TextButton.MouseButton1Click:Connect(function()
-local Player = game.Players.LocalPlayer    
-local Http = game:GetService("HttpService")
-local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
-
-local _place,_id = game.PlaceId, game.JobId
-local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=10"
-function ListServers(cursor)
-   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-   return Http:JSONDecode(Raw)
-end
-local Servers = ListServers()
-local Server = Servers.data[math.random(1,#Servers.data)]
-TPS:TeleportToPlaceInstance(_place, Server.id, Player)
-end)
-
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.25, 0, 0.11, 0)
-TextButton.Position = UDim2.new(0.05, 0, 0.51, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Low Server"
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame10
-TextButton.MouseButton1Click:Connect(function()
-local serverList = {}
-for _, v in ipairs(game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100")).data) do
-    if v.playing and type(v) == "table" and v.maxPlayers > v.playing and v.id ~= game.JobId then
-        serverList[#serverList + 1] = v.id
-    end
-end
-if #serverList > 0 then
-    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, serverList[math.random(1, #serverList)])
-end
-end)
-
-local TextBox = Instance.new("TextBox")
-TextBox.Size = UDim2.new(0.25, 0, 0.11, 0)
-TextBox.Position = UDim2.new(0.35, 0, 0.23, 0)
-TextBox.BackgroundColor3 = Color3.new(255,255,255)
-TextBox.Text = "Walk Speed"
-TextBox.TextColor3 = Color3.new(0,0,0)
-TextBox.TextSize = 7
-TextBox.Parent = Frame10
-TextBox.FocusLost:Connect(function(enterPressed)
+local SpeedText = Instance.new("TextBox")
+SpeedText.Size = UDim2.new(0.3, 0, 0.1, 0)
+SpeedText.Position = UDim2.new(0.04, 0, 0.03, 0)
+SpeedText.BackgroundColor3 = Color3.new(1,1,1)
+SpeedText.Text = "UseSpeed"
+SpeedText.TextColor3 = Color3.new(0,0,0)
+SpeedText.BackgroundTransparency = 0
+SpeedText.Parent = SettingSCF
+SpeedText.FocusLost:Connect(function(enterPressed)
 if enterPressed then
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = TextBox.Text
+_G.SpeedKeep = SpeedText.Text
 end
 end)
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.1, 0, 0.11, 0)
-TextButton.Position = UDim2.new(0.62, 0, 0.23, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Set Speed"
-TextButton.TextSize = 4
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame10
-TextButton.MouseButton1Click:Connect(function()
-game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = TextBox.Text
+local SpeedGot = Instance.new("TextLabel")
+SpeedGot.Size = UDim2.new(0.55, 0, 0.1, 0)
+SpeedGot.Position = UDim2.new(0.37, 0, 0.03, 0)
+SpeedGot.BackgroundColor3 = Color3.new(1,1,1)
+SpeedGot.Text = "Auto Set Speed"
+SpeedGot.TextSize = 10
+SpeedGot.BackgroundTransparency = 0 
+SpeedGot.TextColor3 = Color3.new(0,0,0)
+SpeedGot.Parent = SettingSCF
+
+local ToggleSet = Instance.new("ImageButton")
+ToggleSet.Size = UDim2.new(0.17, 0, 0.7, 0)
+ToggleSet.Position = UDim2.new(0.8, 0, 0.15, 0)
+ToggleSet.BackgroundColor3 = Color3.fromRGB(255, 186, 117)
+ToggleSet.Image = "rbxassetid://7743878857"
+ToggleSet.ImageColor3 = Color3.fromRGB(245, 21, 17)
+ToggleSet.Parent = SpeedGot
+ToggleSet.MouseButton1Click:Connect(function()
+_G.AutiSetSpeed = not _G.AutiSetSpeed
+ToggleSet.Image = (_G.AutiSetSpeed and "rbxassetid://3944680095") or "rbxassetid://7743878857"
+ToggleSet.ImageColor3 = (_G.AutiSetSpeed and Color3.fromRGB(17, 245, 97)) or Color3.fromRGB(245, 21, 17)
+while _G.AutiSetSpeed do
+if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") ~= nil and game.Players.LocalPlayer.Character.Humanoid.WalkSpeed ~= _G.SpeedKeep then
+                    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.SpeedKeep
+                end
+task.wait()
+end
 end)
 
-local TextBox = Instance.new("TextBox")
-TextBox.Size = UDim2.new(0.25, 0, 0.11, 0)
-TextBox.Position = UDim2.new(0.35, 0, 0.37, 0)
-TextBox.BackgroundColor3 = Color3.new(255,255,255)
-TextBox.Text = "Jump power"
-TextBox.TextColor3 = Color3.new(0,0,0)
-TextBox.TextSize = 7
-TextBox.Parent = Frame10
-TextBox.FocusLost:Connect(function(enterPressed)
+local JumpText = Instance.new("TextBox")
+JumpText.Size = UDim2.new(0.3, 0, 0.1, 0)
+JumpText.Position = UDim2.new(0.04, 0, 0.15, 0)
+JumpText.BackgroundColor3 = Color3.new(1,1,1)
+JumpText.Text = "UseJump"
+JumpText.TextColor3 = Color3.new(0,0,0)
+JumpText.BackgroundTransparency = 0
+JumpText.Parent = SettingSCF
+JumpText.FocusLost:Connect(function(enterPressed)
 if enterPressed then
-game.Players.LocalPlayer.Character.Humanoid.JumpPower = TextBox.Text
+_G.JumpKeep = JumpText.Text
 end
 end)
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.1, 0, 0.11, 0)
-TextButton.Position = UDim2.new(0.62, 0, 0.37, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Set Jump"
-TextButton.TextSize = 4
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame10
-TextButton.MouseButton1Click:Connect(function()
-game.Players.LocalPlayer.Character.Humanoid.JumpPower = TextBox.Text
-end) 
+local JumpGot = Instance.new("TextLabel")
+JumpGot.Size = UDim2.new(0.55, 0, 0.1, 0)
+JumpGot.Position = UDim2.new(0.37, 0, 0.15, 0)
+JumpGot.BackgroundColor3 = Color3.new(1,1,1)
+JumpGot.Text = "Auto Set Jump"
+JumpGot.TextSize = 10
+JumpGot.BackgroundTransparency = 0 
+JumpGot.TextColor3 = Color3.new(0,0,0)
+JumpGot.Parent = SettingSCF
+
+local ToggleSet1 = Instance.new("ImageButton")
+ToggleSet1.Size = UDim2.new(0.17, 0, 0.7, 0)
+ToggleSet1.Position = UDim2.new(0.8, 0, 0.15, 0)
+ToggleSet1.BackgroundColor3 = Color3.fromRGB(255, 186, 117)
+ToggleSet1.Image = "rbxassetid://7743878857"
+ToggleSet1.ImageColor3 = Color3.fromRGB(245, 21, 17)
+ToggleSet1.Parent = JumpGot
+ToggleSet1.MouseButton1Click:Connect(function()
+_G.AutiSetJump = not _G.AutiSetJump
+ToggleSet1.Image = (_G.AutiSetJump and "rbxassetid://3944680095") or "rbxassetid://7743878857"
+ToggleSet1.ImageColor3 = (_G.AutiSetJump and Color3.fromRGB(17, 245, 97)) or Color3.fromRGB(245, 21, 17)
+while _G.AutiSetJump do
+if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") ~= nil and game.Players.LocalPlayer.Character.Humanoid.JumpPower ~= _G.JumpKeep then
+     game.Players.LocalPlayer.Character.Humanoid.JumpPower = _G.JumpKeep
+end
+task.wait()
+end
+end)
+
+local AntiAfk = Instance.new("TextLabel")
+AntiAfk.Size = UDim2.new(0.88, 0, 0.1, 0)
+AntiAfk.Position = UDim2.new(0.04, 0, 0.28, 0)
+AntiAfk.BackgroundColor3 = Color3.new(1,1,1)
+AntiAfk.Text = "Anti Afk"
+AntiAfk.TextSize = 10
+AntiAfk.BackgroundTransparency = 0 
+AntiAfk.TextColor3 = Color3.new(0,0,0)
+AntiAfk.Parent = SettingSCF
+
+local ToggleSet2 = Instance.new("ImageButton")
+ToggleSet2.Size = UDim2.new(0.11, 0, 0.7, 0)
+ToggleSet2.Position = UDim2.new(0.873, 0, 0.15, 0)
+ToggleSet2.BackgroundColor3 = Color3.fromRGB(255, 186, 117)
+ToggleSet2.Image = "rbxassetid://7743878857"
+ToggleSet2.ImageColor3 = Color3.fromRGB(245, 21, 17)
+ToggleSet2.Parent = AntiAfk
+ToggleSet2.MouseButton1Click:Connect(function()
+_G.AutiAfk = not _G.AutiAfk
+ToggleSet2.Image = (_G.AutiAfk and "rbxassetid://3944680095") or "rbxassetid://7743878857"
+ToggleSet2.ImageColor3 = (_G.AutiAfk and Color3.fromRGB(17, 245, 97)) or Color3.fromRGB(245, 21, 17)
+for i,v in next, getconnections(game.Players.LocalPlayer.Idled) do
+if _G.AutiAfk then
+v:Disable() 
+else
+v:Enable()
+end
+end
+end)
 
 ----// Save Script \\----
 
@@ -1053,10 +1071,10 @@ TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame14
 TextButton.MouseButton1Click:Connect(function()
 delfile("ExecuteGet/"..SaveGet.Name)
-writefile("ExecuteGet/"..SaveGet.Name..".txt", TextBox2.Text)
-game.CoreGui.Execute.Frame14.TextBox4.Text = "Success Save | Thank!"
+writefile("ExecuteGet/"..SaveGet.Name, TextBox2.Text)
 SaveGet.Script = game.CoreGui.Execute.Frame14.TextBox4.Text
 SaveGet.ScriptSave = game.CoreGui.Execute.Frame14.TextBox4.Text
+game.CoreGui.Execute.Frame14.TextBox4.Text = "Success Save | Thank!"
 end)
 
 local TextButton = Instance.new("TextButton")
