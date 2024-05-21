@@ -249,11 +249,15 @@ ButtonClipBoard.TextWrapped = true
 ButtonClipBoard.TextColor3 = Color3.new(0,0,0)
 ButtonClipBoard.Parent = Frame
 ButtonClipBoard.MouseButton1Click:Connect(function()
+if identifyexecutor() == "Arceus X" then
 if getclipboard() then
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Execute Clipboard",Text = "Execute Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 loadstring(getclipboard())()
 elseif not getclipboard() then
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Execute Clipboard",Text = "Error Execute Clipboard Not Execute.",Icon = "rbxassetid://7733658504",Duration = 4})
+end
+elseif identifyexecutor() ~= "Arceus X" then
+loadstring(getclipboard())()
 end
 end)
 
@@ -689,6 +693,7 @@ SettingToggle.Image = (_G.ToggleGet and "rbxassetid://3944680095") or "rbxasseti
 SettingToggle.ImageColor3 = (_G.ToggleGet and Color3.fromRGB(17, 245, 97)) or Color3.fromRGB(245, 21, 17)
 pcall(call,_G.ToggleGet)
 end)
+return SettingL2
 end
 
 ------// Button \\-------
@@ -708,6 +713,7 @@ SettingB.Parent = SettingSC
 SettingB.MouseButton1Click:Connect(function()
 pcall(call)
 end)
+return SettingB
 end
 
 ---------// TextBox \\----------
@@ -742,6 +748,7 @@ if enterPressed then
 callback(SettingBox.Text)
 end
 end)
+return SettingL3
 end
 
 --------// Started \\---------
@@ -859,6 +866,7 @@ game.CoreGui.Execute.Frame15.Visible = false
 end)
 
 local TextBox5 = Instance.new("TextBox")
+TextBox5.Name = "SaveScriptnow"
 TextBox5.Size = UDim2.new(0.95, 0, 0.43, 0)
 TextBox5.Position = UDim2.new(0.03, 0, 0.3, 0)
 TextBox5.BackgroundColor3 = Color3.new(255, 255, 255)
@@ -876,6 +884,7 @@ TextBox5.TextSize = 15
 TextBox5.Parent = Frame15
 
 local TextBox6 = Instance.new("TextBox")
+TextBox6.Name = "NameScript"
 TextBox6.Size = UDim2.new(0.95, 0, 0.1, 0)
 TextBox6.Position = UDim2.new(0.03, 0, 0.16, 0)
 TextBox6.BackgroundColor3 = Color3.new(255, 255, 255)
@@ -895,8 +904,8 @@ TextButton.Text = "Save"
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame15
 TextButton.MouseButton1Click:Connect(function()
-SavedScriptsAdd({Name = TextBox6.Text..".txt", Script = TextBox5.Text, ScriptSave = TextBox5.Text})
-writefile("ExecuteGet/"..TextBox6.Text..".txt", TextBox5.Text)
+SavedScriptsAdd({Name = game.CoreGui.Execute.Frame15.NameScript.Text..".txt", Script = game.CoreGui.Execute.Frame15.SaveScriptnow.Text, ScriptSave = game.CoreGui.Execute.Frame15.SaveScriptnow.Text})
+writefile("ExecuteGet/"..game.CoreGui.Execute.Frame15.NameScript.Text..".txt", game.CoreGui.Execute.Frame15.SaveScriptnow.Text)
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Save Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 end)
 
@@ -909,7 +918,7 @@ TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame15
 TextButton.MouseButton1Click:Connect(function()
 CreateClear("Clear Script", function()
-TextBox5.Text = ""
+game.CoreGui.Execute.Frame15.SaveScriptnow.Text = ""
 end)
 end)
 
@@ -925,7 +934,7 @@ if not getclipboard() then
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Open Clipboard",Text = "Error Open Clipboard Not Open.",Icon = "rbxassetid://7733658504",Duration = 4})
 elseif getclipboard() then
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Open Clipboard",Text = "Open Success.",Icon = "rbxassetid://7733658504",Duration = 4})
-TextBox5.Text = getclipboard()
+game.CoreGui.Execute.Frame15.SaveScriptnow.Text = getclipboard()
 end
 end)
 
@@ -1042,6 +1051,7 @@ if game.CoreGui.Execute.Frame14.Visible == false then
 game.CoreGui.Execute.Frame14.Visible = true
 game.CoreGui.Execute.Frame14.TextBox4.Text = SaveGet.ScriptSave
 else
+game.CoreGui.Execute.Frame14.TextBox4.Text = ""
 game.CoreGui.Execute.Frame14.Visible = false
 end
 end)
@@ -1059,6 +1069,8 @@ game.CoreGui.Execute.Frame16.Visible = true
 game.CoreGui.Execute.Frame16.TextBox6.Text = SaveGet.Name
 ScriptNameGot = game.CoreGui.Execute.Frame16.TextBox6.Text
 else
+game.CoreGui.Execute.Frame16.TextBox6.Text = ""
+ScriptNameGot = ""
 game.CoreGui.Execute.Frame16.Visible = false
 end
 end)
@@ -1092,6 +1104,7 @@ TextButton.BackgroundTransparency = 1
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame14
 TextButton.MouseButton1Click:Connect(function()
+game.CoreGui.Execute.Frame14.TextBox4.Text = ""
 game.CoreGui.Execute.Frame14.Visible = false
 end)
 
@@ -1126,7 +1139,7 @@ delfile("ExecuteGet/"..SaveGet.Name)
 writefile("ExecuteGet/"..SaveGet.Name, TextBox2.Text)
 SaveGet.Script = game.CoreGui.Execute.Frame14.TextBox4.Text
 SaveGet.ScriptSave = game.CoreGui.Execute.Frame14.TextBox4.Text
-game.CoreGui.Execute.Frame14.TextBox4.Text = "Success Save | Thank!"
+game.CoreGui.Execute.Frame14.TextBox4.Text = ""
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -1236,8 +1249,11 @@ end)
 return TextLabel
 end
 
-for _,v in ipairs(listfiles("ExecuteGet")) do
-SavedScriptsAdd({Name = v:sub(12, #v), Script = readfile(v), ScriptSave = readfile(v)})
+for i,v in pairs(listfiles("ExecuteGet")) do
+if isfile(v) then
+local editedString = string.gsub(v, [[ExecuteGet\]], "")
+SavedScriptsAdd({Name = editedString, Script = readfile(v), ScriptSave = readfile(v)})
+end
 end
 
 -------// Could \\-------
