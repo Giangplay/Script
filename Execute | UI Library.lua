@@ -249,16 +249,7 @@ ButtonClipBoard.TextWrapped = true
 ButtonClipBoard.TextColor3 = Color3.new(0,0,0)
 ButtonClipBoard.Parent = Frame
 ButtonClipBoard.MouseButton1Click:Connect(function()
-if identifyexecutor() == "Arceus X" then
-if getclipboard() then
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Execute Clipboard",Text = "Execute Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 loadstring(getclipboard())()
-elseif not getclipboard() then
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Execute Clipboard",Text = "Error Execute Clipboard Not Execute.",Icon = "rbxassetid://7733658504",Duration = 4})
-end
-elseif identifyexecutor() ~= "Arceus X" then
-loadstring(getclipboard())()
-end
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -438,7 +429,7 @@ game.CoreGui.Execute.Frame9.Visible = false
 end
 end)
 
-CreatorButton("Fly Ui Library", function()
+CreatorButton("Fly Gui", function()
 if game.CoreGui.Execute.FlyGot.Visible == false then
 game.CoreGui.Execute.FlyGot.Visible = true
 else
@@ -446,7 +437,7 @@ game.CoreGui.Execute.FlyGot.Visible = false
 end
 end)
 
-CreatorButton("Postiton & CFrame Ui Library", function()
+CreatorButton("Postiton & CFrame", function()
 if game.CoreGui.Execute.Frame19.Visible == false then
 game.CoreGui.Execute.Frame19.Visible = true
 else
@@ -454,7 +445,7 @@ game.CoreGui.Execute.Frame19.Visible = false
 end
 end)
 
-CreatorButton("Postiton & CFrame Player Ui Library", function()
+CreatorButton("Postiton & CFrame Player", function()
 if game.CoreGui.Execute.Frame20.Visible == false then
 game.CoreGui.Execute.Frame20.Visible = true
 else
@@ -658,19 +649,20 @@ SettingSC.Size = UDim2.new(1, 0, 0.867, 0)
 SettingSC.Position = UDim2.new(0, 0, 0.134, 0)
 SettingSC.BackgroundColor3 = Color3.new(1, 1, 1)
 SettingSC.ScrollBarImageColor3 = Color3.fromRGB(255, 186, 117)
+SettingSC.AutomaticCanvasSize = Enum.AutomaticSize.Y
 SettingSC.Parent = SettingF
 
 local Ui = Instance.new("UIListLayout")
 Ui.HorizontalAlignment = Enum.HorizontalAlignment.Center
 Ui.SortOrder = Enum.SortOrder.LayoutOrder
-Ui.Padding = UDim.new(0.01, 0.6)
+Ui.Padding = UDim.new(0, 5)
 Ui.Parent = SettingSC
 
 ------// Toggle \\-------
 
 function CreateToggle(Name,call)
 local SettingL2 = Instance.new("TextLabel")
-SettingL2.Size = UDim2.new(0.8, 0, 0.09, 0)
+SettingL2.Size = UDim2.new(0.8, 0, 0.2, 0)
 SettingL2.Position = UDim2.new(0, 0, 0, 0)
 SettingL2.BackgroundColor3 = Color3.new(1, 1, 1)
 SettingL2.Text = Name
@@ -700,7 +692,7 @@ end
 
 function CreateButton(Name,call)
 local SettingB = Instance.new("TextButton")
-SettingB.Size = UDim2.new(0.8, 0, 0.09, 0)
+SettingB.Size = UDim2.new(0.8, 0, 0.2, 0)
 SettingB.Position = UDim2.new(0, 0, 0, 0)
 SettingB.BackgroundColor3 = Color3.new(1,1,1)
 SettingB.Text = Name
@@ -723,7 +715,7 @@ Wind.Default = Wind.Default or "Put..."
 Wind.TextDisappear = Wind.TextDisappear or true
 
 local SettingL3 = Instance.new("TextLabel")
-SettingL3.Size = UDim2.new(0.8, 0, 0.09, 0)
+SettingL3.Size = UDim2.new(0.8, 0, 0.2, 0)
 SettingL3.Position = UDim2.new(0.5, 0, 0.5, 0)
 SettingL3.BackgroundColor3 = Color3.new(1,1,1)
 SettingL3.Text = Name
@@ -830,6 +822,69 @@ end
 end)
 end)
 
+CreateTextBox("Player", {Default = "All", TextDisappear = false}, function(Value)
+if Value == "All" or Value == "all" then
+_G.PlayerNow = "All"
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "You have choose [ ".._G.PlayerNow.." ]",Icon = "rbxassetid://7733658504",Duration = 2})
+else
+local targetAbbreviation = Value
+local targetPlayer
+for _, v in pairs(game.Players:GetPlayers()) do
+if string.sub(v.Name, 1, #targetAbbreviation):lower() == targetAbbreviation:lower() then
+targetPlayer = v
+break
+end
+end
+if targetPlayer then
+_G.PlayerNow = targetPlayer.Name
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Found Player [ ".._G.PlayerNow.." ]",Icon = "rbxassetid://7733658504",Duration = 2})
+else
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Can't find player.",Icon = "rbxassetid://7733658504",Duration = 2})
+end
+end
+end)
+
+CreateTextBox("Size", {Default = "Size", TextDisappear = false}, function(Value)
+_G.ReachHitbox = Value
+end)
+
+CreateToggle("Hitbox", function(Value)
+_G.AutoHitbox = Value
+if _G.PlayerNow == "All" then
+while _G.AutoHitbox do
+for i,v in pairs(game.Players:GetChildren()) do
+                    if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+                        v.Character.HumanoidRootPart.Size = Vector3.new(_G.ReachHitbox,_G.ReachHitbox,_G.ReachHitbox)
+                        v.Character.HumanoidRootPart.Transparency = 0.75
+                    end
+                end
+task.wait()
+end
+if _G.AutoHitbox == false then
+for i,v in pairs(game.Players:GetChildren()) do
+                    if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+                        v.Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
+                        v.Character.HumanoidRootPart.Transparency = 1
+                    end
+                end
+end
+else
+while _G.AutoHitbox do
+if game.Players[_G.PlayerNow].Character and game.Players[_G.PlayerNow].Character:FindFirstChild("HumanoidRootPart") then
+                        game.Players[_G.PlayerNow].Character.HumanoidRootPart.Size = Vector3.new(_G.ReachHitbox,_G.ReachHitbox,_G.ReachHitbox)
+                        game.Players[_G.PlayerNow].Character.HumanoidRootPart.Transparency = 0.75
+                    end
+task.wait()
+end
+if _G.AutoHitbox == false then
+if game.Players[_G.PlayerNow].Character and game.Players[_G.PlayerNow].Character:FindFirstChild("HumanoidRootPart") then
+                        game.Players[_G.PlayerNow].Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
+                        game.Players[_G.PlayerNow].Character.HumanoidRootPart.Transparency = 1
+                    end
+             end
+end
+end)
+
 ----// Save Script \\----
 
 makefolder("ExecuteGet")
@@ -930,12 +985,7 @@ TextButton.Text = "Open Clipboard"
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame15
 TextButton.MouseButton1Click:Connect(function()
-if not getclipboard() then
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Open Clipboard",Text = "Error Open Clipboard Not Open.",Icon = "rbxassetid://7733658504",Duration = 4})
-elseif getclipboard() then
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Open Clipboard",Text = "Open Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 game.CoreGui.Execute.Frame15.SaveScriptnow.Text = getclipboard()
-end
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -1151,11 +1201,7 @@ TextButton.TextWrapped = true
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame14
 TextButton.MouseButton1Click:Connect(function()
-if not getclipboard() then
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Open Clipboard",Text = "Error Open Clipboard Not Open.",Icon = "rbxassetid://7733658504",Duration = 4})
-elseif getclipboard() then
 game.CoreGui.Execute.Frame14.TextBox4.Text = getclipboard()
-end
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -1247,13 +1293,6 @@ TextBox6.Text = ""
 end)
 end)
 return TextLabel
-end
-
-for i,v in pairs(listfiles("ExecuteGet")) do
-if isfile(v) then
-local editedString = string.gsub(v, [[ExecuteGet\]], "")
-SavedScriptsAdd({Name = editedString, Script = readfile(v), ScriptSave = readfile(v)})
-end
 end
 
 -------// Could \\-------
@@ -1507,7 +1546,7 @@ local speaker = game:GetService("Players").LocalPlayer
 local chr = game.Players.LocalPlayer.Character
 local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
 
-nowe = false
+nowe = false 
 FlyButton5.MouseButton1Down:connect(function()
     if nowe == true then
         nowe = false
@@ -2048,3 +2087,12 @@ game.CoreGui.Execute.Frame20.Getcheck1.Text = "Convert In [ Position ]"
 game.CoreGui.Execute.Frame20.Check1.Text = tostring(game.Players[_G.GetPlayerGot].Character.HumanoidRootPart.CFrame)
 end
 end)
+
+-------// Save Script Spawn \\-------
+
+for i,v in pairs(listfiles("ExecuteGet")) do
+if isfile(v) then
+local Getscript = string.gsub(v, "ExecuteGet/", "")
+SavedScriptsAdd({Name = Getscript, Script = readfile(v), ScriptSave = readfile(v)})
+end
+end
