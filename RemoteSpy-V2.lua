@@ -37,34 +37,6 @@ local gui = Instance.new("ScreenGui",Background)
 local nextb = Instance.new("ImageButton", gui)
 local gui = Instance.new("UICorner", nextb)
 
-function UICornerAll(Arge1)
-UICornerAllGet = Instance.new("UICorner", Arge1)
-end
-
-UICornerAll(Background)
-UICornerAll(LeftPanel)
-UICornerAll(RemoteTemplate)
-UICornerAll(ColorBar)
-UICornerAll(Text)
-UICornerAll(Button)
-UICornerAll(RightPanel)
-UICornerAll(CodeBox)
-UICornerAll(FunctionTemplate)
-UICornerAll(ColorBar_2)
-UICornerAll(Text_2)
-UICornerAll(Button_2)
-UICornerAll(TopBar)
-UICornerAll(Simple)
-UICornerAll(CloseButton)
-UICornerAll(ImageLabel)
-UICornerAll(MaximizeButton)
-UICornerAll(ImageLabel_2)
-UICornerAll(MinimizeButton)
-UICornerAll(ImageLabel_3)
-UICornerAll(TextLabel)
-UICornerAll(ToolTip)
-UICornerAllGet.CornerRadius = UDim.new(0, 5)
-
 SimpleSpy2.Name = "SimpleSpy2"
 SimpleSpy2.ResetOnSpawn = false
 
@@ -86,7 +58,7 @@ Background.Draggable = true
 nextb.Position = UDim2.new(0,100,0,60)
 nextb.Size = UDim2.new(0,40,0,40)
 nextb.BackgroundColor3 = Color3.fromRGB(53, 52, 55)
-nextb.Image = "rbxassetid://7072720870"
+nextb.Image = "rbxassetid://7072719338"
 nextb.Active = true
 nextb.Draggable = true
 nextb.MouseButton1Down:connect(function()
@@ -2405,4 +2377,11 @@ end, function()
 	if selected then
 		codebox:setRaw(SimpleSpy:ValueToVar(selected.ReturnValue, "returnValue"))
 	end
+end)
+
+newButton("While Loop", function()
+	return "Click to copy code While Loop"
+end, function()
+	setclipboard("while wait() do\n"..codebox:getString().."\nend")
+	TextLabel.Text = "Copied successfully!"
 end)
