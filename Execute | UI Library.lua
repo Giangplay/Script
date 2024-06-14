@@ -1,3 +1,9 @@
+local gui = Instance.new("ScreenGui")
+gui.Name = "Execute"
+gui.Parent = game.CoreGui
+
+----// Auto Load Script \\----
+
 if _G.AutoExecuterExe == true then
 local ScriptSpawn = queueonteleport or queue_on_teleport or syn and syn.queue_on_teleport
 if ScriptSpawn then
@@ -12,10 +18,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Giangplay/Script/main
     ]])
 end
 end
-
-local gui = Instance.new("ScreenGui")
-gui.Name = "Execute"
-gui.Parent = game.CoreGui
 
 ----// Ui Library \\----
 
@@ -150,7 +152,6 @@ end
 ------// Execute | Ui Library \\------
 
 local Frame = Instance.new("Frame")
-Frame.Name = "FrameUi"
 Frame.Size = UDim2.new(0.6, 0, 0.7, 0)
 Frame.Position = UDim2.new(0.2, 0, 0.1, 0)
 Frame.BackgroundColor3 = Color3.new(1, 1, 1)
@@ -191,7 +192,7 @@ TextButton.BackgroundTransparency = 1
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
-game.CoreGui.Execute.FrameUi.Visible = false
+game.CoreGui.Execute.Frame.Visible = false
 end)
 
 local TextBox = Instance.new("TextBox")
@@ -222,7 +223,7 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
-loadstring(game.CoreGui.Execute.FrameUi.ScriptTextBox.Text)()
+loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -236,7 +237,7 @@ TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
 CreateClear("Clear", function()
-game.CoreGui.Execute.FrameUi.ScriptTextBox.Text = ""
+game.CoreGui.Execute.Frame.ScriptTextBox.Text = ""
 end)
 end)
 
@@ -250,7 +251,7 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
-setclipboard(game.CoreGui.Execute.FrameUi.ScriptTextBox.Text)
+setclipboard(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
 end)
 
 local ButtonClipBoard = Instance.new("TextButton")
@@ -1907,7 +1908,7 @@ end)
 
 for i,v in pairs(listfiles("ExecuteGet")) do
 if isfile(v) then
-local Getscript = string.gsub(v, "ExecuteGet\", "")
+local Getscript = string.gsub(v, [[ExecuteGet\]], "")
 SavedScriptsAdd({Name = Getscript, Script = readfile(v)})
 end
 end
