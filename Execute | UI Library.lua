@@ -1,9 +1,3 @@
-local gui = Instance.new("ScreenGui")
-gui.Name = "Execute"
-gui.Parent = game.CoreGui
-
-----// Auto Load Script \\----
-
 if _G.AutoExecuterExe == true then
 local ScriptSpawn = queueonteleport or queue_on_teleport or syn and syn.queue_on_teleport
 if ScriptSpawn then
@@ -19,59 +13,17 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Giangplay/Script/main
 end
 end
 
-----// Ui Library \\----
+local gui = Instance.new("ScreenGui")
+gui.Name = "Execute"
+gui.Parent = game.CoreGui
 
-local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local player = Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.IgnoreGuiInset = true
-ScreenGui.Parent = playerGui
-
-local frame = Instance.new("Frame")
-frame.Parent = ScreenGui
-frame.Size = UDim2.new(1,0,1,0)
-frame.BackgroundTransparency = 0
-frame.BackgroundColor3 = Color3.fromRGB(0,20,40)
-
-local textLabel = Instance.new("TextLabel")
-textLabel.Size = UDim2.new(1,0,1,0)
-textLabel.BackgroundColor3 = Color3.fromRGB(0,20,40)
-textLabel.Font = Enum.Font.GothamBold
-textLabel.TextColor3 = Color3.new(.8,.8,.8)
-textLabel.Text = "Execute | Ui Library"
-textLabel.TextSize = 28
-textLabel.Parent = frame
-
-local loadingRing = Instance.new("ImageLabel")
-loadingRing.Size = UDim2.new(0,256,0,256)
-loadingRing.BackgroundTransparency = 1
-loadingRing.Image = "rbxassetid://4965945816"
-loadingRing.AnchorPoint = Vector2.new(0.5,0.5)
-loadingRing.Position = UDim2.new(0.5,0,0.5,0)
-loadingRing.Parent = frame
-
-local tweenInfo = TweenInfo.new(4,Enum.EasingStyle.Linear,Enum.EasingDirection.In,-1)
-local tween = TweenService:Create(loadingRing,tweenInfo,{Rotation = 360})
-tween:Play()
-wait(2.7)
-loadingRing.Visible = false
-frame:TweenPosition(UDim2.new(0,0,1,0),"InOut","Sine",0.5)
-wait(0.5)
-ScreenGui:Destroy()
-wait(0.4)
-
----// Toggle \\---
-
-if game.CoreGui:FindFirstChild("ScreenGui") == nil then
+if game.CoreGui.Execute:FindFirstChild("ToggleUi1") == nil then
 local TOGGLE = {}
 TOGGLE["Ui"] = Instance.new("ScreenGui", gui)
 TOGGLE["DaIcon"] = Instance.new("ImageButton", TOGGLE["Ui"])
 TOGGLE["das"] = Instance.new("UICorner", TOGGLE["DaIcon"]);
 
-TOGGLE["Ui"].Name = "ToggleUi"
+TOGGLE["Ui"].Name = "ToggleUi1"
 TOGGLE["Ui"].ResetOnSpawn = false
 
 TOGGLE["DaIcon"].Size = UDim2.new(0,45,0,45)
@@ -304,13 +256,32 @@ Frame6.Active = true
 Frame6.Visible = false
 Frame6.Parent = Frame
 
+local ScrollingFrame = Instance.new("ScrollingFrame")
+ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
+ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
+ScrollingFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+ScrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(255, 186, 117)
+ScrollingFrame.ScrollBarThickness = 0
+ScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ScrollingFrame.Parent = Frame6
+
+local Ui = Instance.new("UIListLayout")
+Ui.HorizontalAlignment = Enum.HorizontalAlignment.Center
+Ui.SortOrder = Enum.SortOrder.LayoutOrder
+Ui.Padding = UDim.new(0, 10)
+Ui.Parent = ScrollingFrame
+
+local Padding = Instance.new("UIPadding")
+Padding.PaddingTop = UDim.new(0, 10)
+Padding.Parent = ScrollingFrame
+
 local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-TextButton.Position = UDim2.new(0.1, 0, 0.09, 0)
+TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
 TextButton.Text = "Setting"
 TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame6
+TextButton.Parent = ScrollingFrame
 TextButton.MouseButton1Click:Connect(function()
 if game.CoreGui.Execute.Frame10.Visible == false then
 game.CoreGui.Execute.Frame10.Visible = true
@@ -320,12 +291,12 @@ end
 end)
 
 local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-TextButton.Position = UDim2.new(0.1, 0, 0.39, 0)
+TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
 TextButton.Text = "Cloud"
 TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame6
+TextButton.Parent = ScrollingFrame
 TextButton.MouseButton1Click:Connect(function()
 if game.CoreGui.Execute.Frame13.Visible == false then
 game.CoreGui.Execute.Frame13.Visible = true
@@ -335,17 +306,32 @@ end
 end)
 
 local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-TextButton.Position = UDim2.new(0.1, 0, 0.69, 0)
+TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
 TextButton.Text = "Save Script"
 TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame6
+TextButton.Parent = ScrollingFrame
 TextButton.MouseButton1Click:Connect(function()
 if game.CoreGui.Execute.Frame15.Visible == false then
 game.CoreGui.Execute.Frame15.Visible = true
 else
 game.CoreGui.Execute.Frame15.Visible = false
+end
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(255,255,255)
+TextButton.Text = "Script Tab"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = ScrollingFrame
+TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.Execute.Frame23.Visible == false then
+game.CoreGui.Execute.Frame23.Visible = true
+else
+game.CoreGui.Execute.Frame23.Visible = false
 end
 end)
 
@@ -1086,7 +1072,7 @@ local ButtonExe = Instance.new("TextButton")
 ButtonExe.Size = UDim2.new(0.2, 0, 1, 0)
 ButtonExe.Position = UDim2.new(0.795, 0, 0, 0)
 ButtonExe.BackgroundColor3 = Color3.new(255, 255, 255)
-ButtonExe.Text = "Executer"
+ButtonExe.Text = "Execute"
 ButtonExe.BackgroundTransparency = 0 
 ButtonExe.TextColor3 = Color3.new(0, 0, 0)
 ButtonExe.Parent = SaveLabel
@@ -1263,6 +1249,119 @@ SavedScriptsAdd({Name = scriptname..".txt", Script = source, ScriptSave = source
 writefile("ExecuteGet/"..scriptname..".txt", source)
 end)
 end
+
+-------// Tab Next \\-------
+
+local Frame20 = Instance.new("Frame")
+Frame20.Name = "Frame23"
+Frame20.Size = UDim2.new(0.5, 0, 0.8, 0)
+Frame20.Position = UDim2.new(0.2, 0, 0.1, 0)
+Frame20.BackgroundColor3 = Color3.new(1, 1, 1)
+Frame20.Active = true
+Frame20.Visible = false
+Frame20.BackgroundTransparency = 0 
+Frame20.Draggable = true
+Frame20.Parent = gui
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(1, 0, 0.13, 0)
+TextLabel.Position = UDim2.new(0, 0, 0, 0)
+TextLabel.BackgroundColor3 = Color3.new(255, 255, 255)
+TextLabel.Text = "Create Tab | Ui Library"
+TextLabel.TextSize = 10
+TextLabel.BackgroundTransparency = 0 
+TextLabel.TextColor3 = Color3.new(0, 0, 0)
+TextLabel.Parent = Frame20
+
+local ButtonX = Instance.new("TextButton")
+ButtonX.Size = UDim2.new(0.1, 0, 1, 0)
+ButtonX.Position = UDim2.new(0.9, 0, 0, 0)
+ButtonX.BackgroundColor3 = Color3.new(255, 255, 255)
+ButtonX.Text = "X"
+ButtonX.TextSize = 13
+ButtonX.BackgroundTransparency = 1
+ButtonX.TextColor3 = Color3.new(0, 0, 0)
+ButtonX.Parent = TextLabel
+ButtonX.MouseButton1Click:Connect(function()
+game.CoreGui.Execute.Frame23.Visible = false
+end)
+
+local ScrollingFrame = Instance.new("ScrollingFrame")
+ScrollingFrame.Size = UDim2.new(0.94, 0, 0.65, 0)
+ScrollingFrame.Position = UDim2.new(0.03, 0, 0.3, 0)
+ScrollingFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+ScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ScrollingFrame.ScrollBarThickness = 0
+ScrollingFrame.Parent = Frame20
+
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 5)
+UIListLayout.Parent = ScrollingFrame
+
+local Padding = Instance.new("UIPadding")
+Padding.PaddingTop = UDim.new(0, 8)
+Padding.Parent = ScrollingFrame
+
+function CreateButtonTab(Scripts)
+Scripts.Name = Scripts.Name
+Scripts.Script = Scripts.Script
+
+local TextButton = Instance.new("TextButton")
+TextButton.Name = Scripts.Name
+TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
+TextButton.Text = Scripts.Name
+TextButton.TextSize = 10
+TextButton.BackgroundTransparency = 0 
+TextButton.TextColor3 = Color3.new(0, 0, 0)
+TextButton.Parent = ScrollingFrame
+TextButton.MouseButton1Down:connect(function()
+game.CoreGui.Execute.Frame.ScriptTextBox.Text = Scripts.Script
+end)
+
+local ButtonDelete = Instance.new("TextButton")
+ButtonDelete.Name = "ButtonDelete"
+ButtonDelete.Size = UDim2.new(0.2, 0, 1, 0)
+ButtonDelete.Position = UDim2.new(0.8, 0, 0, 0)
+ButtonDelete.BackgroundColor3 = Color3.new(255, 255, 255)
+ButtonDelete.Text = "×"
+ButtonDelete.TextSize = 20
+ButtonDelete.BackgroundTransparency = 0 
+ButtonDelete.TextColor3 = Color3.new(0, 0, 0)
+ButtonDelete.Parent = TextButton
+ButtonDelete.MouseButton1Down:connect(function()
+game.CoreGui.Execute.Frame23.ScrollingFrame:FindFirstChild(Scripts.Name):Destroy()
+end)
+end
+
+local TextBox = Instance.new("TextBox")
+TextBox.Name = "TextBoxScript"
+TextBox.Size = UDim2.new(0.65, 0, 0.13, 0)
+TextBox.Position = UDim2.new(0.03, 0, 0.15, 0)
+TextBox.BackgroundColor3 = Color3.new(255, 255, 255)
+TextBox.Text = "Script 1"
+TextBox.TextSize = 10
+TextBox.TextColor3 = Color3.new(0, 0, 0)
+TextBox.BackgroundTransparency = 0
+TextBox.Parent = Frame20
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.27, 0, 0.13, 0)
+TextButton.Position = UDim2.new(0.7, 0, 0.15, 0)
+TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
+TextButton.Text = "+"
+TextButton.TextSize = 20
+TextButton.BackgroundTransparency = 0 
+TextButton.TextColor3 = Color3.new(0, 0, 0)
+TextButton.Parent = Frame20
+TextButton.MouseButton1Down:connect(function()
+CreateButtonTab({Name = game.CoreGui.Execute.Frame23.TextBoxScript.Text, Script = game.CoreGui.Execute.Frame.ScriptTextBox.Text})
+wait(0.1)
+game.CoreGui.Execute.Frame.ScriptTextBox.Text = ""
+end)
 
 -----Fly | Ui library-----
 
