@@ -989,7 +989,7 @@ TextButton.Text = "Clear"
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame15
 TextButton.MouseButton1Click:Connect(function()
-CreateClear("Clear Script", function()
+CreateClear("Clear ", function()
 game.CoreGui.Execute.Frame15.SaveScriptnow.Text = ""
 end)
 end)
@@ -1448,6 +1448,7 @@ Clear.BackgroundTransparency = 0
 Clear.TextColor3 = Color3.new(0, 0, 0)
 Clear.Parent = Frame24
 Clear.MouseButton1Click:Connect(function()
+logTable = {}
 game.CoreGui.Execute.Frame24.LogConsole.Text = ""
 end)
 
