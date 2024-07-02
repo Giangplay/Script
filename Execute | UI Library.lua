@@ -13,6 +13,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Giangplay/Script/main
 end
 end
 
+if game.CoreGui:FindFirstChild("Execute") == nil then
 local gui = Instance.new("ScreenGui")
 gui.Name = "Execute"
 gui.Parent = game.CoreGui
@@ -332,6 +333,21 @@ if game.CoreGui.Execute.Frame23.Visible == false then
 game.CoreGui.Execute.Frame23.Visible = true
 else
 game.CoreGui.Execute.Frame23.Visible = false
+end
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(255,255,255)
+TextButton.Text = "Console"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = ScrollingFrame
+TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.Execute.Frame24.Visible == false then
+game.CoreGui.Execute.Frame24.Visible = true
+else
+game.CoreGui.Execute.Frame24.Visible = false
 end
 end)
 
@@ -1363,6 +1379,91 @@ wait(0.1)
 game.CoreGui.Execute.Frame.ScriptTextBox.Text = ""
 end)
 
+------Console | Ui Library-------
+
+logTable = {}
+local Frame24 = Instance.new("Frame")
+Frame24.Name = "Frame24"
+Frame24.Size = UDim2.new(0.5, 0, 0.8, 0)
+Frame24.Position = UDim2.new(0.2, 0, 0.1, 0)
+Frame24.BackgroundColor3 = Color3.new(1, 1, 1)
+Frame24.Active = true
+Frame24.Visible = false
+Frame24.BackgroundTransparency = 0 
+Frame24.Draggable = true
+Frame24.Parent = gui
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(1, 0, 0.14, 0)
+TextLabel.Position = UDim2.new(0, 0, 0, 0)
+TextLabel.BackgroundColor3 = Color3.new(255, 255, 255)
+TextLabel.Text = "Console | Ui Library"
+TextLabel.TextSize = 10
+TextLabel.BackgroundTransparency = 0 
+TextLabel.TextColor3 = Color3.new(0, 0, 0)
+TextLabel.Parent = Frame24
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.1, 0, 1, 0)
+TextButton.Position = UDim2.new(0.9, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
+TextButton.Text = "X"
+TextButton.TextSize = 13
+TextButton.BackgroundTransparency = 1
+TextButton.TextColor3 = Color3.new(0, 0, 0)
+TextButton.Parent = TextLabel
+TextButton.MouseButton1Click:Connect(function()
+game.CoreGui.Execute.Frame24.Visible = false
+end)
+
+local LogConsole = Instance.new("TextBox")
+LogConsole.Name = "LogConsole"
+LogConsole.Size = UDim2.new(0.94, 0, 0.6, 0)
+LogConsole.Position = UDim2.new(0.03, 0, 0.18, 0)
+LogConsole.BackgroundColor3 = Color3.new(255, 255, 255)
+LogConsole.Text = ""
+LogConsole.MultiLine = true
+LogConsole.ClearTextOnFocus = false
+LogConsole.TextEditable = false
+LogConsole.Selectable = false
+LogConsole.TextColor3 = Color3.new(0, 0, 0)
+LogConsole.BackgroundTransparency = 0
+LogConsole.TextSize = 10
+LogConsole.TextWrapped = true
+LogConsole.Parent = Frame24
+
+game:GetService("LogService").MessageOut:Connect(function(Message)
+	repeat wait(.1) until Message
+	logTable[#logTable + 1] = Message
+	game.CoreGui.Execute.Frame24.LogConsole.Text = (table.concat(logTable, "\n\n"))
+end)
+
+local Clear = Instance.new("TextButton")
+Clear.Size = UDim2.new(0.45, 0, 0.16, 0)
+Clear.Position = UDim2.new(0.03, 0, 0.8, 0)
+Clear.BackgroundColor3 = Color3.new(255, 255, 255)
+Clear.Text = "Clear"
+Clear.TextSize = 12
+Clear.BackgroundTransparency = 0 
+Clear.TextColor3 = Color3.new(0, 0, 0)
+Clear.Parent = Frame24
+Clear.MouseButton1Click:Connect(function()
+game.CoreGui.Execute.Frame24.LogConsole.Text = ""
+end)
+
+local Copy = Instance.new("TextButton")
+Copy.Size = UDim2.new(0.47, 0, 0.16, 0)
+Copy.Position = UDim2.new(0.5, 0, 0.8, 0)
+Copy.BackgroundColor3 = Color3.new(255, 255, 255)
+Copy.Text = "Copy"
+Copy.TextSize = 12
+Copy.BackgroundTransparency = 0 
+Copy.TextColor3 = Color3.new(0, 0, 0)
+Copy.Parent = Frame24
+Copy.MouseButton1Click:Connect(function()
+setclipboard(game.CoreGui.Execute.Frame24.LogConsole.Text)
+end)
+
 -----Fly | Ui library-----
 
 local FlyFrame = Instance.new("Frame")
@@ -2009,5 +2110,6 @@ for i,v in pairs(listfiles("ExecuteGet")) do
 if isfile(v) then
 local Getscript = string.gsub(v, [[ExecuteGet\]], "")
 SavedScriptsAdd({Name = Getscript, Script = readfile(v)})
+end
 end
 end
