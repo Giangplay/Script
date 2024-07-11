@@ -16,7 +16,7 @@ end
 if game.CoreGui:FindFirstChild("Execute") == nil then
 local gui = Instance.new("ScreenGui")
 gui.Name = "Execute"
-gui.Parent = game.CoreGui
+gui.Parent = gethui()
 
 if game.CoreGui.Execute:FindFirstChild("ToggleUi1") == nil then
 local TOGGLE = {}
@@ -1220,7 +1220,7 @@ TextButton.Text = "Save Script"
 TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
-TextButton.MouseButton1Click:Connect()
+TextButton.MouseButton1Click:Connect(function()
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Save Script",Text = "Save Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 SavedScriptsAdd({Name = scriptname..".txt", Script = source, ScriptSave = source})
 writefile("ExecuteGet/"..scriptname..".txt", source)
@@ -1425,13 +1425,14 @@ LogConsole.Size = UDim2.new(0.94, 0, 0.6, 0)
 LogConsole.Position = UDim2.new(0.03, 0, 0.18, 0)
 LogConsole.BackgroundColor3 = Color3.new(255, 255, 255)
 LogConsole.Text = ""
-LogConsole.Active = false
 LogConsole.MultiLine = true
 LogConsole.ClearTextOnFocus = false
-LogConsole.Selectable = false
+LogConsole.TextXAlignment = Enum.TextXAlignment.Left
+LogConsole.TextYAlignment = Enum.TextYAlignment.Top
+LogConsole.FontFace = Font.new([[rbxassetid://11702779517]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)
 LogConsole.TextColor3 = Color3.new(0, 0, 0)
 LogConsole.BackgroundTransparency = 0
-LogConsole.TextSize = 10
+LogConsole.TextSize = 14
 LogConsole.TextWrapped = true
 LogConsole.Parent = Frame24
 
@@ -1456,7 +1457,7 @@ local function appendConsole(msg, msgType)
 			return
 		end
 logTable[#logTable + 1] = "[ "..string.format(info.prefix).." ]".." - ".."[ "..os.date("%X").." ]".." - ".."[ "..string.format(msg).." ]"
-game.CoreGui.Execute.Frame24.LogConsole.Text = (table.concat(logTable, "\n\n"))
+game.CoreGui.Execute.Frame24.LogConsole.Text = (table.concat(logTable, "\n"))
 end
 
 game:GetService("LogService").MessageOut:Connect(appendConsole)
