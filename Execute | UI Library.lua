@@ -166,7 +166,7 @@ TextBox.Size = UDim2.new(1, 0, 0.57, 0)
 TextBox.Position = UDim2.new(0, 0, 0.154, 0)
 TextBox.BackgroundColor3 = Color3.new(255,255,255)
 TextBox.Text = ""
-TextBox.PlaceholderText = "Welcome To Execute | Ui library, Get Some You Have Insert the Script so it can be Executed"
+TextBox.PlaceholderText = "Welcome To Execute | Ui library, Get Some You Have Insert the Script so it can be Execute"
 TextBox.TextXAlignment = Enum.TextXAlignment.Left
 TextBox.TextYAlignment = Enum.TextYAlignment.Top
 TextBox.TextWrapped = true
@@ -367,67 +367,124 @@ end)
 
 local Frame1 = Instance.new("Frame")
 Frame1.Name = "Frame1"
-Frame1.Size = UDim2.new(0.35, 0, 0.7, 0)
-Frame1.Position = UDim2.new(0.3, 0, 0.1, 0)
+Frame1.Size = UDim2.new(0.5, 0, 0.8, 0)
+Frame1.Position = UDim2.new(0.2, 0, 0.1, 0)
 Frame1.BackgroundColor3 = Color3.new(1, 1, 1)
 Frame1.Active = true
-Frame1.Visible = false
+Frame1.BackgroundTransparency = 0 
 Frame1.Draggable = true
+Frame1.Visible = false
 Frame1.Parent = gui
 
 local TextLabel = Instance.new("TextLabel")
-TextLabel.Size = UDim2.new(1, 0, 0.15, 0)
+TextLabel.Size = UDim2.new(1, 0, 0.13, 0)
 TextLabel.Position = UDim2.new(0, 0, 0, 0)
-TextLabel.BackgroundColor3 = Color3.new(1,1,1)
+TextLabel.BackgroundColor3 = Color3.new(255, 255, 255)
 TextLabel.Text = "Script Hub | Ui Library"
 TextLabel.TextSize = 10
-TextLabel.TextColor3 = Color3.new(0,0,0)
+TextLabel.BackgroundTransparency = 0 
+TextLabel.TextColor3 = Color3.new(0, 0, 0)
 TextLabel.Parent = Frame1
 
 local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.14, 0, 0.15, 0)
-TextButton.Position = UDim2.new(0.86, 0, 0, 0)
-TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Size = UDim2.new(0.15, 0, 1, 0)
+TextButton.Position = UDim2.new(0.85, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
 TextButton.Text = "X"
-TextButton.TextSize = 13
+TextButton.TextSize = 15
 TextButton.BackgroundTransparency = 1
 TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame1
+TextButton.Parent = TextLabel
 TextButton.MouseButton1Click:Connect(function()
 game.CoreGui.Execute.Frame1.Visible = false
 end)
 
+local TextBox = Instance.new("TextBox")
+TextBox.Size = UDim2.new(0.94, 0, 0.13, 0)
+TextBox.Position = UDim2.new(0.03, 0, 0.18, 0)
+TextBox.BackgroundColor3 = Color3.new(255, 255, 255)
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.new(0, 0, 0)
+TextBox.BackgroundTransparency = 0
+TextBox.TextSize = 10
+TextBox.Parent = Frame1
+TextBox.Changed:Connect(function()
+	if TextBox.Text:lower() ~= "" then
+		for i,v in pairs(game.CoreGui.Execute.Frame1.ScrollingFrame:GetDescendants()) do
+			if v:IsA("TextButton") then
+				if string.find(v.Text:lower(), TextBox.Text:lower()) then
+					v.Visible = true
+				else
+					v.Visible = false
+				end
+			end
+		end
+	else
+		for i, v in pairs(game.CoreGui.Execute.Frame1.ScrollingFrame:GetDescendants()) do
+			if v:IsA("TextButton") then
+				v.Visible = true
+			end
+		end
+	end
+end)
+
 local ScrollingFrame = Instance.new("ScrollingFrame")
-ScrollingFrame.Size = UDim2.new(1, 0, 0.85, 0)
-ScrollingFrame.Position = UDim2.new(0, 0, 0.15, 0)
+ScrollingFrame.Size = UDim2.new(0.94, 0, 0.6, 0)
+ScrollingFrame.Position = UDim2.new(0.03, 0, 0.35, 0)
 ScrollingFrame.BackgroundColor3 = Color3.new(1, 1, 1)
-ScrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(255, 186, 117)
+ScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ScrollingFrame.ScrollBarThickness = 0
 ScrollingFrame.Parent = Frame1
 
 local UIListLayout = Instance.new("UIListLayout")
-UIListLayout.Padding = UDim.new(0, 5)
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 8)
 UIListLayout.Parent = ScrollingFrame
+
+local Padding = Instance.new("UIPadding")
+Padding.PaddingTop = UDim.new(0, 8)
+Padding.Parent = ScrollingFrame
 
 function CreatorButton(Name, call)
 local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.948, 0, 0.06, 0)
-TextButton.Position = UDim2.new(0.5, 0, 0.5, 0)
-TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Size = UDim2.new(0.9, 0, 0.23, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
 TextButton.Text = Name
-TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.TextSize = 10
+TextButton.BackgroundTransparency = 0 
+TextButton.TextColor3 = Color3.new(0, 0, 0)
 TextButton.Parent = ScrollingFrame
 TextButton.MouseButton1Click:Connect(function()
 pcall(call)
 end)
-return TextButton
 end
 
 CreatorButton("Fly PE", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Giangplay/Script/main/Fly_V3.lua"))()
 end)
 
+CreatorButton("Inf Yield Delta", function()
+loadstring(game:HttpGet("https://gist.githubusercontent.com/lxnnydev/c533c374ca4c1dcef4e1e10e33fa4a0c/raw/03e74f184f801dad77d3ebe1e2f18c6ac87ca612/delta___IY.gistfile1.txt.lua",true))()
+end)
+
+CreatorButton("Inf Yield", function()
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+end)
+
 CreatorButton("Dex V3", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
+end)
+
+CreatorButton("Dex V2", function()
+loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex%20Explorer.txt"))()
+wait(2)
+repeat task.wait()
+if game.Players.LocalPlayer.PlayerGui:FindFirstChild("Dex") and game.Players.LocalPlayer.PlayerGui.Dex.ResetOnSpawn == true then
+game.Players.LocalPlayer.PlayerGui.Dex.ResetOnSpawn = false
+end
+until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Dex") and game.Players.LocalPlayer.PlayerGui.Dex.ResetOnSpawn == false
 end)
 
 CreatorButton("Anti AFK", function()
@@ -440,22 +497,6 @@ end)
 
 CreatorButton("Simple Spy", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Giangplay/Script/main/RemoteSpy-V2.lua"))()
-end)
-
-CreatorButton("Teleport Player Gui", function()
-if game.CoreGui.Execute.Frame2.Visible == false then
-game.CoreGui.Execute.Frame2.Visible = true
-else
-game.CoreGui.Execute.Frame2.Visible = false
-end
-end)
-
-CreatorButton("View Player Gui", function()
-if game.CoreGui.Execute.Frame9.Visible == false then
-game.CoreGui.Execute.Frame9.Visible = true
-else
-game.CoreGui.Execute.Frame9.Visible = false
-end
 end)
 
 CreatorButton("Fly Gui", function()
@@ -488,163 +529,6 @@ game.CoreGui.Execute.Shiftlock.Enabled = true
 else
 game.CoreGui.Execute.Shiftlock.Enabled = false
 end
-end)
-
------// Teleport Player \\----
-
-local Frame2 = Instance.new("Frame")
-Frame2.Name = "Frame2"
-Frame2.Size = UDim2.new(0.13, 0, 0.3, 0)
-Frame2.Position = UDim2.new(0.1, 0, 0.2, 0)
-Frame2.Active = true
-Frame2.Draggable = true
-Frame2.Visible = false
-Frame2.Parent = gui
-
-local TextLabel = Instance.new("TextLabel")
-TextLabel.Size = UDim2.new(1, 0, 0.15, 0)
-TextLabel.Position = UDim2.new(0, 0, 0, 0)
-TextLabel.BackgroundColor3 = Color3.new(255,255,255)
-TextLabel.Text = "Teleport Player"
-TextLabel.TextColor3 = Color3.new(0,0,0)
-TextLabel.Parent = Frame2
-
-local TextBox = Instance.new("TextBox")
-TextBox.Size = UDim2.new(1, 0, 0.19, 0)
-TextBox.Position = UDim2.new(0, 0, 0.2, 0)
-TextBox.BackgroundColor3 = Color3.new(255,255,255)
-TextBox.Text = "Player"
-TextBox.TextColor3 = Color3.new(0,0,0)
-TextBox.TextSize = 9
-TextBox.Parent = Frame2
-TextBox.FocusLost:Connect(function(enterPressed)
-if enterPressed then
-local targetAbbreviation = TextBox.Text
-local targetPlayer
-for _, v in pairs(game.Players:GetPlayers()) do
-if string.sub(v.Name, 1, #targetAbbreviation):lower() == targetAbbreviation:lower() then
-targetPlayer = v
-break
-end
-end
-if targetPlayer then
-_G.PlayerGet = targetPlayer.Name
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Found Player [ ".._G.PlayerGet.." ]",Icon = "rbxassetid://7733658504",Duration = 2})
-else
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Can't find player.",Icon = "rbxassetid://7733658504",Duration = 2})
-end
-end
-end)
-
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.6, 0, 0.3, 0)
-TextButton.Position = UDim2.new(0.2, 0, 0.5, 0)
-TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
-TextButton.Text = "Teleport"
-TextButton.TextColor3 = Color3.new(0, 0, 0)
-TextButton.Parent = Frame2
-TextButton.MouseButton1Click:Connect(function()
-if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players[_G.PlayerGet].Character:FindFirstChild("HumanoidRootPart") then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[_G.PlayerGet].Character.HumanoidRootPart.CFrame
-end
-end)
-
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.3, 0, 0.14, 0)
-TextButton.Position = UDim2.new(0.4, 0, 0.86, 0)
-TextButton.Text = "X"
-TextButton.TextSize = 8
-TextButton.BackgroundColor3 = Color3.new(200,200,200)
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame2
-TextButton.MouseButton1Click:Connect(function()
-game.CoreGui.Execute.Frame2.Visible = false
-end)
-
-----// View Player \\-----
-
-local Frame9 = Instance.new("Frame")
-Frame9.Name = "Frame9"
-Frame9.Size = UDim2.new(0.13, 0, 0.3, 0)
-Frame9.Position = UDim2.new(0.1, 0, 0.2, 0)
-Frame9.Active = true
-Frame9.Draggable = true
-Frame9.Visible = false
-Frame9.Parent = gui
-
-local TextLabel = Instance.new("TextLabel")
-TextLabel.Size = UDim2.new(1, 0, 0.15, 0)
-TextLabel.Position = UDim2.new(0, 0, 0, 0)
-TextLabel.BackgroundColor3 = Color3.new(255,255,255)
-TextLabel.Text = "View Player"
-TextLabel.TextColor3 = Color3.new(0,0,0)
-TextLabel.Parent = Frame9
-
-local TextBox7 = Instance.new("TextBox")
-TextBox7.Size = UDim2.new(1, 0, 0.19, 0)
-TextBox7.Position = UDim2.new(0, 0, 0.2, 0)
-TextBox7.BackgroundColor3 = Color3.new(255,255,255)
-TextBox7.Text = "Player"
-TextBox7.TextColor3 = Color3.new(0,0,0)
-TextBox7.TextSize = 9
-TextBox7.Parent = Frame9
-TextBox7.FocusLost:Connect(function(enterPressed)
-if enterPressed then
-local targetAbbreviation = TextBox7.Text
-local targetPlayer
-for _, v in pairs(game.Players:GetPlayers()) do
-if string.sub(v.Name, 1, #targetAbbreviation):lower() == targetAbbreviation:lower() then
-targetPlayer = v
-break
-end
-end
-if targetPlayer then
-_G.PlayerGetView = targetPlayer.Name
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Found Player [ ".._G.PlayerGetView.." ]",Icon = "rbxassetid://7733658504",Duration = 2})
-else
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Can't find player.",Icon = "rbxassetid://7733658504",Duration = 2})
-end
-end
-end)
-
-local TextButton8 = Instance.new("TextButton")
-TextButton8.Size = UDim2.new(0.6, 0, 0.3, 0)
-TextButton8.Position = UDim2.new(0.2, 0, 0.5, 0)
-TextButton8.BackgroundColor3 = Color3.new(255, 255, 255)
-TextButton8.Text = "Auto View"
-TextButton8.TextWrapped = true
-TextButton8.TextColor3 = Color3.new(0, 0, 0)
-TextButton8.Parent = Frame9
-TextButton8.MouseButton1Click:Connect(function()
-_G.AutoViewPlayer = not _G.AutoViewPlayer
-if _G.AutoViewPlayer == false then
-TextButton8.Text = "Auto View [ OFF ]"
-else
-TextButton8.Text = "Auto View [ ON ]"
-end
-if _G.AutoViewPlayer == false then
-if game.Workspace.CurrentCamera and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-game.Workspace.CurrentCamera.CameraSubject = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-end
-end
-while _G.AutoViewPlayer do
-if game.Workspace.CurrentCamera and game.Players[_G.PlayerGetView].Character and game.Players[_G.PlayerGetView].Character:FindFirstChildOfClass("Humanoid") then
-game.Workspace.CurrentCamera.CameraSubject = game.Players[_G.PlayerGetView].Character:FindFirstChildOfClass("Humanoid")
-end
-task.wait()
-end
-end)
-
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.3, 0, 0.14, 0)
-TextButton.Position = UDim2.new(0.4, 0, 0.86, 0)
-TextButton.Text = "X"
-TextButton.TextSize = 8
-TextButton.BackgroundColor3 = Color3.new(200,200,200)
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = Frame9
-TextButton.MouseButton1Click:Connect(function()
-game.CoreGui.Execute.Frame9.Visible = false
 end)
 
 -----// Setting \\-----
@@ -859,11 +743,59 @@ end
 end)
 end)
 
+_G.SetSpeedFly = 100
+CreateTextBox("Speed Fly", {Default = "Speed", TextDisappear = false}, function(Value)
+_G.SetSpeedFly = Value
+end)
+
+CreateToggle("Fly", function(Value)
+_G.StartFly = Value
+if _G.StartFly == false then
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler:Destroy()
+game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler:Destroy()
+game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+end
+end
+while _G.StartFly do
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.MaxForce = Vector3.new(9e9,9e9,9e9)
+game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.MaxTorque = Vector3.new(9e9,9e9,9e9)
+game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
+game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.CFrame = Workspace.CurrentCamera.CoordinateFrame
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = Vector3.new()
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X > 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
+end
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X < 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
+end
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z > 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
+end
+if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z < 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
+end
+elseif game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") == nil and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") == nil then
+local bv = Instance.new("BodyVelocity")
+local bg = Instance.new("BodyGyro")
+
+bv.Name = "VelocityHandler"
+bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+bv.MaxForce = Vector3.new(0,0,0)
+bv.Velocity = Vector3.new(0,0,0)
+
+bg.Name = "GyroHandler"
+bg.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+bg.MaxTorque = Vector3.new(0,0,0)
+bg.P = 1000
+bg.D = 50
+end
+task.wait()
+end
+end)
+
 CreateTextBox("Player", {Default = "All", TextDisappear = false}, function(Value)
-if Value == "All" or Value == "all" then
-_G.PlayerNow = "All"
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "You have choose [ ".._G.PlayerNow.." ]",Icon = "rbxassetid://7733658504",Duration = 2})
-else
 local targetAbbreviation = Value
 local targetPlayer
 for _, v in pairs(game.Players:GetPlayers()) do
@@ -878,6 +810,31 @@ game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text =
 else
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "Can't find player.",Icon = "rbxassetid://7733658504",Duration = 2})
 end
+end)
+
+CreateButton("Teleport Player", function()
+if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players[_G.PlayerNow].Character:FindFirstChild("HumanoidRootPart") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[_G.PlayerNow].Character.HumanoidRootPart.CFrame
+end
+end)
+
+CreateToggle("Auto Teleport Player", function(Value)
+_G.AutoTeleportPlayer = Value
+while _G.AutoTeleportPlayer do
+if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players[_G.PlayerNow].Character:FindFirstChild("HumanoidRootPart") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[_G.PlayerNow].Character.HumanoidRootPart.CFrame
+end
+task.wait()
+end
+end)
+
+CreateToggle("Auto View Player", function(Value)
+_G.AutoViewPlayer = Value
+while _G.AutoViewPlayer do
+if game.Workspace.CurrentCamera and game.Players[_G.PlayerNow].Character and game.Players[_G.PlayerGetView].Character:FindFirstChildOfClass("Humanoid") then
+game.Workspace.CurrentCamera.CameraSubject = game.Players[_G.PlayerNow].Character:FindFirstChildOfClass("Humanoid")
+end
+task.wait()
 end
 end)
 
@@ -885,9 +842,9 @@ CreateTextBox("Size", {Default = "Size", TextDisappear = false}, function(Value)
 _G.ReachHitbox = Value
 end)
 
+_G.ReachHitbox = 20
 CreateToggle("Hitbox", function(Value)
 _G.AutoHitbox = Value
-if _G.PlayerNow == "All" then
 while _G.AutoHitbox do
 for i,v in pairs(game.Players:GetChildren()) do
                     if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
@@ -904,21 +861,6 @@ for i,v in pairs(game.Players:GetChildren()) do
                         v.Character.HumanoidRootPart.Transparency = 1
                     end
                 end
-end
-else
-while _G.AutoHitbox do
-if game.Players[_G.PlayerNow].Character and game.Players[_G.PlayerNow].Character:FindFirstChild("HumanoidRootPart") then
-                        game.Players[_G.PlayerNow].Character.HumanoidRootPart.Size = Vector3.new(_G.ReachHitbox,_G.ReachHitbox,_G.ReachHitbox)
-                        game.Players[_G.PlayerNow].Character.HumanoidRootPart.Transparency = 0.75
-                    end
-task.wait()
-end
-if _G.AutoHitbox == false then
-if game.Players[_G.PlayerNow].Character and game.Players[_G.PlayerNow].Character:FindFirstChild("HumanoidRootPart") then
-                        game.Players[_G.PlayerNow].Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
-                        game.Players[_G.PlayerNow].Character.HumanoidRootPart.Transparency = 1
-                    end
-             end
 end
 end)
 
@@ -1278,7 +1220,7 @@ TextButton.Text = "Save Script"
 TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
-TextButton.MouseButton1Click:Connect(function()
+TextButton.MouseButton1Click:Connect()
 game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Save Script",Text = "Save Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 SavedScriptsAdd({Name = scriptname..".txt", Script = source, ScriptSave = source})
 writefile("ExecuteGet/"..scriptname..".txt", source)
@@ -1341,7 +1283,6 @@ Padding.Parent = ScrollingFrame
 
 function CreateButtonTab(Scripts)
 Scripts.Name = Scripts.Name
-Scripts.Script = Scripts.Script
 
 local TextButton = Instance.new("TextButton")
 TextButton.Name = Scripts.Name
@@ -1354,7 +1295,17 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0, 0, 0)
 TextButton.Parent = ScrollingFrame
 TextButton.MouseButton1Down:connect(function()
-game.CoreGui.Execute.Frame.ScriptTextBox.Text = Scripts.Script
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+game.CoreGui.Execute.Frame.ScriptTextBox.Visible = false
+end
+for i,v in pairs(game.CoreGui.Execute.Frame23.ScrollingFrame:GetChildren()) do
+if v.Name ~= "UIListLayout" and v.Name ~= "UIPadding" then
+game.CoreGui.Execute.Frame:FindFirstChild(v.Name).Visible = false
+end
+end
+if game.CoreGui.Execute.Frame:FindFirstChild(Scripts.Name).Visible == false then
+game.CoreGui.Execute.Frame:FindFirstChild(Scripts.Name).Visible = true
+end
 end)
 
 local ButtonDelete = Instance.new("TextButton")
@@ -1369,7 +1320,42 @@ ButtonDelete.TextColor3 = Color3.new(0, 0, 0)
 ButtonDelete.Parent = TextButton
 ButtonDelete.MouseButton1Down:connect(function()
 game.CoreGui.Execute.Frame23.ScrollingFrame:FindFirstChild(Scripts.Name):Destroy()
+game.CoreGui.Execute.Frame:FindFirstChild(Scripts.Name):Destroy()
+_G.TextBox = 0
+for i,v in pairs(game.CoreGui.Execute.Frame23.ScrollingFrame:GetChildren()) do
+if v.Name ~= "UIListLayout" and v.Name ~= "UIPadding" then
+_G.TextBox = _G.TextBox + 1
+end
+end
+if _G.TextBox > 0 then
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == false then
+game.CoreGui.Execute.Frame.ScriptTextBox.Visible = true
+end
+elseif _G.TextBox == 0 then
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == false then
+game.CoreGui.Execute.Frame.ScriptTextBox.Visible = true
+end
+end
 end)
+
+local TextBox = Instance.new("TextBox")
+TextBox.Name = Scripts.Name
+TextBox.Size = UDim2.new(1, 0, 0.57, 0)
+TextBox.Position = UDim2.new(0, 0, 0.154, 0)
+TextBox.BackgroundColor3 = Color3.new(255,255,255)
+TextBox.Text = ""
+TextBox.PlaceholderText = "New Tab Script"
+TextBox.TextXAlignment = Enum.TextXAlignment.Left
+TextBox.TextYAlignment = Enum.TextYAlignment.Top
+TextBox.TextWrapped = true
+TextBox.Visible = false
+TextBox.FontFace = Font.new([[rbxassetid://11702779517]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)
+TextBox.ClipsDescendants = true
+TextBox.MultiLine = true
+TextBox.ClearTextOnFocus = false
+TextBox.TextColor3 = Color3.new(0,0,0)
+TextBox.TextSize = 19
+TextBox.Parent = game.CoreGui.Execute.Frame
 end
 
 local TextBox = Instance.new("TextBox")
@@ -1393,9 +1379,7 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0, 0, 0)
 TextButton.Parent = Frame20
 TextButton.MouseButton1Down:connect(function()
-CreateButtonTab({Name = game.CoreGui.Execute.Frame23.TextBoxScript.Text, Script = game.CoreGui.Execute.Frame.ScriptTextBox.Text})
-wait(0.1)
-game.CoreGui.Execute.Frame.ScriptTextBox.Text = ""
+CreateButtonTab({Name = game.CoreGui.Execute.Frame23.TextBoxScript.Text})
 end)
 
 ------Console | Ui Library-------
@@ -1441,9 +1425,9 @@ LogConsole.Size = UDim2.new(0.94, 0, 0.6, 0)
 LogConsole.Position = UDim2.new(0.03, 0, 0.18, 0)
 LogConsole.BackgroundColor3 = Color3.new(255, 255, 255)
 LogConsole.Text = ""
+LogConsole.Active = false
 LogConsole.MultiLine = true
 LogConsole.ClearTextOnFocus = false
-LogConsole.TextEditable = false
 LogConsole.Selectable = false
 LogConsole.TextColor3 = Color3.new(0, 0, 0)
 LogConsole.BackgroundTransparency = 0
@@ -1451,11 +1435,31 @@ LogConsole.TextSize = 10
 LogConsole.TextWrapped = true
 LogConsole.Parent = Frame24
 
-game:GetService("LogService").MessageOut:Connect(function(Message)
-	repeat wait(.1) until Message
-	logTable[#logTable + 1] = Message
-	game.CoreGui.Execute.Frame24.LogConsole.Text = (table.concat(logTable, "\n\n"))
-end)
+local typeToInfo = {
+	MessageOutput = {
+		prefix = "Print"
+	},
+	MessageInfo = {
+		prefix = "Info"
+	},
+	MessageWarning = {
+		prefix = "Warning"
+	},
+	MessageError = {
+		prefix = "Error"
+	}
+}
+
+local function appendConsole(msg, msgType)
+	local info = typeToInfo[msgType.Name]
+		if info == nil then
+			return
+		end
+logTable[#logTable + 1] = "[ "..string.format(info.prefix).." ]".." - ".."[ "..os.date("%X").." ]".." - ".."[ "..string.format(msg).." ]"
+game.CoreGui.Execute.Frame24.LogConsole.Text = (table.concat(logTable, "\n\n"))
+end
+
+game:GetService("LogService").MessageOut:Connect(appendConsole)
 
 local Clear = Instance.new("TextButton")
 Clear.Size = UDim2.new(0.45, 0, 0.16, 0)
@@ -2216,7 +2220,6 @@ local function TLQOYN_fake_script()
 		end
 	end)
 	return MobileCameraFramework
-	
 end
 coroutine.wrap(TLQOYN_fake_script)()
 local function OMQRQRC_fake_script()
