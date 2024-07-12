@@ -363,6 +363,21 @@ game.CoreGui.Execute.Frame24.Visible = false
 end
 end)
 
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(255,255,255)
+TextButton.Text = "Check Player"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = ScrollingFrame
+TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.Execute.Frame26.Visible == false then
+game.CoreGui.Execute.Frame26.Visible = true
+else
+game.CoreGui.Execute.Frame26.Visible = false
+end
+end)
+
 --------// Script Hub \\-------
 
 local Frame1 = Instance.new("Frame")
@@ -1500,6 +1515,7 @@ Frame26.BackgroundColor3 = Color3.new(1, 1, 1)
 Frame26.BorderColor3 = Color3.new(0, 0, 0)
 Frame26.BorderSizePixel = 1
 Frame26.Active = true
+Frame26.Visible = false
 Frame26.BackgroundTransparency = 0 
 Frame26.Draggable = true
 Frame26.Parent = gui
