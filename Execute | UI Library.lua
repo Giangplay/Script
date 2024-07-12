@@ -1425,6 +1425,7 @@ LogConsole.Size = UDim2.new(0.94, 0, 0.6, 0)
 LogConsole.Position = UDim2.new(0.03, 0, 0.18, 0)
 LogConsole.BackgroundColor3 = Color3.new(255, 255, 255)
 LogConsole.Text = ""
+LogConsole.RichText = true
 LogConsole.MultiLine = true
 LogConsole.ClearTextOnFocus = false
 LogConsole.TextXAlignment = Enum.TextXAlignment.Left
@@ -1432,7 +1433,7 @@ LogConsole.TextYAlignment = Enum.TextYAlignment.Top
 LogConsole.FontFace = Font.new([[rbxassetid://11702779517]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)
 LogConsole.TextColor3 = Color3.new(0, 0, 0)
 LogConsole.BackgroundTransparency = 0
-LogConsole.TextSize = 14
+LogConsole.TextSize = 15
 LogConsole.TextWrapped = true
 LogConsole.Parent = Frame24
 
@@ -1457,7 +1458,7 @@ local function appendConsole(msg, msgType)
 			return
 		end
 logTable[#logTable + 1] = "[ "..string.format(info.prefix).." ]".." - ".."[ "..os.date("%X").." ]".." - ".."[ "..string.format(msg).." ]"
-game.CoreGui.Execute.Frame24.LogConsole.Text = (table.concat(logTable, "\n"))
+game.CoreGui.Execute.Frame24.LogConsole.Text = (table.concat(logTable, "\n\n"))
 end
 
 game:GetService("LogService").MessageOut:Connect(appendConsole)
@@ -1487,6 +1488,141 @@ Copy.TextColor3 = Color3.new(0, 0, 0)
 Copy.Parent = Frame24
 Copy.MouseButton1Click:Connect(function()
 setclipboard(game.CoreGui.Execute.Frame24.LogConsole.Text)
+end)
+
+------PlayerCheck | Ui Library-------
+
+local Frame26 = Instance.new("Frame")
+Frame26.Name = "Frame26"
+Frame26.Size = UDim2.new(0.5, 0, 0.8, 0)
+Frame26.Position = UDim2.new(0.2, 0, 0.1, 0)
+Frame26.BackgroundColor3 = Color3.new(1, 1, 1)
+Frame26.BorderColor3 = Color3.new(0, 0, 0)
+Frame26.BorderSizePixel = 1
+Frame26.Active = true
+Frame26.BackgroundTransparency = 0 
+Frame26.Draggable = true
+Frame26.Parent = gui
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(1, 0, 0.13, 0)
+TextLabel.Position = UDim2.new(0, 0, 0, 0)
+TextLabel.BackgroundColor3 = Color3.new(255, 255, 255)
+TextLabel.Text = "Search Player | Ui Library"
+TextLabel.TextSize = 10
+TextLabel.BackgroundTransparency = 0 
+TextLabel.TextColor3 = Color3.new(0, 0, 0)
+TextLabel.Parent = Frame26
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.1, 0, 1, 0)
+TextButton.Position = UDim2.new(0.9, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
+TextButton.Text = "X"
+TextButton.TextSize = 12
+TextButton.BackgroundTransparency = 1
+TextButton.TextColor3 = Color3.new(0, 0, 0)
+TextButton.Parent = TextLabel
+
+local ImageLabel = Instance.new("ImageLabel")
+ImageLabel.Name = "Image1"
+ImageLabel.Size = UDim2.new(0.3, 0, 0.37, 0)
+ImageLabel.Position = UDim2.new(0.03, 0, 0.17, 0)
+ImageLabel.BackgroundColor3 = Color3.new(1,1,1)
+ImageLabel.Image = "rbxassetid://0"
+ImageLabel.BackgroundTransparency = 0 
+ImageLabel.Parent = Frame26
+
+local Image = Instance.new("ImageButton")
+Image.Name = "Image2"
+Image.Size = UDim2.new(0.3, 0, 0.39, 0)
+Image.Position = UDim2.new(0.03, 0, 0.57, 0)
+Image.BackgroundColor3 = Color3.new(1,1,1)
+Image.Image = "rbxassetid://0"
+Image.BackgroundTransparency = 0 
+Image.Parent = Frame26
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Name = "Usernames"
+TextLabel.Size = UDim2.new(0.6, 0, 0.13, 0)
+TextLabel.Position = UDim2.new(0.37, 0, 0.17, 0)
+TextLabel.BackgroundColor3 = Color3.new(255, 255, 255)
+TextLabel.Text = "Username"
+TextLabel.TextSize = 10
+TextLabel.BackgroundTransparency = 0 
+TextLabel.TextColor3 = Color3.new(0, 0, 0)
+TextLabel.Parent = Frame26
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Name = "IDName"
+TextLabel.Size = UDim2.new(0.6, 0, 0.13, 0)
+TextLabel.Position = UDim2.new(0.37, 0, 0.33, 0)
+TextLabel.BackgroundColor3 = Color3.new(255, 255, 255)
+TextLabel.Text = "ID Name"
+TextLabel.TextSize = 10
+TextLabel.BackgroundTransparency = 0 
+TextLabel.TextColor3 = Color3.new(0, 0, 0)
+TextLabel.Parent = Frame26
+
+local TextBox = Instance.new("TextBox")
+TextBox.Name = "CheckText"
+TextBox.Size = UDim2.new(0.6, 0, 0.13, 0)
+TextBox.Position = UDim2.new(0.37, 0, 0.49, 0)
+TextBox.BackgroundColor3 = Color3.new(255, 255, 255)
+TextBox.Text = ""
+TextBox.PlaceholderText = "Username"
+TextBox.TextColor3 = Color3.new(0, 0, 0)
+TextBox.BackgroundTransparency = 0
+TextBox.TextSize = 10
+TextBox.Parent = Frame26
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.3, 0, 0.3, 0)
+TextButton.Position = UDim2.new(0.37, 0, 0.66, 0)
+TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
+TextButton.Text = "Check Player"
+TextButton.TextSize = 10
+TextButton.TextWrapped = true
+TextButton.BackgroundTransparency = 0 
+TextButton.TextColor3 = Color3.new(0, 0, 0)
+TextButton.Parent = Frame26
+TextButton.MouseButton1Click:Connect(function()
+local Success, Result = pcall(function()
+	local Player = game.CoreGui.Execute.Frame26.CheckText.Text
+	if Player then
+		local A = game.Players:GetUserIdFromNameAsync(Player) or nil
+			local B = game.Players:GetNameFromUserIdAsync(A)
+			local T = game.Players:GetUserThumbnailAsync(A, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+			local T2 = game.Players:GetUserThumbnailAsync(A, Enum.ThumbnailType.AvatarThumbnail, Enum.ThumbnailSize.Size420x420)
+		if A ~= nil then
+				game.CoreGui.Execute.Frame26.Usernames.Text = B
+				game.CoreGui.Execute.Frame26.IDName.Text = A
+				game.CoreGui.Execute.Frame26.Image1.Image = T
+				game.CoreGui.Execute.Frame26.Image2.Image = T2
+		end
+	end
+	end)
+if not Success then
+game.CoreGui.Execute.Frame26.Usernames.Text = "No name in roblox"
+game.CoreGui.Execute.Frame26.IDName.Text = ""
+game.CoreGui.Execute.Frame26.CheckText.Text = ""
+end
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.3, 0, 0.3, 0)
+TextButton.Position = UDim2.new(0.67, 0, 0.66, 0)
+TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
+TextButton.Text = "Clear Check Player"
+TextButton.TextSize = 10
+TextButton.TextWrapped = true
+TextButton.BackgroundTransparency = 0 
+TextButton.TextColor3 = Color3.new(0, 0, 0)
+TextButton.Parent = Frame26
+TextButton.MouseButton1Click:Connect(function()
+game.CoreGui.Execute.Frame26.Usernames.Text = ""
+game.CoreGui.Execute.Frame26.IDName.Text = ""
+game.CoreGui.Execute.Frame26.CheckText.Text = ""
 end)
 
 -----Fly | Ui library-----
