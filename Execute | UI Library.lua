@@ -179,6 +179,7 @@ TextBox.TextSize = 19
 TextBox.Parent = Frame
 
 local TextButton = Instance.new("TextButton")
+TextButton.Name = "ExecuteNow"
 TextButton.Size = UDim2.new(0.2, 0, 0.28, 0)
 TextButton.Position = UDim2.new(0, 0, 0.72, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
@@ -188,10 +189,16 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
     loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
+end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+loadstring(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)()
+end
 end)
 
 local TextButton = Instance.new("TextButton")
+TextButton.Name = "ClearNow"
 TextButton.Size = UDim2.new(0.2, 0, 0.28, 0)
 TextButton.Position = UDim2.new(0.2, 0, 0.72, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
@@ -202,11 +209,17 @@ TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
 CreateClear("Clear", function()
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
 game.CoreGui.Execute.Frame.ScriptTextBox.Text = ""
+end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text = ""
+end
 end)
 end)
 
 local TextButton = Instance.new("TextButton")
+TextButton.Name = "CopyScriptNow"
 TextButton.Size = UDim2.new(0.2, 0, 0.28, 0)
 TextButton.Position = UDim2.new(0.4, 0, 0.72, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
@@ -216,10 +229,16 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
 setclipboard(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
+end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+setclipboard(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
+end
 end)
 
 local ButtonClipBoard = Instance.new("TextButton")
+ButtonClipBoard.Name = "ButtonClipBoardNow"
 ButtonClipBoard.Size = UDim2.new(0.2, 0, 0.28, 0)
 ButtonClipBoard.Position = UDim2.new(0.6, 0, 0.72, 0)
 ButtonClipBoard.BackgroundColor3 = Color3.new(255,255,255)
@@ -233,6 +252,7 @@ loadstring(getclipboard())()
 end)
 
 local TextButton = Instance.new("TextButton")
+TextButton.Name = "ScriptHub"
 TextButton.Size = UDim2.new(0.2, 0, 0.28, 0)
 TextButton.Position = UDim2.new(0.8, 0, 0.72, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
@@ -262,8 +282,8 @@ end)
 
 local Frame6 = Instance.new("Frame")
 Frame6.Name = "Frame6"
-Frame6.Size = UDim2.new(0.3, 0, 0.56, 0)
-Frame6.Position = UDim2.new(0, 0, 0.154, 0)
+Frame6.Size = UDim2.new(0.28, 0, 1, 0)
+Frame6.Position = UDim2.new(-0.29, 0, 0, 0)
 Frame6.BackgroundColor3 = Color3.new(1, 1, 1)
 Frame6.Active = true
 Frame6.Visible = false
@@ -288,14 +308,20 @@ local Padding = Instance.new("UIPadding")
 Padding.PaddingTop = UDim.new(0, 10)
 Padding.Parent = ScrollingFrame
 
+function ButtonChoose(Name, Call)
 local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
+TextButton.Size = UDim2.new(0.8, 0, 0.13, 0)
 TextButton.Position = UDim2.new(0, 0, 0, 0)
 TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Setting"
+TextButton.Text = Name
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ScrollingFrame
 TextButton.MouseButton1Click:Connect(function()
+pcall(Call)
+end)
+end
+
+ButtonChoose("Setting", function()
 if game.CoreGui.Execute.Frame10.Visible == false then
 game.CoreGui.Execute.Frame10.Visible = true
 else
@@ -303,14 +329,7 @@ game.CoreGui.Execute.Frame10.Visible = false
 end
 end)
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
-TextButton.Position = UDim2.new(0, 0, 0, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Cloud"
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = ScrollingFrame
-TextButton.MouseButton1Click:Connect(function()
+ButtonChoose("Cloud", function()
 if game.CoreGui.Execute.Frame13.Visible == false then
 game.CoreGui.Execute.Frame13.Visible = true
 else
@@ -318,14 +337,7 @@ game.CoreGui.Execute.Frame13.Visible = false
 end
 end)
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
-TextButton.Position = UDim2.new(0, 0, 0, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Save Script"
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = ScrollingFrame
-TextButton.MouseButton1Click:Connect(function()
+ButtonChoose("Save Script", function()
 if game.CoreGui.Execute.Frame15.Visible == false then
 game.CoreGui.Execute.Frame15.Visible = true
 else
@@ -333,14 +345,7 @@ game.CoreGui.Execute.Frame15.Visible = false
 end
 end)
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
-TextButton.Position = UDim2.new(0, 0, 0, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Script Tab"
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = ScrollingFrame
-TextButton.MouseButton1Click:Connect(function()
+ButtonChoose("Script Tab", function()
 if game.CoreGui.Execute.Frame23.Visible == false then
 game.CoreGui.Execute.Frame23.Visible = true
 else
@@ -348,14 +353,7 @@ game.CoreGui.Execute.Frame23.Visible = false
 end
 end)
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
-TextButton.Position = UDim2.new(0, 0, 0, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Console"
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = ScrollingFrame
-TextButton.MouseButton1Click:Connect(function()
+ButtonChoose("Console", function()
 if game.CoreGui.Execute.Frame24.Visible == false then
 game.CoreGui.Execute.Frame24.Visible = true
 else
@@ -363,14 +361,7 @@ game.CoreGui.Execute.Frame24.Visible = false
 end
 end)
 
-local TextButton = Instance.new("TextButton")
-TextButton.Size = UDim2.new(0.8, 0, 0.23, 0)
-TextButton.Position = UDim2.new(0, 0, 0, 0)
-TextButton.BackgroundColor3 = Color3.new(255,255,255)
-TextButton.Text = "Check Player"
-TextButton.TextColor3 = Color3.new(0,0,0)
-TextButton.Parent = ScrollingFrame
-TextButton.MouseButton1Click:Connect(function()
+ButtonChoose("Check Player", function()
 if game.CoreGui.Execute.Frame26.Visible == false then
 game.CoreGui.Execute.Frame26.Visible = true
 else
@@ -539,10 +530,10 @@ end
 end)
 
 CreatorButton("Shift lock", function()
-if game.CoreGui.Execute.Shiftlock.Enabled == false then
-game.CoreGui.Execute.Shiftlock.Enabled = true
+if game.CoreGui.Execute.ShiftLockButton.Visible == false then
+game.CoreGui.Execute.ShiftLockButton.Visible = true
 else
-game.CoreGui.Execute.Shiftlock.Enabled = false
+game.CoreGui.Execute.ShiftLockButton.Visible = false
 end
 end)
 
@@ -1210,7 +1201,6 @@ TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
 TextButton.MouseButton1Click:Connect(function()
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Copy",Text = "Copy Success.",Icon = "rbxassetid://7733658504",Duration = 4})
 setclipboard(source)
 end)
 
@@ -1223,8 +1213,12 @@ TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
 TextButton.MouseButton1Click:Connect(function()
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Open",Text = "Open Success.",Icon = "rbxassetid://7733658504",Duration = 4})
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
 game.CoreGui.Execute.Frame.ScriptTextBox.Text = source
+end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text = source
+end
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -1313,6 +1307,7 @@ TextButton.MouseButton1Down:connect(function()
 if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
 game.CoreGui.Execute.Frame.ScriptTextBox.Visible = false
 end
+_G.TextBoxNewScript = Scripts.Name
 for i,v in pairs(game.CoreGui.Execute.Frame23.ScrollingFrame:GetChildren()) do
 if v.Name ~= "UIListLayout" and v.Name ~= "UIPadding" then
 game.CoreGui.Execute.Frame:FindFirstChild(v.Name).Visible = false
@@ -1336,6 +1331,7 @@ ButtonDelete.Parent = TextButton
 ButtonDelete.MouseButton1Down:connect(function()
 game.CoreGui.Execute.Frame23.ScrollingFrame:FindFirstChild(Scripts.Name):Destroy()
 game.CoreGui.Execute.Frame:FindFirstChild(Scripts.Name):Destroy()
+_G.TextBoxNewScript = nil
 _G.TextBox = 0
 for i,v in pairs(game.CoreGui.Execute.Frame23.ScrollingFrame:GetChildren()) do
 if v.Name ~= "UIListLayout" and v.Name ~= "UIPadding" then
@@ -1440,7 +1436,6 @@ LogConsole.Size = UDim2.new(0.94, 0, 0.6, 0)
 LogConsole.Position = UDim2.new(0.03, 0, 0.18, 0)
 LogConsole.BackgroundColor3 = Color3.new(255, 255, 255)
 LogConsole.Text = ""
-LogConsole.RichText = true
 LogConsole.MultiLine = true
 LogConsole.ClearTextOnFocus = false
 LogConsole.TextXAlignment = Enum.TextXAlignment.Left
@@ -1539,6 +1534,9 @@ TextButton.TextSize = 12
 TextButton.BackgroundTransparency = 1
 TextButton.TextColor3 = Color3.new(0, 0, 0)
 TextButton.Parent = TextLabel
+TextButton.MouseButton1Click:Connect(function()
+game.CoreGui.Execute.Frame26.Visible = false
+end)
 
 local ImageLabel = Instance.new("ImageLabel")
 ImageLabel.Name = "Image1"
@@ -1606,10 +1604,10 @@ TextButton.MouseButton1Click:Connect(function()
 local Success, Result = pcall(function()
 	local Player = game.CoreGui.Execute.Frame26.CheckText.Text
 	if Player then
-		local A = game.Players:GetUserIdFromNameAsync(Player) or nil
-			local B = game.Players:GetNameFromUserIdAsync(A)
-			local T = game.Players:GetUserThumbnailAsync(A, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-			local T2 = game.Players:GetUserThumbnailAsync(A, Enum.ThumbnailType.AvatarThumbnail, Enum.ThumbnailSize.Size420x420)
+		 A = game.Players:GetUserIdFromNameAsync(Player) or nil
+		 B = game.Players:GetNameFromUserIdAsync(A)
+		 T = game.Players:GetUserThumbnailAsync(A, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+	    T2 = game.Players:GetUserThumbnailAsync(A, Enum.ThumbnailType.AvatarThumbnail, Enum.ThumbnailSize.Size420x420)
 		if A ~= nil then
 				game.CoreGui.Execute.Frame26.Usernames.Text = B
 				game.CoreGui.Execute.Frame26.IDName.Text = A
@@ -1619,9 +1617,16 @@ local Success, Result = pcall(function()
 	end
 	end)
 if not Success then
+Old = game.CoreGui.Execute.Frame26.CheckText.Text
 game.CoreGui.Execute.Frame26.Usernames.Text = "No name in roblox"
 game.CoreGui.Execute.Frame26.IDName.Text = ""
 game.CoreGui.Execute.Frame26.CheckText.Text = ""
+wait(3)
+if A ~= nil and B ~= nil and Old ~= nil then
+game.CoreGui.Execute.Frame26.Usernames.Text = B
+game.CoreGui.Execute.Frame26.IDName.Text = A
+game.CoreGui.Execute.Frame26.CheckText.Text = Old
+end
 end
 end)
 
@@ -2283,223 +2288,59 @@ end)
 
 ------// Shiftlock \\--------
 
-local ShiftlockStarterGui = Instance.new("ScreenGui")
-ShiftlockStarterGui.Name = "Shiftlock"
-ShiftlockStarterGui.Parent = gui
-ShiftlockStarterGui.Enabled = false
+local Active
+local States = {
+    Off = "rbxasset://textures/ui/mouseLock_off@2x.png",
+    On = "rbxasset://textures/ui/mouseLock_on@2x.png",
+    Lock = "rbxasset://textures/MouseLockedCursor.png",
+    Lock2 = "rbxasset://SystemCursors/Cross"
+}
 
-local ImageButton = Instance.new("ImageButton")
-ImageButton.Parent = ShiftlockStarterGui
-ImageButton.Draggable = true
-ImageButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ImageButton.BackgroundTransparency = 1
-ImageButton.Position = UDim2.new(0.921914339, 0, 0.552375436, 0)
-ImageButton.Size = UDim2.new(0.0636147112, 0, 0.0661305636, 0)
-ImageButton.SizeConstraint = Enum.SizeConstraint.RelativeXX
-ImageButton.Image = "http://www.roblox.com/asset/?id=182223762"
+local ShiftLockButton = Instance.new("ImageButton")
+ShiftLockButton.Name = "ShiftLockButton"
+ShiftLockButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ShiftLockButton.BackgroundTransparency = 1.000
+ShiftLockButton.Position = UDim2.new(0.7, 0, 0.75, 0)
+ShiftLockButton.Size = UDim2.new(0.0636147112, 0, 0.0661305636, 0)
+ShiftLockButton.SizeConstraint = Enum.SizeConstraint.RelativeXX
+ShiftLockButton.Visible = false
+ShiftLockButton.Draggable = true
+ShiftLockButton.Image = States.Off
+ShiftLockButton.Parent = gui
 
--- Scripts:
+local ShiftlockCursor = Instance.new("ImageLabel")
+ShiftlockCursor.Name = "Shiftlock Cursor"
+ShiftlockCursor.Parent = ShiftLockButton
+ShiftlockCursor.Image = States.Lock
+ShiftlockCursor.Size = UDim2.new(0.03, 0, 0.03, 0)
+ShiftlockCursor.Position = UDim2.new(0.5, 0, 0.5, 0)
+ShiftlockCursor.AnchorPoint = Vector2.new(0.5, 0.5)
+ShiftlockCursor.SizeConstraint = Enum.SizeConstraint.RelativeXX
+ShiftlockCursor.BackgroundTransparency = 1
+ShiftlockCursor.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+ShiftlockCursor.Visible = false
 
-local function TLQOYN_fake_script()
-	local script = Instance.new("LocalScript", ImageButton)
-
-	local MobileCameraFramework = {}
-	local players = game:GetService("Players")
-	local runservice = game:GetService("RunService")
-	local CAS = game:GetService("ContextActionService")
-	local player = players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-	local root = character:WaitForChild("HumanoidRootPart")
-	local humanoid = character.Humanoid
-	local camera = workspace.CurrentCamera
-	local button = script.Parent
-	
-	uis = game:GetService("UserInputService")
-	ismobile = uis.TouchEnabled
-	button.Visible = ismobile
-	
-	local states = {
-		OFF = "rbxasset://textures/ui/mouseLock_off@2x.png",
-		ON = "rbxasset://textures/ui/mouseLock_on@2x.png"
-	}
-	local MAX_LENGTH = 900000
-	local active = false
-	local ENABLED_OFFSET = CFrame.new(1.7, 0, 0)
-	local DISABLED_OFFSET = CFrame.new(-1.7, 0, 0)
-	local function UpdateImage(STATE)
-		button.Image = states[STATE]
-	end
-	local function UpdateAutoRotate(BOOL)
-		humanoid.AutoRotate = BOOL
-	end
-	local function GetUpdatedCameraCFrame(ROOT, CAMERA)
-		return CFrame.new(root.Position, Vector3.new(CAMERA.CFrame.LookVector.X * MAX_LENGTH, root.Position.Y, CAMERA.CFrame.LookVector.Z * MAX_LENGTH))
-	end
-	local function EnableShiftlock()
-		UpdateAutoRotate(false)
-		UpdateImage("ON")
-		root.CFrame = GetUpdatedCameraCFrame(root, camera)
-		camera.CFrame = camera.CFrame * ENABLED_OFFSET
-	end
-	local function DisableShiftlock()
-		UpdateAutoRotate(true)
-		UpdateImage("OFF")
-		camera.CFrame = camera.CFrame * DISABLED_OFFSET
-		pcall(function()
-			active:Disconnect()
-			active = nil
-		end)
-	end
-	UpdateImage("OFF")
-	active = false
-	function ShiftLock()
-		if not active then
-			active = runservice.RenderStepped:Connect(function()
-				EnableShiftlock()
-			end)
-		else
-			DisableShiftlock()
-		end
-	end
-	local ShiftLockButton = CAS:BindAction("ShiftLOCK", ShiftLock, false, "On")
-	CAS:SetPosition("ShiftLOCK", UDim2.new(0.8, 0, 0.8, 0))
-	button.MouseButton1Click:Connect(function()
-		if not active then
-			active = runservice.RenderStepped:Connect(function()
-				EnableShiftlock()
-			end)
-		else
-			DisableShiftlock()
-		end
-	end)
-	return MobileCameraFramework
-end
-coroutine.wrap(TLQOYN_fake_script)()
-local function OMQRQRC_fake_script()
-	local script = Instance.new("LocalScript", ShiftlockStarterGui)
-
-	local Players = game:GetService("Players")
-	local UserInputService = game:GetService("UserInputService")
-	local Settings = UserSettings()
-	local GameSettings = Settings.GameSettings
-	local ShiftLockController = {}
-	while not Players.LocalPlayer do
-		wait()
-	end
-	local LocalPlayer = Players.LocalPlayer
-	local Mouse = LocalPlayer:GetMouse()
-	local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
-	local ScreenGui, ShiftLockIcon, InputCn
-	local IsShiftLockMode = true
-	local IsShiftLocked = true
-	local IsActionBound = false
-	local IsInFirstPerson = false
-	ShiftLockController.OnShiftLockToggled = Instance.new("BindableEvent")
-	local function isShiftLockMode()
-		return LocalPlayer.DevEnableMouseLock and GameSettings.ControlMode == Enum.ControlMode.MouseLockSwitch and LocalPlayer.DevComputerMovementMode ~= Enum.DevComputerMovementMode.ClickToMove and GameSettings.ComputerMovementMode ~= Enum.ComputerMovementMode.ClickToMove and LocalPlayer.DevComputerMovementMode ~= Enum.DevComputerMovementMode.Scriptable
-	end
-	if not UserInputService.TouchEnabled then
-		IsShiftLockMode = isShiftLockMode()
-	end
-	local function onShiftLockToggled()
-		IsShiftLocked = not IsShiftLocked
-		ShiftLockController.OnShiftLockToggled:Fire()
-	end
-	local initialize = function()
-		print("enabled")
-	end
-	function ShiftLockController:IsShiftLocked()
-		return IsShiftLockMode and IsShiftLocked
-	end
-	function ShiftLockController:SetIsInFirstPerson(isInFirstPerson)
-		IsInFirstPerson = isInFirstPerson
-	end
-	local function mouseLockSwitchFunc(actionName, inputState, inputObject)
-		if IsShiftLockMode then
-			onShiftLockToggled()
-		end
-	end
-	local function disableShiftLock()
-		if ScreenGui then
-			ScreenGui.Parent = nil
-		end
-		IsShiftLockMode = false
-		Mouse.Icon = ""
-		if InputCn then
-			InputCn:disconnect()
-			InputCn = nil
-		end
-		IsActionBound = false
-		ShiftLockController.OnShiftLockToggled:Fire()
-	end
-	local onShiftInputBegan = function(inputObject, isProcessed)
-		if isProcessed then
-			return
-		end
-		if inputObject.UserInputType ~= Enum.UserInputType.Keyboard or inputObject.KeyCode == Enum.KeyCode.LeftShift or inputObject.KeyCode == Enum.KeyCode.RightShift then
-		end
-	end
-	local function enableShiftLock()
-		IsShiftLockMode = isShiftLockMode()
-		if IsShiftLockMode then
-			if ScreenGui then
-				ScreenGui.Parent = gui
-			end
-			if IsShiftLocked then
-				ShiftLockController.OnShiftLockToggled:Fire()
-			end
-			if not IsActionBound then
-				InputCn = UserInputService.InputBegan:connect(onShiftInputBegan)
-				IsActionBound = true
-			end
-		end
-	end
-	GameSettings.Changed:connect(function(property)
-		if property == "ControlMode" then
-			if GameSettings.ControlMode == Enum.ControlMode.MouseLockSwitch then
-				enableShiftLock()
-			else
-				disableShiftLock()
-			end
-		elseif property == "ComputerMovementMode" then
-			if GameSettings.ComputerMovementMode == Enum.ComputerMovementMode.ClickToMove then
-				disableShiftLock()
-			else
-				enableShiftLock()
-			end
-		end
-	end)
-	LocalPlayer.Changed:connect(function(property)
-		if property == "DevEnableMouseLock" then
-			if LocalPlayer.DevEnableMouseLock then
-				enableShiftLock()
-			else
-				disableShiftLock()
-			end
-		elseif property == "DevComputerMovementMode" then
-			if LocalPlayer.DevComputerMovementMode == Enum.DevComputerMovementMode.ClickToMove or LocalPlayer.DevComputerMovementMode == Enum.DevComputerMovementMode.Scriptable then
-				disableShiftLock()
-			else
-				enableShiftLock()
-			end
-		end
-	end)
-	LocalPlayer.CharacterAdded:connect(function(character)
-		if not UserInputService.TouchEnabled then
-			initialize()
-		end
-	end)
-	if not UserInputService.TouchEnabled then
-		initialize()
-		if isShiftLockMode() then
-			InputCn = UserInputService.InputBegan:connect(onShiftInputBegan)
-			IsActionBound = true
-		end
-	end
-	enableShiftLock()
-	return ShiftLockController
-end
-coroutine.wrap(OMQRQRC_fake_script)()
+ShiftLockButton.MouseButton1Click:Connect(function()
+        if not Active then
+            Active = game:GetService("RunService").RenderStepped:Connect(function()
+                    game.Players.LocalPlayer.Character.Humanoid.AutoRotate = false
+                    ShiftLockButton.Image = States.On
+                    ShiftlockCursor.Visible = true
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, Vector3.new(workspace.CurrentCamera.CFrame.LookVector.X * 900000, game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y, workspace.CurrentCamera.CFrame.LookVector.Z * 900000))
+                    workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame * CFrame.new(1.7, 0, 0)
+                    workspace.CurrentCamera.Focus =CFrame.fromMatrix(workspace.CurrentCamera.Focus.Position, workspace.CurrentCamera.CFrame.RightVector, workspace.CurrentCamera.CFrame.UpVector) * CFrame.new(1.7, 0, 0)
+                end)
+        else
+            game.Players.LocalPlayer.Character.Humanoid.AutoRotate = true
+            ShiftLockButton.Image = States.Off
+            workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame * CFrame.new(-1.7, 0, 0)
+            ShiftlockCursor.Visible = false
+            pcall(function()
+                    Active:Disconnect()
+                    Active = nil
+            end)
+        end
+    end)
 
 ------// Auto Delete \\---------
 
