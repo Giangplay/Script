@@ -102,10 +102,19 @@ end)
 end
 end
 
+local function executescript(sc) 
+runcode(sc)
+end
+
 KeyCodeBo = game:GetService("UserInputService").InputBegan:Connect(function(input)
 	if input.KeyCode == Enum.KeyCode.L then
 	if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") and game.CoreGui.Execute.Frame:FindFirstChild("ScriptTextBox") then
-    loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
+    if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+    executescript(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
+end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+executescript(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
+end
    end
    elseif input.KeyCode == Enum.KeyCode.RightShift then
    if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") then
@@ -190,10 +199,10 @@ TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
 if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
-    loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
+    executescript(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
 end
 if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
-loadstring(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)()
+executescript(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
 end
 end)
 
@@ -248,7 +257,7 @@ ButtonClipBoard.TextWrapped = true
 ButtonClipBoard.TextColor3 = Color3.new(0,0,0)
 ButtonClipBoard.Parent = Frame
 ButtonClipBoard.MouseButton1Click:Connect(function()
-loadstring(getclipboard())()
+executeclipboard()
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -612,7 +621,6 @@ SettingToggle.Image = (_G.ToggleGet and "rbxassetid://3944680095") or "rbxasseti
 SettingToggle.ImageColor3 = (_G.ToggleGet and Color3.fromRGB(17, 245, 97)) or Color3.fromRGB(245, 21, 17)
 pcall(call,_G.ToggleGet)
 end)
-return SettingL2
 end
 
 ------// Button \\-------
@@ -632,7 +640,6 @@ SettingB.Parent = SettingSC
 SettingB.MouseButton1Click:Connect(function()
 pcall(call)
 end)
-return SettingB
 end
 
 ---------// TextBox \\----------
@@ -667,7 +674,6 @@ if enterPressed then
 callback(SettingBox.Text)
 end
 end)
-return SettingL3
 end
 
 --------// Started \\---------
@@ -1061,7 +1067,7 @@ ButtonExe.BackgroundTransparency = 0
 ButtonExe.TextColor3 = Color3.new(0, 0, 0)
 ButtonExe.Parent = SaveLabel
 ButtonExe.MouseButton1Click:Connect(function()
-    loadstring(SaveGet.Script)()
+    executescript(SaveGet.Script)
 end)
 
 local ButtonDelete = Instance.new("TextButton")
@@ -1189,7 +1195,7 @@ TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
 TextButton.MouseButton1Click:Connect(function()
-    loadstring(source)()
+    executescript(source)
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -2365,7 +2371,7 @@ end)
 
 for i,v in pairs(listfiles("ExecuteGet")) do
 if isfile(v) then
-local Getscript = string.gsub(v, [[ExecuteGet\]], "")
+local Getscript = string.gsub(v, "ExecuteGet/", "")
 SavedScriptsAdd({Name = Getscript, Script = readfile(v)})
 end
 end
