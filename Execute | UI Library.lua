@@ -102,18 +102,23 @@ end)
 end
 end
 
-local function executescript(sc) 
-runcode(sc)
-end
-
 KeyCodeBo = game:GetService("UserInputService").InputBegan:Connect(function(input)
 	if input.KeyCode == Enum.KeyCode.L then
 	if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") and game.CoreGui.Execute.Frame:FindFirstChild("ScriptTextBox") then
-    if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
-    executescript(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
+if identifyexecutor() == "Fluxus" then
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+    loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
 end
 if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
-executescript(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
+loadstring(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)()
+end
+else
+    if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+    runcode(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
+end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+runcode(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
+end
 end
    end
    elseif input.KeyCode == Enum.KeyCode.RightShift then
@@ -198,11 +203,20 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
+if identifyexecutor() == "Fluxus" then
 if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
-    executescript(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
+    loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
 end
 if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
-executescript(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
+loadstring(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)()
+end
+else
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+    runcode(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
+end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+runcode(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
+end
 end
 end)
 
@@ -1049,6 +1063,7 @@ SaveGet.Name = SaveGet.Name or "Get Name"
 SaveGet.Script = SaveGet.Script or "Put Hehe Now"
 
 local SaveLabel = Instance.new("TextLabel")
+SaveLabel.Name = SaveGet.Name
 SaveLabel.Size = UDim2.new(1, 0, 0.2, 0)
 SaveLabel.Position = UDim2.new(0, 0, 0, 0)
 SaveLabel.BackgroundColor3 = Color3.new(255, 255, 255)
@@ -1067,7 +1082,11 @@ ButtonExe.BackgroundTransparency = 0
 ButtonExe.TextColor3 = Color3.new(0, 0, 0)
 ButtonExe.Parent = SaveLabel
 ButtonExe.MouseButton1Click:Connect(function()
-    executescript(SaveGet.Script)
+if identifyexecutor() == "Fluxus" then
+    loadstring(SaveGet.Script)()
+else
+    runcode(SaveGet.Script)
+end
 end)
 
 local ButtonDelete = Instance.new("TextButton")
@@ -1081,10 +1100,9 @@ ButtonDelete.Parent = SaveLabel
 ButtonDelete.MouseButton1Click:Connect(function()
 CreateClear("Delete", function()
 delfile("ExecuteGet/"..SaveGet.Name)
-game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Delete Script",Text = "Success | Pls Rejoin game.",Icon = "rbxassetid://7733658504",Duration = 4})
+game.CoreGui.Execute.Frame11.ScrollingFrame[SaveGet.Name]:Destroy()
 end)
 end)
-return SaveLabel
 end
 
 -------// Could \\-------
@@ -1195,7 +1213,11 @@ TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
 TextButton.MouseButton1Click:Connect(function()
-    executescript(source)
+if identifyexecutor() == "Fluxus" then
+    loadstring(source)()
+    else
+    runcode(source)
+end
 end)
 
 local TextButton = Instance.new("TextButton")
@@ -1338,10 +1360,12 @@ ButtonDelete.MouseButton1Down:connect(function()
 game.CoreGui.Execute.Frame23.ScrollingFrame:FindFirstChild(Scripts.Name):Destroy()
 game.CoreGui.Execute.Frame:FindFirstChild(Scripts.Name):Destroy()
 _G.TextBoxNewScript = nil
+_G.MusTab = 1
 _G.TextBox = 0
 for i,v in pairs(game.CoreGui.Execute.Frame23.ScrollingFrame:GetChildren()) do
 if v.Name ~= "UIListLayout" and v.Name ~= "UIPadding" then
 _G.TextBox = _G.TextBox + 1
+_G.MusTab = _G.MusTab + 1
 end
 end
 if _G.TextBox > 0 then
@@ -1353,6 +1377,11 @@ if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == false then
 game.CoreGui.Execute.Frame.ScriptTextBox.Visible = true
 end
 end
+if _G.MusTab > 1 then
+game.CoreGui.Execute.Frame23.TextBoxScript.Text = "Script "..tostring(_G.MusTab)
+elseif _G.MusTab == 1 then
+game.CoreGui.Execute.Frame23.TextBoxScript.Text = "Script 1"
+end
 end)
 
 local TextBox = Instance.new("TextBox")
@@ -1361,7 +1390,7 @@ TextBox.Size = UDim2.new(1, 0, 0.57, 0)
 TextBox.Position = UDim2.new(0, 0, 0.154, 0)
 TextBox.BackgroundColor3 = Color3.new(255,255,255)
 TextBox.Text = ""
-TextBox.PlaceholderText = "New Tab Script"
+TextBox.PlaceholderText = "Script "..tostring(_G.MusTab).." (New Tab Script)"
 TextBox.TextXAlignment = Enum.TextXAlignment.Left
 TextBox.TextYAlignment = Enum.TextYAlignment.Top
 TextBox.TextWrapped = true
@@ -1386,6 +1415,7 @@ TextBox.TextColor3 = Color3.new(0, 0, 0)
 TextBox.BackgroundTransparency = 0
 TextBox.Parent = Frame20
 
+_G.MusTab = 1
 local TextButton = Instance.new("TextButton")
 TextButton.Size = UDim2.new(0.27, 0, 0.13, 0)
 TextButton.Position = UDim2.new(0.7, 0, 0.15, 0)
@@ -1397,6 +1427,8 @@ TextButton.TextColor3 = Color3.new(0, 0, 0)
 TextButton.Parent = Frame20
 TextButton.MouseButton1Down:connect(function()
 CreateButtonTab({Name = game.CoreGui.Execute.Frame23.TextBoxScript.Text})
+_G.MusTab = _G.MusTab + 1
+game.CoreGui.Execute.Frame23.TextBoxScript.Text = "Script "..tostring(_G.MusTab)
 end)
 
 ------Console | Ui Library-------
@@ -1513,8 +1545,6 @@ Frame26.Name = "Frame26"
 Frame26.Size = UDim2.new(0.5, 0, 0.8, 0)
 Frame26.Position = UDim2.new(0.2, 0, 0.1, 0)
 Frame26.BackgroundColor3 = Color3.new(1, 1, 1)
-Frame26.BorderColor3 = Color3.new(0, 0, 0)
-Frame26.BorderSizePixel = 1
 Frame26.Active = true
 Frame26.Visible = false
 Frame26.BackgroundTransparency = 0 
