@@ -2401,8 +2401,13 @@ end)
 
 for i,v in pairs(listfiles("ExecuteGet")) do
 if isfile(v) then
+if identifyexecutor() == "Fluxus" then
+local Getscript = string.gsub(v, [[ExecuteGet\]], "")
+SavedScriptsAdd({Name = Getscript, Script = readfile(v)})
+else
 local Getscript = string.gsub(v, "ExecuteGet/", "")
 SavedScriptsAdd({Name = Getscript, Script = readfile(v)})
+end
 end
 end
 end
