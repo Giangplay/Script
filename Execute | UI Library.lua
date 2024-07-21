@@ -1,7 +1,7 @@
 if _G.AutoExecuterExe == true then
-local ScriptSpawn = queueonteleport or queue_on_teleport or syn and syn.queue_on_teleport
-if ScriptSpawn then
-    ScriptSpawn([[
+local ScriptSpawnExecute = queueonteleport or queue_on_teleport or syn and syn.queue_on_teleport
+if ScriptSpawnExecute then
+    ScriptSpawnExecute([[
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
@@ -10,6 +10,8 @@ wait(0.25)
 _G.AutoExecuterExe = true
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Giangplay/Script/main/Execute%20%7C%20UI%20Library.lua"))()
     ]])
+else
+game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text = "You cannot auto execute",Icon = "rbxassetid://7733658504",Duration = 5})
 end
 end
 
@@ -68,7 +70,7 @@ local LabelClear = Instance.new("TextLabel")
 LabelClear.Size = UDim2.new(0.95, 0, 0.35, 0)
 LabelClear.Position = UDim2.new(0.025, 0, 0.08, 0)
 LabelClear.BackgroundColor3 = Color3.new(1,1,1)
-LabelClear.Text = "Are you ready to "..Name.." script?"
+LabelClear.Text = Name
 LabelClear.TextSize = 11
 LabelClear.TextWrapped = true
 LabelClear.TextColor3 = Color3.new(0,0,0)
@@ -231,7 +233,7 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
-CreateClear("Clear", function()
+CreateClear("Are you ready to Clear script?", function()
 if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
 game.CoreGui.Execute.Frame.ScriptTextBox.Text = ""
 end
@@ -384,7 +386,7 @@ game.CoreGui.Execute.Frame24.Visible = false
 end
 end)
 
-ButtonChoose("Check Player", function()
+ButtonChoose("Search Player", function()
 if game.CoreGui.Execute.Frame26.Visible == false then
 game.CoreGui.Execute.Frame26.Visible = true
 else
@@ -977,7 +979,7 @@ TextButton.Text = "Clear"
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame15
 TextButton.MouseButton1Click:Connect(function()
-CreateClear("Clear ", function()
+CreateClear("Are you ready to Clear script save?", function()
 game.CoreGui.Execute.Frame15.SaveScriptnow.Text = ""
 end)
 end)
@@ -1007,103 +1009,6 @@ else
 game.CoreGui.Execute.Frame11.Visible = false
 end
 end)
-
-----// Menu Save Script \\----
-
-local Frame20 = Instance.new("Frame")
-Frame20.Name = "Frame11"
-Frame20.Size = UDim2.new(0.5, 0, 0.8, 0)
-Frame20.Position = UDim2.new(0.2, 0, 0.1, 0)
-Frame20.BackgroundColor3 = Color3.new(1, 1, 1)
-Frame20.Active = true
-Frame20.Visible = false
-Frame20.BackgroundTransparency = 0 
-Frame20.Draggable = true
-Frame20.Parent = gui
-
-local TextLabel = Instance.new("TextLabel")
-TextLabel.Size = UDim2.new(1, 0, 0.13, 0)
-TextLabel.Position = UDim2.new(0, 0, 0, 0)
-TextLabel.BackgroundColor3 = Color3.new(255, 255, 255)
-TextLabel.Text = "Menu Save | Ui Library"
-TextLabel.TextSize = 10
-TextLabel.BackgroundTransparency = 0 
-TextLabel.TextColor3 = Color3.new(0, 0, 0)
-TextLabel.Parent = Frame20
-
-local ButtonX = Instance.new("TextButton")
-ButtonX.Size = UDim2.new(0.1, 0, 1, 0)
-ButtonX.Position = UDim2.new(0.9, 0, 0, 0)
-ButtonX.BackgroundColor3 = Color3.new(255, 255, 255)
-ButtonX.Text = "X"
-ButtonX.TextSize = 13
-ButtonX.BackgroundTransparency = 1
-ButtonX.TextColor3 = Color3.new(0, 0, 0)
-ButtonX.Parent = TextLabel
-ButtonX.MouseButton1Click:Connect(function()
-game.CoreGui.Execute.Frame11.Visible = false
-end)
-
-local ScrollingFrame = Instance.new("ScrollingFrame")
-ScrollingFrame.Size = UDim2.new(0.94, 0, 0.78, 0)
-ScrollingFrame.Position = UDim2.new(0.03, 0, 0.17, 0)
-ScrollingFrame.BackgroundColor3 = Color3.new(1, 1, 1)
-ScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
-ScrollingFrame.ScrollBarThickness = 0
-ScrollingFrame.Parent = Frame20
-
-local UIListLayout = Instance.new("UIListLayout")
-UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout.Padding = UDim.new(0, 5)
-UIListLayout.Parent = ScrollingFrame
-
-function SavedScriptsAdd(SaveGet)
-SaveGet.Name = SaveGet.Name or "Get Name"
-SaveGet.Script = SaveGet.Script or "Put Hehe Now"
-
-local SaveLabel = Instance.new("TextLabel")
-SaveLabel.Name = SaveGet.Name
-SaveLabel.Size = UDim2.new(1, 0, 0.2, 0)
-SaveLabel.Position = UDim2.new(0, 0, 0, 0)
-SaveLabel.BackgroundColor3 = Color3.new(255, 255, 255)
-SaveLabel.Text = SaveGet.Name
-SaveLabel.TextSize = 10
-SaveLabel.BackgroundTransparency = 0 
-SaveLabel.TextColor3 = Color3.new(0, 0, 0)
-SaveLabel.Parent = ScrollingFrame
-
-local ButtonExe = Instance.new("TextButton")
-ButtonExe.Size = UDim2.new(0.2, 0, 1, 0)
-ButtonExe.Position = UDim2.new(0.795, 0, 0, 0)
-ButtonExe.BackgroundColor3 = Color3.new(255, 255, 255)
-ButtonExe.Text = "Execute"
-ButtonExe.BackgroundTransparency = 0 
-ButtonExe.TextColor3 = Color3.new(0, 0, 0)
-ButtonExe.Parent = SaveLabel
-ButtonExe.MouseButton1Click:Connect(function()
-if identifyexecutor() == "Fluxus" then
-    loadstring(SaveGet.Script)()
-else
-    runcode(SaveGet.Script)
-end
-end)
-
-local ButtonDelete = Instance.new("TextButton")
-ButtonDelete.Size = UDim2.new(0.2, 0, 1, 0)
-ButtonDelete.Position = UDim2.new(0, 0, 0, 0)
-ButtonDelete.BackgroundColor3 = Color3.new(255, 255, 255)
-ButtonDelete.Text = "Delete"
-ButtonDelete.BackgroundTransparency = 0 
-ButtonDelete.TextColor3 = Color3.new(0, 0, 0)
-ButtonDelete.Parent = SaveLabel
-ButtonDelete.MouseButton1Click:Connect(function()
-CreateClear("Delete", function()
-delfile("ExecuteGet/"..SaveGet.Name)
-game.CoreGui.Execute.Frame11.ScrollingFrame[SaveGet.Name]:Destroy()
-end)
-end)
-end
 
 -------// Could \\-------
 
@@ -1677,9 +1582,11 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0, 0, 0)
 TextButton.Parent = Frame26
 TextButton.MouseButton1Click:Connect(function()
+CreateClear("Are you ready to Clear Check Player?", function()
 game.CoreGui.Execute.Frame26.Usernames.Text = ""
 game.CoreGui.Execute.Frame26.IDName.Text = ""
 game.CoreGui.Execute.Frame26.CheckText.Text = ""
+end
 end)
 
 -----Fly | Ui library-----
@@ -2396,6 +2303,103 @@ end
 end)
 end
 end)
+
+----// Menu Save Script \\----
+
+local Frame20 = Instance.new("Frame")
+Frame20.Name = "Frame11"
+Frame20.Size = UDim2.new(0.5, 0, 0.8, 0)
+Frame20.Position = UDim2.new(0.2, 0, 0.1, 0)
+Frame20.BackgroundColor3 = Color3.new(1, 1, 1)
+Frame20.Active = true
+Frame20.Visible = false
+Frame20.BackgroundTransparency = 0 
+Frame20.Draggable = true
+Frame20.Parent = gui
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(1, 0, 0.13, 0)
+TextLabel.Position = UDim2.new(0, 0, 0, 0)
+TextLabel.BackgroundColor3 = Color3.new(255, 255, 255)
+TextLabel.Text = "Menu Save | Ui Library"
+TextLabel.TextSize = 10
+TextLabel.BackgroundTransparency = 0 
+TextLabel.TextColor3 = Color3.new(0, 0, 0)
+TextLabel.Parent = Frame20
+
+local ButtonX = Instance.new("TextButton")
+ButtonX.Size = UDim2.new(0.1, 0, 1, 0)
+ButtonX.Position = UDim2.new(0.9, 0, 0, 0)
+ButtonX.BackgroundColor3 = Color3.new(255, 255, 255)
+ButtonX.Text = "X"
+ButtonX.TextSize = 13
+ButtonX.BackgroundTransparency = 1
+ButtonX.TextColor3 = Color3.new(0, 0, 0)
+ButtonX.Parent = TextLabel
+ButtonX.MouseButton1Click:Connect(function()
+game.CoreGui.Execute.Frame11.Visible = false
+end)
+
+local ScrollingFrame = Instance.new("ScrollingFrame")
+ScrollingFrame.Size = UDim2.new(0.94, 0, 0.78, 0)
+ScrollingFrame.Position = UDim2.new(0.03, 0, 0.17, 0)
+ScrollingFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+ScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ScrollingFrame.ScrollBarThickness = 0
+ScrollingFrame.Parent = Frame20
+
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 5)
+UIListLayout.Parent = ScrollingFrame
+
+function SavedScriptsAdd(SaveGet)
+SaveGet.Name = SaveGet.Name or "Get Name"
+SaveGet.Script = SaveGet.Script or "Put Hehe Now"
+
+local SaveLabel = Instance.new("TextLabel")
+SaveLabel.Name = SaveGet.Name
+SaveLabel.Size = UDim2.new(1, 0, 0.2, 0)
+SaveLabel.Position = UDim2.new(0, 0, 0, 0)
+SaveLabel.BackgroundColor3 = Color3.new(255, 255, 255)
+SaveLabel.Text = SaveGet.Name
+SaveLabel.TextSize = 10
+SaveLabel.BackgroundTransparency = 0 
+SaveLabel.TextColor3 = Color3.new(0, 0, 0)
+SaveLabel.Parent = ScrollingFrame
+
+local ButtonExe = Instance.new("TextButton")
+ButtonExe.Size = UDim2.new(0.2, 0, 1, 0)
+ButtonExe.Position = UDim2.new(0.795, 0, 0, 0)
+ButtonExe.BackgroundColor3 = Color3.new(255, 255, 255)
+ButtonExe.Text = "Execute"
+ButtonExe.BackgroundTransparency = 0 
+ButtonExe.TextColor3 = Color3.new(0, 0, 0)
+ButtonExe.Parent = SaveLabel
+ButtonExe.MouseButton1Click:Connect(function()
+if identifyexecutor() == "Fluxus" then
+    loadstring(SaveGet.Script)()
+else
+    runcode(SaveGet.Script)
+end
+end)
+
+local ButtonDelete = Instance.new("TextButton")
+ButtonDelete.Size = UDim2.new(0.2, 0, 1, 0)
+ButtonDelete.Position = UDim2.new(0, 0, 0, 0)
+ButtonDelete.BackgroundColor3 = Color3.new(255, 255, 255)
+ButtonDelete.Text = "Delete"
+ButtonDelete.BackgroundTransparency = 0 
+ButtonDelete.TextColor3 = Color3.new(0, 0, 0)
+ButtonDelete.Parent = SaveLabel
+ButtonDelete.MouseButton1Click:Connect(function()
+CreateClear("Are you ready to Delete Files Script", function()
+delfile("ExecuteGet/"..SaveGet.Name)
+game.CoreGui.Execute.Frame11.ScrollingFrame[SaveGet.Name]:Destroy()
+end)
+end)
+end
 
 -------// Save Script Spawn \\-------
 
