@@ -1,3 +1,7 @@
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
 if _G.AutoExecuterExe == true then
 local ScriptSpawnExecute = queueonteleport or queue_on_teleport or syn and syn.queue_on_teleport
 if ScriptSpawnExecute then
@@ -1586,7 +1590,7 @@ CreateClear("Are you ready to Clear Check Player?", function()
 game.CoreGui.Execute.Frame26.Usernames.Text = ""
 game.CoreGui.Execute.Frame26.IDName.Text = ""
 game.CoreGui.Execute.Frame26.CheckText.Text = ""
-end
+end)
 end)
 
 -----Fly | Ui library-----
