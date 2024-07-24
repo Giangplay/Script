@@ -3,9 +3,9 @@ if not game:IsLoaded() then
 end
 
 if _G.AutoExecuterExe == true then
-local ScriptSpawnExecute = queueonteleport or queue_on_teleport or syn and syn.queue_on_teleport
-if ScriptSpawnExecute then
-    ScriptSpawnExecute([[
+local ScriptSpawnExecuteUiLib = queueonteleport or queue_on_teleport or syn and syn.queue_on_teleport
+if ScriptSpawnExecuteUiLib then
+    ScriptSpawnExecuteUiLib([[
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
@@ -74,7 +74,7 @@ local LabelClear = Instance.new("TextLabel")
 LabelClear.Size = UDim2.new(0.95, 0, 0.35, 0)
 LabelClear.Position = UDim2.new(0.025, 0, 0.08, 0)
 LabelClear.BackgroundColor3 = Color3.new(1,1,1)
-LabelClear.Text = Name
+LabelClear.Text = "Are you ready to "..Name.." script?"
 LabelClear.TextSize = 11
 LabelClear.TextWrapped = true
 LabelClear.TextColor3 = Color3.new(0,0,0)
@@ -112,23 +112,21 @@ KeyCodeBo = game:GetService("UserInputService").InputBegan:Connect(function(inpu
 	if input.KeyCode == Enum.KeyCode.L then
 	if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") and game.CoreGui.Execute.Frame:FindFirstChild("ScriptTextBox") then
 if identifyexecutor() == "Fluxus" then
-for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
-if v:IsA("TextBox") then
-if v.Visible == true then
-loadstring(v.Text)()
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+    loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
 end
-end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+loadstring(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)()
 end
 else
-for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
-if v:IsA("TextBox") then
-if v.Visible == true then
-runcode(v.Text)
+    if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+    runcode(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
+end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+runcode(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
 end
 end
-end
-end
-end
+   end
    elseif input.KeyCode == Enum.KeyCode.RightShift then
    if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") then
    game.CoreGui.Execute.Frame.Visible = not game.CoreGui.Execute.Frame.Visible
@@ -212,20 +210,18 @@ TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
 if identifyexecutor() == "Fluxus" then
-for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
-if v:IsA("TextBox") then
-if v.Visible == true then
-loadstring(v.Text)()
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+    loadstring(game.CoreGui.Execute.Frame.ScriptTextBox.Text)()
 end
-end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+loadstring(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)()
 end
 else
-for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
-if v:IsA("TextBox") then
-if v.Visible == true then
-runcode(v.Text)
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+    runcode(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
 end
-end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+runcode(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
 end
 end
 end)
@@ -241,13 +237,12 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
-CreateClear("Are you ready to Clear script?", function()
-for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
-if v:IsA("TextBox") then
-if v.Visible == true then
-v.Text = ""
+CreateClear("Clear", function()
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+game.CoreGui.Execute.Frame.ScriptTextBox.Text = ""
 end
-end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text = ""
 end
 end)
 end)
@@ -263,12 +258,11 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
-for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
-if v:IsA("TextBox") then
-if v.Visible == true then
-setclipboard(v.Text)
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+setclipboard(game.CoreGui.Execute.Frame.ScriptTextBox.Text)
 end
-end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+setclipboard(game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text)
 end
 end)
 
@@ -989,7 +983,7 @@ TextButton.Text = "Clear"
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame15
 TextButton.MouseButton1Click:Connect(function()
-CreateClear("Are you ready to Clear script save?", function()
+CreateClear("Clear ", function()
 game.CoreGui.Execute.Frame15.SaveScriptnow.Text = ""
 end)
 end)
@@ -1110,14 +1104,10 @@ ButtonDelete.BackgroundTransparency = 0
 ButtonDelete.TextColor3 = Color3.new(0, 0, 0)
 ButtonDelete.Parent = SaveLabel
 ButtonDelete.MouseButton1Click:Connect(function()
-CreateClear("Are you ready to Delete Files Script", function()
+CreateClear("Delete", function()
 delfile("ExecuteGet/"..SaveGet.Name)
 end)
 end)
-end
-
-for i,v in pairs(listfiles("ExecuteGet")) do
-SavedScriptsAdd({Name = v:sub(12, #v), Script = readfile(v)})
 end
 
 -------// Could \\-------
@@ -1256,12 +1246,11 @@ TextButton.TextSize = 9
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = ImageLabel
 TextButton.MouseButton1Click:Connect(function()
-for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
-if v:IsA("TextBox") then
-if v.Visible == true then
-v.Text = source
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+game.CoreGui.Execute.Frame.ScriptTextBox.Text = source
 end
-end
+if _G.TextBoxNewScript ~= nil and game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Visible == true then
+game.CoreGui.Execute.Frame[_G.TextBoxNewScript].Text = source
 end
 end)
 
@@ -1348,11 +1337,13 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0, 0, 0)
 TextButton.Parent = ScrollingFrame
 TextButton.MouseButton1Down:connect(function()
-for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
-if v:IsA("TextBox") then
-if v.Visible == true then
-v.Visible = false
+if game.CoreGui.Execute.Frame.ScriptTextBox.Visible == true then
+game.CoreGui.Execute.Frame.ScriptTextBox.Visible = false
 end
+_G.TextBoxNewScript = Scripts.Name
+for i,v in pairs(game.CoreGui.Execute.Frame23.ScrollingFrame:GetChildren()) do
+if v.Name ~= "UIListLayout" and v.Name ~= "UIPadding" then
+game.CoreGui.Execute.Frame:FindFirstChild(v.Name).Visible = false
 end
 end
 if game.CoreGui.Execute.Frame:FindFirstChild(Scripts.Name).Visible == false then
@@ -1373,6 +1364,7 @@ ButtonDelete.Parent = TextButton
 ButtonDelete.MouseButton1Down:connect(function()
 game.CoreGui.Execute.Frame23.ScrollingFrame:FindFirstChild(Scripts.Name):Destroy()
 game.CoreGui.Execute.Frame:FindFirstChild(Scripts.Name):Destroy()
+_G.TextBoxNewScript = nil
 _G.MusTab = 1
 _G.TextBox = 0
 for i,v in pairs(game.CoreGui.Execute.Frame23.ScrollingFrame:GetChildren()) do
@@ -1690,11 +1682,9 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0, 0, 0)
 TextButton.Parent = Frame26
 TextButton.MouseButton1Click:Connect(function()
-CreateClear("Are you ready to Clear Check Player?", function()
 game.CoreGui.Execute.Frame26.Usernames.Text = ""
 game.CoreGui.Execute.Frame26.IDName.Text = ""
 game.CoreGui.Execute.Frame26.CheckText.Text = ""
-end)
 end)
 
 -----Fly | Ui library-----
@@ -2411,4 +2401,8 @@ end
 end)
 end
 end)
+
+for i,v in ipairs(listfiles("ExecuteGet")) do
+SavedScriptsAdd({Name = v:sub(12, #v), Script = readfile(v)})
+end
 end
