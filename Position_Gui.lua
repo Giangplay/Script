@@ -1,144 +1,197 @@
-local Text = Enum.Font.FredokaOne
+if game.CoreGui:FindFirstChild("PositionGui") == nil then
+local gui = Instance.new("ScreenGui")
+gui.Name = "PositionGui"
+gui.Parent = gethui()
 
-local ScreenGui = Instance.new("ScreenGui")
+print("Key L [ Off / On Gui ]") 
+print("Key P [ Check ]") 
+print("Key T [ Teleport ]")
+print("Key E [ Convert in Position / CFrame ]") 
+print("Key A [ Auto Check ]") 
+
+KeyCodeBo = game:GetService("UserInputService").InputBegan:Connect(function(input)
+if game.CoreGui:FindFirstChild("PositionGui") and game.CoreGui.PositionGui:FindFirstChild("PositionYour") then
+if input.KeyCode == Enum.KeyCode.L then
+game.CoreGui.PositionGui.PositionYour.Visible = not game.CoreGui.PositionGui.PositionYour.Visible
+elseif input.KeyCode == Enum.KeyCode.P then
+if game.CoreGui.PositionGui.PositionYour.CheckUse.Text == "You Using Position" then
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z))
+elseif game.CoreGui.PositionGui.PositionYour.CheckUse.Text == "You Using CFrame" then
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+end
+elseif input.KeyCode == Enum.KeyCode.T then
+_G.TeleportGet = tostring(game.CoreGui.PositionGui.PositionYour.Check.Text)
+game.Players.LocalPlayer.Character:MoveTo(_G.TeleportGet)
+elseif input.KeyCode == Enum.KeyCode.E then
+if game.CoreGui.PositionGui.PositionYour.CheckUse.Text ~= "You Using Position" then
+game.CoreGui.PositionGui.PositionYour.CheckUse.Text = "You Using Position"
+game.CoreGui.PositionGui.PositionYour.Getcheck.Text = "Convert In [ CFrame ]"
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z))
+elseif game.CoreGui.PositionGui.PositionYour.CheckUse.Text == "You Using Position" then
+game.CoreGui.PositionGui.PositionYour.CheckUse.Text = "You Using CFrame"
+game.CoreGui.PositionGui.PositionYour.Getcheck.Text = "Convert In [ Position ]"
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+end
+elseif input.KeyCode == Enum.KeyCode.A then
+_G.Auto = not _G.Auto
+while _G.Auto do
+if game.CoreGui:FindFirstChild("PositionGui") and game.CoreGui.PositionGui:FindFirstChild("PositionYour") then
+if game.CoreGui.PositionGui.PositionYour.CheckUse.Text == "You Using Position" then
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z))
+elseif game.CoreGui.PositionGui.PositionYour.CheckUse.Text == "You Using CFrame" then
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+end
+end
+task.wait()
+end
+end
+end
+end)
+
 local Frame = Instance.new("Frame")
-local title = Instance.new("TextLabel")
-local copy = Instance.new("TextButton")
-local pos = Instance.new("TextLabel")
-local find = Instance.new("TextButton")
-local Bindable = Instance.new("BindableFunction")
-
-ScreenGui.Parent = game.CoreGui
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
-Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.639646292, 0, 0.399008662, 0)
-Frame.Size = UDim2.new(0, 387, 0, 206)
+Frame.Name = "PositionYour"
+Frame.Size = UDim2.new(0.5, 0, 0.7, 0)
+Frame.Position = UDim2.new(0.25, 0, 0.1, 0)
+Frame.BackgroundColor3 = Color3.new(1, 1, 1)
 Frame.Active = true
+Frame.Draggable = true
+Frame.Parent = gui
 
-Frameui = Instance.new("UICorner", Frame)
-Frameui.CornerRadius = UDim.new(0, 4)
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(1, 0, 0.13, 0)
+TextLabel.Position = UDim2.new(0, 0, 0, 0)
+TextLabel.BackgroundColor3 = Color3.new(1,1,1)
+TextLabel.Text = "Position & CFrame | Ui Library"
+TextLabel.TextSize = 10
+TextLabel.TextColor3 = Color3.new(0,0,0)
+TextLabel.Parent = Frame
 
-title.Name = "title"
-title.Parent = Frame
-title.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-title.BorderSizePixel = 0
-title.Size = UDim2.new(0, 387, 0, 50)
-title.Font = Text
-title.Text = "Position Finder"
-title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.TextSize = 30.000
-title.TextWrapped = true
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.13, 0, 0.13, 0)
+TextButton.Position = UDim2.new(0.87, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "X"
+TextButton.TextSize = 15
+TextButton.BackgroundTransparency = 1
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+    gui:Destroy()
+end)
 
-titleui = Instance.new("UICorner", title)
-titleui.CornerRadius = UDim.new(0, 4)
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Name = "CheckUse"
+TextLabel.Size = UDim2.new(0.3, 0, 0.1, 0)
+TextLabel.Position = UDim2.new(0.35, 0, 0.13, 0)
+TextLabel.BackgroundColor3 = Color3.new(1,1,1)
+TextLabel.Text = "You Using Position"
+TextLabel.TextSize = 10
+TextLabel.BackgroundTransparency = 1
+TextLabel.TextColor3 = Color3.new(0,0,0)
+TextLabel.Parent = Frame
 
-copy.Name = "copy"
-copy.Parent = Frame
-copy.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-copy.BorderSizePixel = 0
-copy.Position = UDim2.new(0.527131796, 0, 0.635922313, 0)
-copy.Size = UDim2.new(0, 148, 0, 50)
-copy.Font = Text
-copy.Text = "Select"
-copy.TextColor3 = Color3.fromRGB(255, 255, 255)
-copy.TextSize = 20.000
+local TextBox = Instance.new("TextBox")
+TextBox.Name = "Check"
+TextBox.Size = UDim2.new(0.93, 0, 0.2, 0)
+TextBox.Position = UDim2.new(0.04, 0, 0.22, 0)
+TextBox.BackgroundColor3 = Color3.new(1,1,1)
+TextBox.Text = ""
+TextBox.TextWrapped = true
+TextBox.TextColor3 = Color3.new(0,0,0)
+TextBox.TextSize = 10
+TextBox.Parent = Frame
 
-copyui = Instance.new("UICorner", copy)
-copyui.CornerRadius = UDim.new(0, 4)
-
-pos.Name = "pos"
-pos.Parent = Frame
-pos.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-pos.BorderSizePixel = 0
-pos.Position = UDim2.new(0.0904392749, 0, 0.305825233, 0)
-pos.Size = UDim2.new(0, 317, 0, 50)
-pos.Font = Text
-pos.Text = ""
-pos.TextColor3 = Color3.fromRGB(255, 255, 255)
-pos.TextSize = 20.000
-
-posui = Instance.new("UICorner", pos)
-posui.CornerRadius = UDim.new(0, 4)
-
-find.Name = "find"
-find.Parent = Frame
-find.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-find.BorderSizePixel = 0
-find.Position = UDim2.new(0.0904392898, 0, 0.635922313, 0)
-find.Size = UDim2.new(0, 148, 0, 50)
-find.Font = Text
-find.Text = "Find"
-find.TextColor3 = Color3.fromRGB(255, 255, 255)
-find.TextSize = 20.000
-
-findui = Instance.new("UICorner", find)
-findui.CornerRadius = UDim.new(0, 4)
-
-local function UMTQ_fake_script()
-local script = Instance.new("LocalScript", copy)
-script.Parent.MouseButton1Click:Connect(function()
-function Callback(answer)
-if answer == "Available" then
-setclipboard("game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new("..script.Parent.Parent.pos.Text..")")
-elseif answer == "Not Available" then
-setclipboard(script.Parent.Parent.pos.Text)
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "CheckTele"
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.05, 0, 0.5, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Check"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.PositionGui.PositionYour.CheckUse.Text == "You Using Position" then
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z))
+elseif game.CoreGui.PositionGui.PositionYour.CheckUse.Text == "You Using CFrame" then
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
 end
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "Teleport"
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.36, 0, 0.5, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Teleport"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+_G.TeleportGet = tostring(game.CoreGui.PositionGui.PositionYour.Check.Text)
+game.Players.LocalPlayer.Character:MoveTo(_G.TeleportGet)
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.05, 0, 0.75, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "[ Copy ] Available Teleport"
+TextButton.TextWrapped = true
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+setclipboard("game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new("..game.CoreGui.PositionGui.PositionYour.Check.Text..")")
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.28, 0, 0.2, 0)
+TextButton.Position = UDim2.new(0.36, 0, 0.75, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "[ Copy ] No Available Teleport"
+TextButton.TextWrapped = true
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+setclipboard(game.CoreGui.PositionGui.PositionYour.Check.Text)
+end)
+
+local TextButton = Instance.new("TextButton")
+TextButton.Name = "Getcheck"
+TextButton.Size = UDim2.new(0.28, 0, 0.45, 0)
+TextButton.Position = UDim2.new(0.67, 0, 0.5, 0)
+TextButton.BackgroundColor3 = Color3.new(1,1,1)
+TextButton.Text = "Convert In [ CFrame ]"
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = Frame
+TextButton.MouseButton1Click:Connect(function()
+if game.CoreGui.PositionGui.PositionYour.CheckUse.Text ~= "You Using Position" then
+game.CoreGui.PositionGui.PositionYour.CheckUse.Text = "You Using Position"
+game.CoreGui.PositionGui.PositionYour.Getcheck.Text = "Convert In [ CFrame ]"
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z))
+elseif game.CoreGui.PositionGui.PositionYour.CheckUse.Text == "You Using Position" then
+game.CoreGui.PositionGui.PositionYour.CheckUse.Text = "You Using CFrame"
+game.CoreGui.PositionGui.PositionYour.Getcheck.Text = "Convert In [ Position ]"
+game.CoreGui.PositionGui.PositionYour.Check.Text = tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
 end
-Bindable.OnInvoke = Callback
-game.StarterGui:SetCore("SendNotification", {Title = "Error",Text = "Position You Choose To Go",Duration = 10,Button1 = "Available",Button2 = "Not Available",Icon = "rbxassetid://7733658504",Callback = Bindable})
+end)
+
+AutoDelete = game:GetService("RunService").RenderStepped:Connect(function()
+if game.CoreGui:FindFirstChild("PositionGui") == nil then
+pcall(function()
+if _G.Auto == true then
+_G.Auto = false
+_G.Auto = nil
+end
+if Active then
+   Active:Disconnect()
+   Active = nil
+   elseif AutoDelete then
+   AutoDelete:Disconnect()
+   AutoDelete = nil
+   elseif KeyCodeBo then
+   KeyCodeBo:Disconnect()
+   KeyCodeBo = nil
+end
 end)
 end
-coroutine.wrap(UMTQ_fake_script)()
-local function KJAYG_fake_script()
-	local script = Instance.new('LocalScript', Frame)
-
-	local UIS = game:GetService("UserInputService")
-	function dragify(Frame)
-	    dragToggle = nil
-	    local dragSpeed = 0
-	    dragInput = nil
-	    dragStart = nil
-	    local dragPos = nil
-	    function updateInput(input)
-	        local Delta = input.Position - dragStart
-	        local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
-	        game:GetService("TweenService"):Create(Frame, TweenInfo.new(0.25), {Position = Position}):Play()
-	    end
-	    Frame.InputBegan:Connect(function(input)
-	        if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UIS:GetFocusedTextBox() == nil then
-	            dragToggle = true
-	            dragStart = input.Position
-	            startPos = Frame.Position
-	            input.Changed:Connect(function()
-	                if input.UserInputState == Enum.UserInputState.End then
-	                    dragToggle = false
-	                end
-	            end)
-	        end
-	    end)
-	    Frame.InputChanged:Connect(function(input)
-	        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-	            dragInput = input
-	        end
-	    end)
-	    game:GetService("UserInputService").InputChanged:Connect(function(input)
-	        if input == dragInput and dragToggle then
-	            updateInput(input)
-	        end
-	    end)
-	end
-	
-	dragify(script.Parent)
+end)
 end
-coroutine.wrap(KJAYG_fake_script)()
-local function EKBNYI_fake_script() -- find.LocalScript 
-	local script = Instance.new('LocalScript', find)
-
-	script.Parent.MouseButton1Down:Connect(function()
-		script.Parent.Parent.pos.Text = tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z))
-	end)
-end
-coroutine.wrap(EKBNYI_fake_script)()
