@@ -74,7 +74,7 @@ local LabelClear = Instance.new("TextLabel")
 LabelClear.Size = UDim2.new(0.95, 0, 0.35, 0)
 LabelClear.Position = UDim2.new(0.025, 0, 0.08, 0)
 LabelClear.BackgroundColor3 = Color3.new(1,1,1)
-LabelClear.Text = "Are you ready to "..Name.." script?"
+LabelClear.Text = "Are You Ready To "..Name
 LabelClear.TextSize = 11
 LabelClear.TextWrapped = true
 LabelClear.TextColor3 = Color3.new(0,0,0)
@@ -108,9 +108,19 @@ end)
 end
 end
 
+_G.ExecuteKey = {
+	["Execute"] = Enum.KeyCode.L,
+	["ONOFF"] = Enum.KeyCode.RightShift,
+	["Copyscript"] = Enum.KeyCode.C,
+	["Clearscript"] = Enum.KeyCode.O,
+	["OpenCloseScriptHub"] = Enum.KeyCode.P,
+	["OpenCloseChooseUi"] = Enum.KeyCode.U
+}
+
 KeyCodeBo = game:GetService("UserInputService").InputBegan:Connect(function(input)
-	if input.KeyCode == Enum.KeyCode.L then
-	if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") and game.CoreGui.Execute.Frame:FindFirstChild("ScriptTextBox") then
+if _G.KeyboardExecute == true then
+if input.KeyCode == _G.ExecuteKey["Execute"] then
+if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") and game.CoreGui.Execute.Frame:FindFirstChild("ScriptTextBox") then
 if identifyexecutor() == "Fluxus" then
 for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
 if v:IsA("TextBox") then
@@ -129,10 +139,45 @@ end
 end
 end
 end
-   elseif input.KeyCode == Enum.KeyCode.RightShift then
-   if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") then
-   game.CoreGui.Execute.Frame.Visible = not game.CoreGui.Execute.Frame.Visible
-   end
+elseif input.KeyCode == _G.ExecuteKey["ONOFF"] then
+if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") then
+game.CoreGui.Execute.Frame.Visible = not game.CoreGui.Execute.Frame.Visible
+end
+elseif input.KeyCode == _G.ExecuteKey["Copyscript"] then
+if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") then
+for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
+if v:IsA("TextBox") then
+if v.Visible == true then
+setclipboard(v.Text)
+end
+end
+end
+end
+elseif input.KeyCode == _G.ExecuteKey["Clearscript"] then
+if game.CoreGui:FindFirstChild("Execute") and game.CoreGui.Execute:FindFirstChild("Frame") then
+CreateClear("Clear script?", function()
+for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
+if v:IsA("TextBox") then
+if v.Visible == true then
+v.Text = ""
+end
+end
+end
+end)
+end
+elseif input.KeyCode == _G.ExecuteKey["OpenCloseScriptHub"] then
+if game.CoreGui.Execute.Frame1.Visible == false then
+game.CoreGui.Execute.Frame1.Visible = true
+else
+game.CoreGui.Execute.Frame1.Visible = false
+end
+elseif input.KeyCode == _G.ExecuteKey["OpenCloseChooseUi"] then
+if game.CoreGui.Execute.Frame6New.Visible == false then
+game.CoreGui.Execute.Frame6New.Visible = true
+else
+game.CoreGui.Execute.Frame6New.Visible = false
+end
+end
 end
 end)
 
@@ -192,7 +237,7 @@ TextBox.PlaceholderText = "Welcome To Execute | Ui library, Get Some You Have In
 TextBox.TextXAlignment = Enum.TextXAlignment.Left
 TextBox.TextYAlignment = Enum.TextYAlignment.Top
 TextBox.TextWrapped = true
-TextBox.FontFace = Font.new([[rbxassetid://11702779517]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)
+TextBox.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 TextBox.ClipsDescendants = true
 TextBox.MultiLine = true
 TextBox.ClearTextOnFocus = false
@@ -241,7 +286,7 @@ TextButton.BackgroundTransparency = 0
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame
 TextButton.MouseButton1Click:Connect(function()
-CreateClear("Clear", function()
+CreateClear("Clear script?", function()
 for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
 if v:IsA("TextBox") then
 if v.Visible == true then
@@ -397,6 +442,112 @@ end
 end)
 
 ButtonChoose("Search Player", function()
+if game.CoreGui.Execute.Frame26.Visible == false then
+game.CoreGui.Execute.Frame26.Visible = true
+else
+game.CoreGui.Execute.Frame26.Visible = false
+end
+end)
+
+--------// Clone Frame 6 \\---------
+
+local Frame6New = Instance.new("Frame")
+Frame6New.Name = "Frame6New"
+Frame6New.Size = UDim2.new(0.17, 0, 0.7, 0)
+Frame6New.Position = UDim2.new(0.1, 0, 0.1, 0)
+Frame6New.BackgroundColor3 = Color3.new(1, 1, 1)
+Frame6New.Active = true
+Frame6New.BackgroundTransparency = 1
+Frame6New.Draggable = true
+Frame6New.Visible = false
+Frame6New.Parent = gui
+
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(1, 0, 0.1, 0)
+TextButton.Position = UDim2.new(0, 0, -0.12, 0)
+TextButton.BackgroundColor3 = Color3.new(255, 255, 255)
+TextButton.Text = "X"
+TextButton.TextSize = 10
+TextButton.BackgroundTransparency = 0 
+TextButton.TextColor3 = Color3.new(0, 0, 0)
+TextButton.Parent = Frame6New
+TextButton.MouseButton1Click:Connect(function()
+game.CoreGui.Execute.Frame6New.Visible = false
+end)
+
+local ScrollingFrame = Instance.new("ScrollingFrame")
+ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
+ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
+ScrollingFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+ScrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(255, 186, 117)
+ScrollingFrame.ScrollBarThickness = 0
+ScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ScrollingFrame.Parent = Frame6New
+
+local Ui = Instance.new("UIListLayout")
+Ui.HorizontalAlignment = Enum.HorizontalAlignment.Center
+Ui.SortOrder = Enum.SortOrder.LayoutOrder
+Ui.Padding = UDim.new(0, 10)
+Ui.Parent = ScrollingFrame
+
+local Padding = Instance.new("UIPadding")
+Padding.PaddingTop = UDim.new(0, 10)
+Padding.Parent = ScrollingFrame
+
+function ButtonChooseClone(Name, Call)
+local TextButton = Instance.new("TextButton")
+TextButton.Size = UDim2.new(0.8, 0, 0.13, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(255,255,255)
+TextButton.Text = Name
+TextButton.TextColor3 = Color3.new(0,0,0)
+TextButton.Parent = ScrollingFrame
+TextButton.MouseButton1Click:Connect(function()
+pcall(Call)
+end)
+end
+
+ButtonChooseClone("Setting", function()
+if game.CoreGui.Execute.Frame10.Visible == false then
+game.CoreGui.Execute.Frame10.Visible = true
+else
+game.CoreGui.Execute.Frame10.Visible = false
+end
+end)
+
+ButtonChooseClone("Cloud", function()
+if game.CoreGui.Execute.Frame13.Visible == false then
+game.CoreGui.Execute.Frame13.Visible = true
+else
+game.CoreGui.Execute.Frame13.Visible = false
+end
+end)
+
+ButtonChooseClone("Save Script", function()
+if game.CoreGui.Execute.Frame15.Visible == false then
+game.CoreGui.Execute.Frame15.Visible = true
+else
+game.CoreGui.Execute.Frame15.Visible = false
+end
+end)
+
+ButtonChooseClone("Script Tab", function()
+if game.CoreGui.Execute.Frame23.Visible == false then
+game.CoreGui.Execute.Frame23.Visible = true
+else
+game.CoreGui.Execute.Frame23.Visible = false
+end
+end)
+
+ButtonChooseClone("Console", function()
+if game.CoreGui.Execute.Frame24.Visible == false then
+game.CoreGui.Execute.Frame24.Visible = true
+else
+game.CoreGui.Execute.Frame24.Visible = false
+end
+end)
+
+ButtonChooseClone("Search Player", function()
 if game.CoreGui.Execute.Frame26.Visible == false then
 game.CoreGui.Execute.Frame26.Visible = true
 else
@@ -622,7 +773,7 @@ Ui.Parent = SettingSC
 
 ------// Toggle \\-------
 
-function CreateToggle(Name,call)
+function CreateToggle(Name,call,Winds)
 local SettingL2 = Instance.new("TextLabel")
 SettingL2.Size = UDim2.new(0.8, 0, 0.2, 0)
 SettingL2.Position = UDim2.new(0, 0, 0, 0)
@@ -762,9 +913,9 @@ end)
 
 
 CreateToggle("Anti Afk", function(Value)
-_G.AutiAfk = Value
+_G.AntiAfk = Value
 for i,v in next, getconnections(game.Players.LocalPlayer.Idled) do
-if _G.AutiAfk then
+if _G.AntiAfk then
 v:Disable() 
 else
 v:Enable()
@@ -781,7 +932,9 @@ end
 end)
 end)
 
+if _G.SetSpeedFly == nil then
 _G.SetSpeedFly = 100
+end
 CreateTextBox("Speed Fly", {Default = "Speed", TextDisappear = false}, function(Value)
 _G.SetSpeedFly = Value
 end)
@@ -880,7 +1033,9 @@ CreateTextBox("Size", {Default = "Size", TextDisappear = false}, function(Value)
 _G.ReachHitbox = Value
 end)
 
+if _G.ReachHitbox == nil then
 _G.ReachHitbox = 20
+end
 CreateToggle("Hitbox", function(Value)
 _G.AutoHitbox = Value
 while _G.AutoHitbox do
@@ -899,6 +1054,40 @@ for i,v in pairs(game.Players:GetChildren()) do
                         v.Character.HumanoidRootPart.Transparency = 1
                     end
                 end
+end
+end)
+
+CreateToggle("Keyboard Executor", function(Value)
+_G.KeyboardExecute = Value
+if _G.KeyboardExecute == true then
+_G.OldText = {}
+for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
+if v:IsA("TextBox") then
+_G.OldText[#_G.OldText + 1] = v.PlaceholderText
+end
+end
+for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
+if v:IsA("TextBox") then
+v.PlaceholderText = ([[
+1. Execute [ Key L ]
+2. Close / Open Ui [ Key RightShift ]
+3. Copy script [ Key C ]
+4. Clear [ Key O ]
+5. Close / Open Script Hub [ Key P ]
+6. Close / Open Choose Ui [ Key U ]
+]])
+end
+end
+elseif _G.KeyboardExecute == false then
+if _G.OldText then
+_G.Tab = 1
+for i,v in pairs(game.CoreGui.Execute.Frame:GetChildren()) do
+if v:IsA("TextBox") then
+v.PlaceholderText = _G.OldText[_G.Tab]
+_G.Tab = _G.Tab + 1
+end
+end
+end
 end
 end)
 
@@ -989,7 +1178,7 @@ TextButton.Text = "Clear"
 TextButton.TextColor3 = Color3.new(0,0,0)
 TextButton.Parent = Frame15
 TextButton.MouseButton1Click:Connect(function()
-CreateClear("Clear ", function()
+CreateClear("Clear Save?", function()
 game.CoreGui.Execute.Frame15.SaveScriptnow.Text = ""
 end)
 end)
@@ -1110,7 +1299,7 @@ ButtonDelete.BackgroundTransparency = 0
 ButtonDelete.TextColor3 = Color3.new(0, 0, 0)
 ButtonDelete.Parent = SaveLabel
 ButtonDelete.MouseButton1Click:Connect(function()
-CreateClear("Delete", function()
+CreateClear("Delete File?", function()
 delfile("ExecuteGet/"..SaveGet.Name)
 end)
 end)
@@ -1404,7 +1593,7 @@ TextBox.TextXAlignment = Enum.TextXAlignment.Left
 TextBox.TextYAlignment = Enum.TextYAlignment.Top
 TextBox.TextWrapped = true
 TextBox.Visible = false
-TextBox.FontFace = Font.new([[rbxassetid://11702779517]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)
+TextBox.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 TextBox.ClipsDescendants = true
 TextBox.MultiLine = true
 TextBox.ClearTextOnFocus = false
@@ -1487,7 +1676,7 @@ LogConsole.MultiLine = true
 LogConsole.ClearTextOnFocus = false
 LogConsole.TextXAlignment = Enum.TextXAlignment.Left
 LogConsole.TextYAlignment = Enum.TextYAlignment.Top
-LogConsole.FontFace = Font.new([[rbxassetid://11702779517]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)
+LogConsole.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 LogConsole.TextColor3 = Color3.new(0, 0, 0)
 LogConsole.BackgroundTransparency = 0
 LogConsole.TextSize = 15
@@ -2405,8 +2594,8 @@ end
 end)
 end
 end)
-
+wait(0.7)
 for i,v in ipairs(listfiles("ExecuteGet")) do
-SavedScriptsAdd({Name = v:sub(12, #v), Script = readfile(v)})
+SavedScriptsAdd({Name = v:sub(12, #v), Script = readfile(v), true})
 end
 end
